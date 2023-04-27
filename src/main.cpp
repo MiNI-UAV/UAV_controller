@@ -1,5 +1,6 @@
 #include <iostream>
 #include "GPS.hpp"
+#include <Eigen/Dense>
 
 int main()
 {
@@ -10,7 +11,8 @@ int main()
 
 	while(1)
 	{
-		std::cout << gps.getGPS() << "\n" << gps.getAH() << std::endl;
+		std::cout << "Pos:\n"<< gps.getGPSPos().transpose() << std::endl << std::endl;
+		std::cout << "Vel:\n"<< gps.getGPSVel().transpose() << std::endl << std::endl;
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 }
