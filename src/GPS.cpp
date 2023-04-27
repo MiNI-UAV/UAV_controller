@@ -64,6 +64,7 @@ GPS_AH::GPS_AH(zmq::context_t *ctx, std::string uav_address)
 GPS_AH::~GPS_AH()
 {
     posListener.join();
+    vnListener.join();
 }
 
 Eigen::Vector3d GPS_AH::getGPSPos()
@@ -156,7 +157,7 @@ void GPS_AH::handlePosMsg(std::string msg)
 
 void GPS_AH::handleVelMsg(std::string msg)
 {
-    std::istringstream f(msg.substr(4));
+    std::istringstream f(msg.substr(3));
     std::string s;
     Eigen::Vector3d vn;
     int i; 
