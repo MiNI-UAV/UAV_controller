@@ -4,7 +4,8 @@
 
 PID::PID(double dt, double Kp, double Ki, double Kd,
          double min = std::numeric_limits<double>::min(),
-         double max = std::numeric_limits<double>::max()):
+         double max = std::numeric_limits<double>::max(),
+         AntiWindUpMode antiWindUp = AntiWindUpMode::Clamping):
     _dt(dt),
     _max(max),
     _min(min),
@@ -12,7 +13,8 @@ PID::PID(double dt, double Kp, double Ki, double Kd,
     _Kd(Kd),
     _Ki(Ki),
     _pre_error(0),
-    _integral(0)
+    _integral(0),
+    _antiWindUp(antiWindUp)
 {     
 }
 
@@ -24,8 +26,8 @@ double PID::calc(double error)
 {
     double Pout = _Kp * error;
 
-    //missing Anti-windup
-    _integral += error * _dt;
+    double dI = error * _dt;
+    _integral += dI;
     double Iout = _Ki * _integral;
 
     double derivative = (error - _pre_error) / _dt;
@@ -34,6 +36,13 @@ double PID::calc(double error)
     double output = Pout + Iout + Dout;
 
     output = std::clamp(output,_min,_max);
+
+    //ANTI-WINDUP - CLAMPING
+    if(_antiWindUp == AntiWindUpMode::Clamping)
+    {
+        if((error > 0 && output == _max) || (error < 0 && output == _min))
+        _integral -= dI;
+    }
 
     _pre_error = error;
 
