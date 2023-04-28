@@ -1,3 +1,4 @@
+#include <limits>
 
 enum AntiWindUpMode
 {

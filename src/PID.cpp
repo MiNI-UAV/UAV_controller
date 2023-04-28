@@ -3,9 +3,7 @@
 #include <algorithm>
 
 PID::PID(double dt, double Kp, double Ki, double Kd,
-         double min = std::numeric_limits<double>::min(),
-         double max = std::numeric_limits<double>::max(),
-         AntiWindUpMode antiWindUp = AntiWindUpMode::Clamping):
+         double min, double max, AntiWindUpMode antiWindUp):
     _dt(dt),
     _max(max),
     _min(min),
