@@ -21,7 +21,6 @@ void angularVelListenerJob(zmq::context_t *ctx, std::string address,std::functio
             return;
         } 
         std::string msg_str =  std::string(static_cast<char*>(msg.data()), msg.size());
-        std::cout << msg_str << "\n";
         handleMsg(msg_str);
     }
     sock.close();

@@ -14,8 +14,10 @@ void Control::sendSpeed(Eigen::VectorXd speeds)
     static Eigen::IOFormat commaFormat(4, Eigen::DontAlignCols," ",",");
     std::stringstream ss;
     std::string s;
+    ss.precision(3);
     ss << "s:"<< speeds.format(commaFormat);
     s = ss.str();
+    //std::cout << s << std::endl;
     zmq::message_t message(s.data(), s.size());
     sock.send(message,zmq::send_flags::none);
 }

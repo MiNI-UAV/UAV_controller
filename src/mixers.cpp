@@ -1,7 +1,7 @@
 #include "mixers.hpp"
 #include <Eigen/Dense>
 
-Eigen::VectorXd controlMixer4(double verticalSpeed, double roll, double pitch, double yaw)
+Eigen::VectorXd controlMixer4(double climb_rate, double roll_rate , double pitch_rate, double yaw_rate, double maxSpeed)
 {
     const Eigen::Matrix4d mixer((
         Eigen::Matrix4d() << 1,  1,  1,  1,
@@ -9,6 +9,7 @@ Eigen::VectorXd controlMixer4(double verticalSpeed, double roll, double pitch, d
                              1, -1, -1,  1,
                              1, -1,  1, -1).finished());
     Eigen::Vector4d u;
-    u << verticalSpeed, roll, pitch, yaw;
-    return mixer*u;
+    u << climb_rate, roll_rate, pitch_rate, yaw_rate;
+    Eigen::VectorXd res = mixer*u;
+    return res.cwiseMax(0.0).cwiseMin(maxSpeed);
 }
