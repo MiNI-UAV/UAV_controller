@@ -1,6 +1,7 @@
 #include <iostream>
 #include "GPS.hpp"
 #include "Gyro.hpp"
+#include "mixers.hpp"
 #include <Eigen/Dense>
 
 int main()
