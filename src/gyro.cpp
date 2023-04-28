@@ -31,6 +31,7 @@ void angularVelListenerJob(zmq::context_t *ctx, std::string address,std::functio
 Gyro::Gyro(zmq::context_t *ctx, std::string uav_address)
 {
     angularVel.setZero();
+    uav_address = uav_address + "/state";
     angularVelListener = std::thread(angularVelListenerJob,ctx, uav_address, [this](std::string msg) {this->handleVelMsg(msg);});
 }
 

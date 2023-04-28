@@ -7,7 +7,7 @@
 int main()
 {
 	zmq::context_t ctx;
-	std::string uav_address = "ipc:///tmp/default/state";
+	std::string uav_address = "ipc:///tmp/default";
 	GPS_AH gps(&ctx,uav_address);
 	Gyro gyro(&ctx,uav_address);
 

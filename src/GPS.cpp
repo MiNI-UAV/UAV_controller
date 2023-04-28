@@ -56,7 +56,7 @@ GPS_AH::GPS_AH(zmq::context_t *ctx, std::string uav_address)
     pos.setZero();
     orientation.setZero();
     vel.setZero();
-
+    uav_address = uav_address + "/state";
     posListener = std::thread(posListenerJob,ctx, uav_address, [this](std::string msg) {this->handlePosMsg(msg);});
     vnListener = std::thread(vnListenerJob,ctx, uav_address, [this](std::string msg) {this->handleVelMsg(msg);});
 }
