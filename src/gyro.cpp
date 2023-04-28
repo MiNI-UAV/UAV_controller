@@ -1,5 +1,6 @@
-#include "Gyro.hpp"
+#include "gyro.hpp"
 #include <iostream>
+#include <Eigen/Dense>
 
 
 void angularVelListenerJob(zmq::context_t *ctx, std::string address,std::function<void(std::string)> handleMsg)
