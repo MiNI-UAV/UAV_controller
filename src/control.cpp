@@ -5,13 +5,37 @@ Control::Control(zmq::context_t *ctx, std::string uav_address)
 {
     std::string address = uav_address + "/control";
     std::cout << "Starting control socket: " << address << std::endl;
-    sock = zmq::socket_t(*ctx, zmq::socket_type::pub);
+    sock = zmq::socket_t(*ctx, zmq::socket_type::req);
     sock.connect(address);
+}
+
+void Control::startUp()
+{
+    zmq::message_t message("c:ping",6);
+    sock.send(message,zmq::send_flags::none);
+    zmq::message_t response;
+    auto res = sock.recv(response);
+    if(!res && response.str().compare("pong") != 0)
+    {
+        std::cerr << "Ping error" << std::endl;
+		exit(1);
+    }
+    zmq::message_t first_msg("c:start",7);
+    sock.send(first_msg,zmq::send_flags::none);
 }
 
 void Control::sendSpeed(Eigen::VectorXd speeds)
 {
     static Eigen::IOFormat commaFormat(4, Eigen::DontAlignCols," ",",");
+
+    zmq::message_t response;
+    auto res = sock.recv(response);
+    if(!res && response.str().compare("ok") != 0)
+    {
+        std::cerr << "Send speed error" << std::endl;
+		exit(1);
+    }
+
     std::stringstream ss;
     std::string s;
     ss.precision(3);

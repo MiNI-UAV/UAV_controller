@@ -8,32 +8,62 @@
 #include "timed_loop.hpp"
 #include "state.hpp"
 
+
+void connectToStateEndpoint(zmq::context_t *ctx, std::string uav_address)
+{
+	zmq::socket_t sock = zmq::socket_t(*ctx, zmq::socket_type::sub);
+	sock.set(zmq::sockopt::subscribe, "idle");
+	sock.connect(uav_address + "/state");
+	while (1)
+	{
+		zmq::message_t msg;
+		const auto res = sock.recv(msg, zmq::recv_flags::none);
+		if (!res)
+		{
+			std::cerr << "Sync error" << std::endl;
+			exit(1);
+		}
+		if(std::string(static_cast<char*>(msg.data()), msg.size()).compare("idle") == 0) break;
+	}
+	sock.close();
+}
+
+void syncWithPhysicEngine(zmq::context_t *ctx, std::string uav_address,Control& control)
+{
+	std::cout << "Attempting to sync..." << std::endl;
+	connectToStateEndpoint(ctx,uav_address);
+	control.startUp();
+	std::cout << "Synchronized!" << std::endl;
+}
+
 int main()
 {
 	zmq::context_t ctx;
 	std::string uav_address = "ipc:///tmp/drone1";
-	const int controlServerPort = 10001;
-	constexpr int step_time = 3; //ms
+	const int controlServerPort = 10002;
+	constexpr int step_time = 3; // ms
 
-	GPS_AH gps(&ctx,uav_address);
-	Gyro gyro(&ctx,uav_address);
-	Control control(&ctx,uav_address);
-	State state(&ctx,controlServerPort);
+	GPS_AH gps(&ctx, uav_address);
+	Gyro gyro(&ctx, uav_address);
+	Control control(&ctx, uav_address);
+	State state(&ctx, controlServerPort);
 	Status status = Status::running;
 
+	PID pidZ(step_time / 1000.0, 2.122, 0.035, -0.387, -1000, 1000);
+	PID pidFi(step_time / 1000.0, 9.584, 0.798, 0.192, -1000, 1000);
+	PID pidTheta(step_time / 1000.0, 5.191, 0.228, 0.127, -1000, 1000);
+	PID pidPsi(step_time / 1000.0, 5.288, 0.230, -0.151, -1000, 1000);
 
+	PID pidW(step_time / 1000.0, -3556.149, -538.572, -112.917, 0, 1000);
+	PID pidRoll(step_time / 1000.0, -6.249, -0.904, -0.219, -250, 250);
+	PID pidPitch(step_time / 1000.0, 6.304, 1.174, 0.433, -250, 250);
+	PID pidYaw(step_time / 1000.0, 112.662, 22.778, 3.419, -250, 250);
 
-	PID pidZ(step_time/1000.0, 2.122, 0.035, -0.387, -1000, 1000);
-	PID pidFi(step_time/1000.0, 9.584, 0.798, 0.192, -1000, 1000);
-	PID pidTheta(step_time/1000.0, 5.191, 0.228, 0.127, -1000, 1000);
-	PID pidPsi(step_time/1000.0, 5.288, 0.230, -0.151, -1000, 1000);
+	syncWithPhysicEngine(&ctx, uav_address, control);
 
-	PID pidW(step_time/1000.0, -3556.149, -538.572, -112.917, 0, 1000);
-	PID pidRoll(step_time/1000.0, -6.249, -0.904, -0.219, -250, 250);
-	PID pidPitch(step_time/1000.0, 6.304, 1.174, 0.433, -250, 250);
-	PID pidYaw(step_time/1000.0, 112.662, 22.778, 3.419, -250, 250);
-
-	TimedLoop loop(std::round(step_time), [&](){
+	TimedLoop loop(
+		std::round(step_time), [&]()
+		{
 		Eigen::Vector3d pos = gps.getGPSPos();
 		Eigen::Vector3d vel = gps.getGPSVel();
 		Eigen::Vector3d ori = gps.getAH();
@@ -49,8 +79,8 @@ int main()
 		double pitch_rate = pidPitch.calc(demandedQ-angVel(1));
 		double yaw_rate = pidYaw.calc(demandedR-angVel(2));
 		Eigen::VectorXd vec = controlMixer4(climb_rate,roll_rate,pitch_rate,yaw_rate);
-		control.sendSpeed(vec);
-    }, status);
+		control.sendSpeed(vec); },
+		status);
 
 	loop.go();
 }

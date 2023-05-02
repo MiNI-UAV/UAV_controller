@@ -39,7 +39,6 @@ void State::handleMsg(std::string msg)
 {
     std::istringstream f(msg);
     std::string command;
-    int i; 
     while(1)
     {
         if(!getline(f, command, ',')) break;
