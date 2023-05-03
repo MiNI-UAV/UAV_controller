@@ -1,3 +1,4 @@
+#pragma once
 #include <limits>
 
 enum AntiWindUpMode
@@ -15,6 +16,7 @@ class PID
          AntiWindUpMode antiWindUp = AntiWindUpMode::Clamping);
         ~PID();
         double calc(double error);
+        void clear();
 
 
     private:

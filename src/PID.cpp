@@ -46,3 +46,8 @@ double PID::calc(double error)
 
     return output;
 }
+
+void PID::clear()
+{
+    _integral = 0;
+}
