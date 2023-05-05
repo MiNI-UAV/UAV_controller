@@ -4,6 +4,7 @@
 #include <zmq.hpp>
 #include <functional>
 #include "status.hpp"
+#include "controller_mode.hpp"
 
 class State
 {
@@ -26,15 +27,18 @@ class State
 
         std::atomic<double> throttle = 0.0;
 
-        State(zmq::context_t* ctx, int port, const ControllerMode& mode, std::function<void(ControllerMode)> setControlMode, std::function<void()> exitController);
+        State(zmq::context_t* ctx, std::string uav_address, const ControllerMode& mode, std::function<void(ControllerMode)> setControlMode, std::function<void()> exitController);
         ~State();
         void handleMsg(std::string msg);
 
     private:
+        bool run;
         std::thread orderServer;
         const ControllerMode& _mode;
         std::function<void(ControllerMode)> _setControlMode;
         std::function<void()> _exitController;
+
+
         void clearAll();
         void handleControl(std::string content);
         void handleMode(std::string content);

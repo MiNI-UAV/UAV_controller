@@ -17,6 +17,7 @@ class GPS_AH
         void handleVelMsg(std::string msg);
 
     private:
+        bool run;
         std::thread posListener;
         std::thread vnListener;
         Eigen::Vector3d pos;

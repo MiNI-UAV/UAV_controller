@@ -13,6 +13,7 @@ class Gyro
         void handleVelMsg(std::string msg);
 
     private:
+        bool run;
         std::thread angularVelListener;
         Eigen::Vector3d angularVel;
         std::mutex mtxAngVel;

@@ -1,8 +1,8 @@
 #include "controller.hpp"
 #include <iostream>
 
-Controller::Controller(zmq::context_t *ctx, std::string uav_address,int controlPort):
-state(ctx, controlPort,mode,[this](ControllerMode mode){setMode(mode);},[this](){exitController();}),
+Controller::Controller(zmq::context_t *ctx, std::string uav_address):
+state(ctx, uav_address, mode,[this](ControllerMode mode){setMode(mode);},[this](){exitController();}),
 gps(ctx, uav_address),
 gyro(ctx, uav_address),
 control(ctx, uav_address)
@@ -21,6 +21,7 @@ control(ctx, uav_address)
 
 Controller::~Controller()
 {
+    std::cout << "Exiting controller!" << std::endl;
 }
 
 void Controller::run()
@@ -41,8 +42,8 @@ void Controller::run()
                 control.recv();
             break;
             case Status::exiting:
-                control.stop();
                 std::cout << "Exiting..." << std::endl;
+                control.stop();
                 run = false;
             break;
             case Status::reload:
@@ -135,7 +136,7 @@ void Controller::setMode(ControllerMode new_mode)
         pid.second.clear();
     }
     mode = new_mode;
-
+    status = Status::reload;
 }
 
 void Controller::exitController()

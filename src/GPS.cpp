@@ -3,22 +3,22 @@
 #include <thread>
 #include <functional>
 
-void posListenerJob(zmq::context_t *ctx, std::string address,std::function<void(std::string)> handleMsg)
+void posListenerJob(zmq::context_t *ctx, std::string address,std::function<void(std::string)> handleMsg, bool& run)
 {
     std::cout << "Starting GPS&AH pos listener: " + address + "\n";
     zmq::socket_t sock = zmq::socket_t(*ctx, zmq::socket_type::sub);
+    sock.set(zmq::sockopt::rcvtimeo,200);
     sock.set(zmq::sockopt::conflate,1);
     sock.connect(address);
     sock.set(zmq::sockopt::subscribe, "pos:");
-    bool run = true;
     while(run)
     {
         zmq::message_t msg;
         const auto res = sock.recv(msg, zmq::recv_flags::none);
         if(!res)
         {
-            std::cerr << "GPS&AH pos listener recv error" << std::endl;
-            return;
+            if(zmq_errno() != EAGAIN) std::cerr << "GPS&AH pos listener recv error" << std::endl;
+            continue;
         } 
         std::string msg_str =  std::string(static_cast<char*>(msg.data()), msg.size());
         handleMsg(msg_str);
@@ -27,22 +27,22 @@ void posListenerJob(zmq::context_t *ctx, std::string address,std::function<void(
     std::cout << "Ending GPS&AH pos listener: " << address << std::endl;
 }
 
-void vnListenerJob(zmq::context_t *ctx, std::string address,std::function<void(std::string)> handleMsg)
+void vnListenerJob(zmq::context_t *ctx, std::string address,std::function<void(std::string)> handleMsg, bool& run)
 {
     std::cout << "Starting GPS&AH vel listener: " + address + "\n";
     zmq::socket_t sock = zmq::socket_t(*ctx, zmq::socket_type::sub);
+    sock.set(zmq::sockopt::rcvtimeo,200);
     sock.set(zmq::sockopt::conflate,1);
     sock.connect(address);
     sock.set(zmq::sockopt::subscribe, "vn:");
-    bool run = true;
     while(run)
     {
         zmq::message_t msg;
         const auto res = sock.recv(msg, zmq::recv_flags::none);
         if(!res)
         {
-            std::cerr << "GPS&AH vel listener recv error" << std::endl;
-            return;
+            if(zmq_errno() != EAGAIN) std::cerr << "GPS&AH vel listener recv error" << std::endl;
+            continue;
         } 
         std::string msg_str =  std::string(static_cast<char*>(msg.data()), msg.size());
         handleMsg(msg_str);
@@ -57,14 +57,17 @@ GPS_AH::GPS_AH(zmq::context_t *ctx, std::string uav_address)
     orientation.setZero();
     vel.setZero();
     uav_address = uav_address + "/state";
-    posListener = std::thread(posListenerJob,ctx, uav_address, [this](std::string msg) {this->handlePosMsg(msg);});
-    vnListener = std::thread(vnListenerJob,ctx, uav_address, [this](std::string msg) {this->handleVelMsg(msg);});
+    run = true;
+    posListener = std::thread(posListenerJob,ctx, uav_address, [this](std::string msg) {this->handlePosMsg(msg);},std::ref(run));
+    vnListener = std::thread(vnListenerJob,ctx, uav_address, [this](std::string msg) {this->handleVelMsg(msg);},std::ref(run));
 }
 
 GPS_AH::~GPS_AH()
 {
+    run = false;
     posListener.join();
     vnListener.join();
+    std::cout << "Exiting GPS!" << std::endl;
 }
 
 Eigen::Vector3d GPS_AH::getGPSPos()

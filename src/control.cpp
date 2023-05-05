@@ -32,7 +32,7 @@ void Control::start()
 
 void Control::stop()
 {
-    recv();
+    //recv();
 
     zmq::message_t first_msg("c:stop",6);
     sock.send(first_msg,zmq::send_flags::none);
@@ -68,11 +68,18 @@ Control::~Control()
 
 void Control::recv()
 {
-    zmq::message_t response;
-    auto res = sock.recv(response);
-    if(!res && response.str().compare("ok") != 0)
+    try
     {
-        std::cerr << "Recv error" << std::endl;
-		exit(1);
+        zmq::message_t response;
+        auto res = sock.recv(response);
+        if(!res && response.str().compare("ok") != 0)
+        {
+            std::cerr << "Recv error" << std::endl;
+		    exit(1);
+        }
     }
+    catch(const zmq::error_t &ze)
+    {
+        std::cerr << "Recv error:" + std::to_string(ze.num()) << std::endl;
+    }  
 }

@@ -6,40 +6,46 @@
 #include "controller_mode.hpp"
 #include "status.hpp"
 
-void orderServerJob(zmq::context_t *ctx, int port, std::function<void(std::string)> handleMsg)
+void orderServerJob(zmq::context_t *ctx, std::string uav_address, std::function<void(std::string)> handleMsg, bool& run)
 {
-    std::cout << "Starting Order server on port: " + std::to_string(port) + "\n";
+    uav_address = uav_address +  "/steer";
+    std::cout << "Starting Order server: " + uav_address + "\n";
     zmq::socket_t sock = zmq::socket_t(*ctx, zmq::socket_type::sub);
-    sock.bind("tcp://*:"+std::to_string(port));
+    sock.set(zmq::sockopt::rcvtimeo,200);
+    sock.bind(uav_address);
+    //TODO: Remove below temporiary solution
+    sock.bind("tcp://*:"+std::to_string(1234));
     sock.set(zmq::sockopt::subscribe, "");
-    bool run = true;
+    run = true;
     while(run)
     {
         zmq::message_t msg;
         const auto res = sock.recv(msg, zmq::recv_flags::none);
         if(!res)
         {
-            std::cerr << "Order server recv error" << std::endl;
-            return;
+            if(zmq_errno() != EAGAIN) std::cerr << "Order server recv error" << std::endl;
+            continue;
         } 
         std::string msg_str =  std::string(static_cast<char*>(msg.data()), msg.size());
         handleMsg(msg_str);
     }
     sock.close();
-    std::cout << "Ending Order server" << std::endl;
 }
 
-State::State(zmq::context_t* ctx, int port, const ControllerMode& mode, std::function<void(ControllerMode)> setControlMode, std::function<void()> exitController):
+State::State(zmq::context_t* ctx, std::string uav_address, const ControllerMode& mode, std::function<void(ControllerMode)> setControlMode, std::function<void()> exitController):
 _mode{mode},
 _setControlMode{setControlMode},
 _exitController{exitController}
 {
-    orderServer = std::thread(orderServerJob,ctx, port, [this](std::string msg) {this->handleMsg(msg);});
+    run = true;
+    orderServer = std::thread(orderServerJob,ctx, uav_address, [this](std::string msg) {this->handleMsg(msg);},std::ref(run));
 }
 
 State::~State()
 {
+    run = false;
     orderServer.join();
+    std::cout << "Exiting Order Server!" << std::endl;
 }
 
 void State::handleMsg(std::string msg)
