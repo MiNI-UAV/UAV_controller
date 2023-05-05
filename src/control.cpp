@@ -32,6 +32,8 @@ void Control::start()
 
 void Control::stop()
 {
+    recv();
+
     zmq::message_t first_msg("c:stop",6);
     sock.send(first_msg,zmq::send_flags::none);
     zmq::message_t response;
@@ -47,13 +49,7 @@ void Control::sendSpeed(Eigen::VectorXd speeds)
 {
     static Eigen::IOFormat commaFormat(4, Eigen::DontAlignCols," ",",");
 
-    zmq::message_t response;
-    auto res = sock.recv(response);
-    if(!res && response.str().compare("ok") != 0)
-    {
-        std::cerr << "Send speed error" << std::endl;
-		exit(1);
-    }
+    recv();
 
     std::stringstream ss;
     std::string s;
@@ -68,4 +64,15 @@ void Control::sendSpeed(Eigen::VectorXd speeds)
 Control::~Control()
 {
     sock.close();
+}
+
+void Control::recv()
+{
+    zmq::message_t response;
+    auto res = sock.recv(response);
+    if(!res && response.str().compare("ok") != 0)
+    {
+        std::cerr << "Recv error" << std::endl;
+		exit(1);
+    }
 }

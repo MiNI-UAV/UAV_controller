@@ -22,6 +22,7 @@ class Controller
         ~Controller();
         void run();
         void setMode(ControllerMode new_mode);
+        void exitController();
 
     private:
         std::map<std::string,PID> pids;

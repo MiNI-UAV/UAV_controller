@@ -8,6 +8,7 @@ class Control
         void prepare();
         void start();
         void stop();
+        void recv();
         void sendSpeed(Eigen::VectorXd speeds);
         ~Control();
 

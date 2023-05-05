@@ -2,7 +2,7 @@
 #include <iostream>
 
 Controller::Controller(zmq::context_t *ctx, std::string uav_address,int controlPort):
-state(ctx, controlPort),
+state(ctx, controlPort,mode,[this](ControllerMode mode){setMode(mode);},[this](){exitController();}),
 gps(ctx, uav_address),
 gyro(ctx, uav_address),
 control(ctx, uav_address)
@@ -26,7 +26,7 @@ Controller::~Controller()
 void Controller::run()
 {
     bool run = true;
-    control.start();
+    
     while(run)
     {
         switch(status)
@@ -35,8 +35,10 @@ void Controller::run()
                 //TODO
             break;
             case Status::running:
+                control.start();
                 std::cout << "Running in " << ToString(mode) << " mode" << std::endl;
                 loop->go();
+                control.recv();
             break;
             case Status::exiting:
                 control.stop();
@@ -134,4 +136,9 @@ void Controller::setMode(ControllerMode new_mode)
     }
     mode = new_mode;
 
+}
+
+void Controller::exitController()
+{
+    status = Status::exiting;
 }

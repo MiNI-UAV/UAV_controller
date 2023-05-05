@@ -2,6 +2,8 @@
 #include <atomic>
 #include <thread>
 #include <zmq.hpp>
+#include <functional>
+#include "status.hpp"
 
 class State
 {
@@ -24,11 +26,17 @@ class State
 
         std::atomic<double> throttle = 0.0;
 
-        State(zmq::context_t* ctx, int port);
+        State(zmq::context_t* ctx, int port, const ControllerMode& mode, std::function<void(ControllerMode)> setControlMode, std::function<void()> exitController);
         ~State();
         void handleMsg(std::string msg);
 
     private:
         std::thread orderServer;
-
+        const ControllerMode& _mode;
+        std::function<void(ControllerMode)> _setControlMode;
+        std::function<void()> _exitController;
+        void clearAll();
+        void handleControl(std::string content);
+        void handleMode(std::string content);
+        void handleJoystick(std::string content);
 };
