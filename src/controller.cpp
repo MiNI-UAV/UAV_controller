@@ -1,4 +1,5 @@
 #include "controller.hpp"
+#include <iostream>
 
 Controller::Controller(zmq::context_t *ctx, std::string uav_address,int controlPort):
 state(ctx, controlPort),
@@ -6,39 +7,16 @@ gps(ctx, uav_address),
 gyro(ctx, uav_address),
 control(ctx, uav_address)
 {
-    mode = ControllerMode::angle;
+    status = Status::running;
     loadPIDs("");
-    jobs[ControllerMode::angle] = [&]()
-		{
-		Eigen::Vector3d pos = gps.getGPSPos();
-		Eigen::Vector3d vel = gps.getGPSVel();
-		Eigen::Vector3d ori = gps.getAH();
-		Eigen::Vector3d angVel = gyro.getAngularVel();
-
-		double demandedW = pids.at("Z").calc(state.demandedZ - pos(2));
-		double demandedP = pids.at("Fi").calc(state.demandedFi - ori(0));
-		double demandedQ = pids.at("Theta").calc(state.demandedTheta - ori(1));
-		double demandedR = pids.at("Psi").calc(state.demandedPsi - ori(2));
-
-        double climb_rate = pids.at("W").calc(demandedW-vel(2));
-		double roll_rate = pids.at("Roll").calc(demandedP-angVel(0));
-		double pitch_rate = pids.at("Pitch").calc(demandedQ-angVel(1));
-		double yaw_rate = pids.at("Yaw").calc(demandedR-angVel(2));
-		Eigen::VectorXd vec = controlMixer4(climb_rate,roll_rate,pitch_rate,yaw_rate);
-		control.sendSpeed(vec); };
-
-    jobs[ControllerMode::acro] = [&]()
-		{
-		Eigen::Vector3d angVel = gyro.getAngularVel();
-
-        double climb_rate = state.throttle;
-		double roll_rate = pids.at("Roll").calc(state.demandedP-angVel(0));
-		double pitch_rate = pids.at("Pitch").calc(state.demandedQ-angVel(1));
-		double yaw_rate = pids.at("Yaw").calc(state.demandedR-angVel(2));
-		Eigen::VectorXd vec = controlMixer4(climb_rate,roll_rate,pitch_rate,yaw_rate);
-		control.sendSpeed(vec); };
-
-    //TODO add position mode.
+    mode = ControllerMode::angle;
+    mixer = [&](double c, double r, double p, double y) {return controlMixer4(c,r,p,y,maxRotorSpeed);};
+    jobs[ControllerMode::none] = [](){};
+    jobs[ControllerMode::angle] = [&](){angleControllLoop();};
+    jobs[ControllerMode::acro] = [&](){acroControllLoop();};
+    jobs[ControllerMode::position] = [&](){positionControllLoop();};
+    loop.emplace(std::round(step_time),jobs[mode],status);
+    syncWithPhysicEngine(ctx,uav_address);
 }
 
 Controller::~Controller()
@@ -47,6 +25,52 @@ Controller::~Controller()
 
 void Controller::run()
 {
+    bool run = true;
+    control.start();
+    while(run)
+    {
+        switch(status)
+        {
+            case Status::idle:
+                //TODO
+            break;
+            case Status::running:
+                std::cout << "Running in " << ToString(mode) << " mode" << std::endl;
+                loop->go();
+            break;
+            case Status::exiting:
+                control.stop();
+                std::cout << "Exiting..." << std::endl;
+                run = false;
+            break;
+            case Status::reload:
+                loop.emplace(std::round(step_time),jobs[mode],status);
+                status = Status::running;
+            break;
+        }
+    }
+}
+
+void Controller::syncWithPhysicEngine(zmq::context_t *ctx,std::string uav_address)
+{
+    std::cout << "Attempting to sync..." << std::endl;
+	zmq::socket_t sock = zmq::socket_t(*ctx, zmq::socket_type::sub);
+	sock.set(zmq::sockopt::subscribe, "idle");
+	sock.connect(uav_address + "/state");
+	while (1)
+	{
+		zmq::message_t msg;
+		const auto res = sock.recv(msg, zmq::recv_flags::none);
+		if (!res)
+		{
+			std::cerr << "Sync error" << std::endl;
+			exit(1);
+		}
+		if(std::string(static_cast<char*>(msg.data()), msg.size()).compare("idle") == 0) break;
+	}
+	sock.close();
+	control.prepare();
+	std::cout << "Synchronized!" << std::endl;
 }
 
 void Controller::loadPIDs(std::string configPath)
@@ -65,6 +89,43 @@ void Controller::loadPIDs(std::string configPath)
     }
 }
 
+void Controller::acroControllLoop()
+{
+    Eigen::Vector3d angVel = gyro.getAngularVel();
+
+    double climb_rate = state.throttle;
+    double roll_rate = pids.at("Roll").calc(state.demandedP-angVel(0));
+    double pitch_rate = pids.at("Pitch").calc(state.demandedQ-angVel(1));
+    double yaw_rate = pids.at("Yaw").calc(state.demandedR-angVel(2));
+    Eigen::VectorXd vec = mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
+    control.sendSpeed(vec);
+}
+
+void Controller::angleControllLoop()
+{
+    Eigen::Vector3d pos = gps.getGPSPos();
+    Eigen::Vector3d vel = gps.getGPSVel();
+    Eigen::Vector3d ori = gps.getAH();
+    Eigen::Vector3d angVel = gyro.getAngularVel();
+
+    double demandedW = pids.at("Z").calc(state.demandedZ - pos(2));
+    double demandedP = pids.at("Fi").calc(state.demandedFi - ori(0));
+    double demandedQ = pids.at("Theta").calc(state.demandedTheta - ori(1));
+    double demandedR = pids.at("Psi").calc(state.demandedPsi - ori(2));
+
+    double climb_rate = pids.at("W").calc(demandedW-vel(2));
+    double roll_rate = pids.at("Roll").calc(demandedP-angVel(0));
+    double pitch_rate = pids.at("Pitch").calc(demandedQ-angVel(1));
+    double yaw_rate = pids.at("Yaw").calc(demandedR-angVel(2));
+    Eigen::VectorXd vec = mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
+    control.sendSpeed(vec);
+}
+
+void Controller::positionControllLoop()
+{
+    //TODO add position mode.
+}
+
 void Controller::setMode(ControllerMode new_mode)
 {
     for(auto pid: pids)
@@ -72,4 +133,5 @@ void Controller::setMode(ControllerMode new_mode)
         pid.second.clear();
     }
     mode = new_mode;
+
 }

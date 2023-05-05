@@ -5,7 +5,7 @@
 
 void posListenerJob(zmq::context_t *ctx, std::string address,std::function<void(std::string)> handleMsg)
 {
-    std::cout << "Starting GPS&AH pos listener: " << address << std::endl;
+    std::cout << "Starting GPS&AH pos listener: " + address + "\n";
     zmq::socket_t sock = zmq::socket_t(*ctx, zmq::socket_type::sub);
     sock.set(zmq::sockopt::conflate,1);
     sock.connect(address);
@@ -29,7 +29,7 @@ void posListenerJob(zmq::context_t *ctx, std::string address,std::function<void(
 
 void vnListenerJob(zmq::context_t *ctx, std::string address,std::function<void(std::string)> handleMsg)
 {
-    std::cout << "Starting GPS&AH vel listener: " << address << std::endl;
+    std::cout << "Starting GPS&AH vel listener: " + address + "\n";
     zmq::socket_t sock = zmq::socket_t(*ctx, zmq::socket_type::sub);
     sock.set(zmq::sockopt::conflate,1);
     sock.connect(address);

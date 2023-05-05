@@ -4,5 +4,6 @@ enum Status
 {
     idle = 1,
     running = 2,
-    exiting = 3
+    exiting = 3,
+    reload = 4
 };
