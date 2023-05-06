@@ -132,16 +132,16 @@ void State::handleJoystick(std::string content)
     case ControllerMode::acro:
         throttle = (values[1]+1.0)/2.0;
         demandedP = values[2];
-	    demandedQ = values[3];
+	    demandedQ = -values[3];
 	    demandedR = values[0];
 
     break;
 
     case ControllerMode::angle:
-        demandedZ += values[1]/1000.0;
+        demandedZ -= values[1]/10.0;
 	    demandedFi = values[2];
-	    demandedTheta = values[3];
-	    demandedPsi += values[0]/1000.0;
+	    demandedTheta = -values[3];
+	    demandedPsi += values[0]/50.0;
     break;
     
     default:
