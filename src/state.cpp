@@ -119,6 +119,7 @@ void State::handleMode(std::string content)
 
 void State::handleJoystick(std::string content)
 {
+    constexpr double angleLimit = std::numbers::pi/4.0;
     std::istringstream f(content);
     std::string value;
     double values[4];
@@ -131,17 +132,17 @@ void State::handleJoystick(std::string content)
     {
     case ControllerMode::acro:
         throttle = (values[1]+1.0)/2.0;
-        demandedP = values[2];
-	    demandedQ = -values[3];
+        demandedP = values[2]/2.0;
+	    demandedQ = -values[3]/2.0;
 	    demandedR = values[0];
 
     break;
 
     case ControllerMode::angle:
         demandedZ -= values[1]/10.0;
-	    demandedFi = values[2];
-	    demandedTheta = -values[3];
-	    demandedPsi += values[0]/50.0;
+	    demandedFi = values[2]*angleLimit;
+	    demandedTheta = -values[3]*angleLimit;
+	    demandedPsi += values[0]/100.0;
     break;
     
     default:

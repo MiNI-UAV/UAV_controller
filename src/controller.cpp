@@ -96,7 +96,7 @@ void Controller::acroControllLoop()
 {
     Eigen::Vector3d angVel = gyro.getAngularVel();
 
-    double climb_rate = state.throttle;
+    double climb_rate = state.throttle*1000.0;
     double roll_rate = pids.at("Roll").calc(state.demandedP-angVel(0));
     double pitch_rate = pids.at("Pitch").calc(state.demandedQ-angVel(1));
     double yaw_rate = pids.at("Yaw").calc(state.demandedR-angVel(2));
