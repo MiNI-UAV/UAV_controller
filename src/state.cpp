@@ -3,6 +3,7 @@
 #include <iostream>
 #include <functional>
 #include <numbers>
+#include <cmath>
 #include "controller_mode.hpp"
 #include "status.hpp"
 
@@ -117,6 +118,14 @@ void State::handleMode(std::string content)
     }
 }
 
+double clampAngle(double angle)
+{
+    angle = std::fmod(angle + std::numbers::pi,2*std::numbers::pi);
+    if (angle < 0)
+        angle += 2*std::numbers::pi;
+    return angle - std::numbers::pi;
+}
+
 void State::handleJoystick(std::string content)
 {
     constexpr double angleLimit = std::numbers::pi/4.0;
@@ -131,10 +140,10 @@ void State::handleJoystick(std::string content)
     switch (_mode)
     {
     case ControllerMode::acro:
-        throttle = (values[1]+1.0)/2.0;
-        demandedP = values[2]/2.0;
-	    demandedQ = -values[3]/2.0;
-	    demandedR = values[0];
+        throttle = values[1];
+        demandedP = values[2]*5.0;
+	    demandedQ = -values[3]*5.0;
+	    demandedR = values[0]*3.0;
 
     break;
 
@@ -142,7 +151,8 @@ void State::handleJoystick(std::string content)
         demandedZ -= values[1]/10.0;
 	    demandedFi = values[2]*angleLimit;
 	    demandedTheta = -values[3]*angleLimit;
-	    demandedPsi += values[0]/100.0;
+        demandedPsi += values[0]/100.0;
+        //demandedPsi = clampAngle(demandedPsi + values[0]/100.0);
     break;
     
     default:

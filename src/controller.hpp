@@ -30,6 +30,7 @@ class Controller
         std::function<Eigen::VectorXd(double,double,double,double)> mixer;
         ControllerMode mode;
         const int step_time = 3;
+        double hoverRotorSpeed = 335.0;
         double maxRotorSpeed = 1000.0;
 
         Status status;

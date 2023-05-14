@@ -96,12 +96,20 @@ void Controller::acroControllLoop()
 {
     Eigen::Vector3d angVel = gyro.getAngularVel();
 
-    double climb_rate = state.throttle*1000.0;
+    double climb_rate = (state.throttle+1.0)*hoverRotorSpeed;
     double roll_rate = pids.at("Roll").calc(state.demandedP-angVel(0));
     double pitch_rate = pids.at("Pitch").calc(state.demandedQ-angVel(1));
     double yaw_rate = pids.at("Yaw").calc(state.demandedR-angVel(2));
     Eigen::VectorXd vec = mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
     control.sendSpeed(vec);
+}
+
+double circularError(double demanded, double val)
+{
+    double diff = demanded-val;
+    if(diff > std::numbers::pi) return -2*std::numbers::pi + diff;
+    if(diff < -std::numbers::pi) return +2*std::numbers::pi + diff;
+    return diff;
 }
 
 void Controller::angleControllLoop()
@@ -112,9 +120,9 @@ void Controller::angleControllLoop()
     Eigen::Vector3d angVel = gyro.getAngularVel();
 
     double demandedW = pids.at("Z").calc(state.demandedZ - pos(2));
-    double demandedP = pids.at("Fi").calc(state.demandedFi - ori(0));
-    double demandedQ = pids.at("Theta").calc(state.demandedTheta - ori(1));
-    double demandedR = pids.at("Psi").calc(state.demandedPsi - ori(2));
+    double demandedP = pids.at("Fi").calc(circularError(state.demandedFi, ori(0)));
+    double demandedQ = pids.at("Theta").calc(circularError(state.demandedTheta, ori(1)));
+    double demandedR = pids.at("Psi").calc(circularError(state.demandedPsi, ori(2)));
 
     double climb_rate = pids.at("W").calc(demandedW-vel(2));
     double roll_rate = pids.at("Roll").calc(demandedP-angVel(0));
