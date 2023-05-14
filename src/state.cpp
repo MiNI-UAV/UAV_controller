@@ -151,8 +151,8 @@ void State::handleJoystick(std::string content)
         demandedZ -= values[1]/10.0;
 	    demandedFi = values[2]*angleLimit;
 	    demandedTheta = -values[3]*angleLimit;
-        demandedPsi += values[0]/100.0;
-        //demandedPsi = clampAngle(demandedPsi + values[0]/100.0);
+        //demandedPsi += values[0]/100.0;
+        demandedPsi = clampAngle(demandedPsi + values[0]/100.0);
     break;
     
     default:
