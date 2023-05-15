@@ -92,6 +92,19 @@ void Controller::loadPIDs(std::string configPath)
     }
 }
 
+void Controller::setCurrentDemands()
+{
+    auto pos = gps.getGPSPos();
+    state.demandedX = pos(0);
+    state.demandedY = pos(1);
+    state.demandedZ = pos(2);
+    auto ori = gps.getAH();
+    state.demandedFi = ori(0);
+    state.demandedTheta = ori(1);
+    state.demandedPsi = ori(2);
+    
+}
+
 void Controller::acroControllLoop()
 {
     Eigen::Vector3d angVel = gyro.getAngularVel();
@@ -137,12 +150,15 @@ void Controller::positionControllLoop()
     //TODO add position mode.
 }
 
+
+
 void Controller::setMode(ControllerMode new_mode)
 {
     for(auto pid: pids)
     {
         pid.second.clear();
     }
+    setCurrentDemands();
     mode = new_mode;
     status = Status::reload;
 }

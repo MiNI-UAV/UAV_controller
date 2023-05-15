@@ -42,6 +42,7 @@ class Controller
 
         void syncWithPhysicEngine(zmq::context_t *ctx,std::string uav_address);
         void loadPIDs(std::string configPath);
+        void setCurrentDemands();
         void acroControllLoop();
         void angleControllLoop();
         void positionControllLoop();
