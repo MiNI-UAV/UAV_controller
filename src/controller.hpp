@@ -13,12 +13,13 @@
 #include "timed_loop.hpp"
 #include "state.hpp"
 #include "controller_mode.hpp"
+#include "params.hpp"
 
 
 class Controller
 {
     public:
-        Controller(zmq::context_t *ctx, std::string uav_address);
+        Controller(zmq::context_t *ctx, std::string uav_address, Params& params);
         ~Controller();
         void run();
         void setMode(ControllerMode new_mode);

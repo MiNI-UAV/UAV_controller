@@ -1,7 +1,7 @@
 #include "controller.hpp"
 #include <iostream>
 
-Controller::Controller(zmq::context_t *ctx, std::string uav_address):
+Controller::Controller(zmq::context_t *ctx, std::string uav_address, Params& params):
 state(ctx, uav_address, mode,[this](ControllerMode mode){setMode(mode);},[this](){exitController();}),
 gps(ctx, uav_address),
 gyro(ctx, uav_address),
