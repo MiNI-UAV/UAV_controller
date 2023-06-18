@@ -10,7 +10,6 @@ params{_params}
 {
     status = Status::running;
     mode = ControllerMode::angle;
-    mixer = [&](double c, double r, double p, double y) {return controlMixer4(c,r,p,y,maxRotorSpeed);};
     jobs[ControllerMode::none] = [](){};
     jobs[ControllerMode::angle] = [&](){angleControllLoop();};
     jobs[ControllerMode::acro] = [&](){acroControllLoop();};
@@ -93,11 +92,11 @@ void Controller::acroControllLoop()
 {
     Eigen::Vector3d angVel = gyro.getAngularVel();
 
-    double climb_rate = (state.throttle+1.0)*hoverRotorSpeed;
+    double climb_rate = (state.throttle+1.0)*params.hoverRotorSpeed;
     double roll_rate = params.pids.at("Roll").calc(state.demandedP-angVel(0));
     double pitch_rate = params.pids.at("Pitch").calc(state.demandedQ-angVel(1));
     double yaw_rate = params.pids.at("Yaw").calc(state.demandedR-angVel(2));
-    Eigen::VectorXd vec = mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
+    Eigen::VectorXd vec = params.mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
     control.sendSpeed(vec);
 }
 
@@ -125,7 +124,7 @@ void Controller::angleControllLoop()
     double roll_rate = params.pids.at("Roll").calc(demandedP-angVel(0));
     double pitch_rate = params.pids.at("Pitch").calc(demandedQ-angVel(1));
     double yaw_rate = params.pids.at("Yaw").calc(demandedR-angVel(2));
-    Eigen::VectorXd vec = mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
+    Eigen::VectorXd vec = params.mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
     control.sendSpeed(vec);
 }
 

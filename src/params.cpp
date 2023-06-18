@@ -103,7 +103,8 @@ void Params::loadConfig(std::string configFile)
         if(std::strcmp(node->name(),"mixer") == 0)
         {
             Eigen::MatrixX4d mixerMatrix = stringToMatrix(node->value());
-            mixer = [mixerMatrix, this](double c, double r, double p, double y) {return controlMixer(mixerMatrix,c,r,p,y,maxRotorSpeed);};
+            double maxSpeed = maxRotorSpeed;
+            mixer = [mixerMatrix, maxSpeed](double c, double r, double p, double y) {return controlMixer(mixerMatrix,c,r,p,y,maxSpeed);};
         }
         
     }

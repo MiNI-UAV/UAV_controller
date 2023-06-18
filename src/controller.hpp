@@ -26,12 +26,8 @@ class Controller
         void exitController();
 
     private:
-        //std::map<std::string,PID> pids;
         std::function<void()> jobs[4];
-        std::function<Eigen::VectorXd(double,double,double,double)> mixer;
         ControllerMode mode;
-        double hoverRotorSpeed = 335.0;
-        double maxRotorSpeed = 1000.0;
 
         Status status;
         State state;
