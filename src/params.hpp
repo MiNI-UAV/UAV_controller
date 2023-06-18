@@ -4,6 +4,8 @@
 #include <map>
 #include "PID.hpp"
 
+const int step_time = 3;
+
 struct Params
 {
     public:

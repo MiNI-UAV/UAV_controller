@@ -48,7 +48,7 @@ PID parsePID(rapidxml::xml_node<>* PIDNode)
         if(std::strcmp(node->name(),"min") == 0) min = std::stod(node->value());
         if(std::strcmp(node->name(),"max") == 0) max = std::stod(node->value());
     }
-    return PID(P,I,D,min,max);
+    return PID((double)step_time / 1000.0,P,I,D,min,max);
 }
 
 void Params::loadConfig(std::string configFile)
@@ -103,7 +103,7 @@ void Params::loadConfig(std::string configFile)
         if(std::strcmp(node->name(),"mixer") == 0)
         {
             Eigen::MatrixX4d mixerMatrix = stringToMatrix(node->value());
-            mixer = [&](double c, double r, double p, double y) {return controlMixer(mixerMatrix,c,r,p,y,maxRotorSpeed);};
+            mixer = [mixerMatrix, this](double c, double r, double p, double y) {return controlMixer(mixerMatrix,c,r,p,y,maxRotorSpeed);};
         }
         
     }
