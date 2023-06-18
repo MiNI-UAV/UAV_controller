@@ -115,21 +115,15 @@ void Controller::angleControllLoop()
     Eigen::Vector3d ori = gps.getAH();
     Eigen::Vector3d angVel = gyro.getAngularVel();
 
-    std::cout << pos << std::endl;
-
     double demandedW = params.pids.at("Z").calc(state.demandedZ - pos(2));
     double demandedP = params.pids.at("Fi").calc(circularError(state.demandedFi, ori(0)));
     double demandedQ = params.pids.at("Theta").calc(circularError(state.demandedTheta, ori(1)));
     double demandedR = params.pids.at("Psi").calc(circularError(state.demandedPsi, ori(2)));
 
-    //std::cout << demandedW << "  " << demandedP << " " << demandedQ << " " << demandedR << std::endl;
-
     double climb_rate = params.pids.at("W").calc(demandedW-vel(2));
     double roll_rate = params.pids.at("Roll").calc(demandedP-angVel(0));
     double pitch_rate = params.pids.at("Pitch").calc(demandedQ-angVel(1));
     double yaw_rate = params.pids.at("Yaw").calc(demandedR-angVel(2));
-
-    //std::cout << climb_rate << "  " << roll_rate << " " << pitch_rate << " " << yaw_rate << std::endl;
 
     Eigen::VectorXd vec = params.mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
     control.sendSpeed(vec);

@@ -33,7 +33,7 @@ void TimedLoop::go()
     }
     else
     {
-      std::cout<< "Time exceeded!\n";
+      std::cout<< "[Controller] Time exceeded!\n";
     }
   }
 }
@@ -59,7 +59,7 @@ void TimedLoop::go(uint32_t loops)
     }
     else
     {
-      std::cout<< "Time exceeded!\n";
+      std::cout<< "[Controller] Time exceeded!\n";
     }
   }
 }

@@ -18,7 +18,7 @@ Params parseArgs(int argc, char** argv, Params& params)
         std::cout << options.help() << std::endl;
         exit(0);
     }
-    //if(result.count("config"))
+    if(result.count("config"))
     {
         params.loadConfig(result["config"].as<std::string>().c_str());
     }
