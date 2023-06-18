@@ -27,7 +27,7 @@ void Control::start()
 {
     zmq::message_t first_msg("c:start",7);
     sock.send(first_msg,zmq::send_flags::none);
-    std::cout << "Start!\n";
+    std::cout << "[Controller] Start!\n";
 }
 
 void Control::stop()
@@ -47,14 +47,13 @@ void Control::stop()
 
 void Control::sendSpeed(Eigen::VectorXd speeds)
 {
-    static Eigen::IOFormat commaFormat(4, Eigen::DontAlignCols," ",",");
+    static Eigen::IOFormat commaFormat(Eigen::StreamPrecision, Eigen::DontAlignCols," ",",");
 
     recv();
-
     std::stringstream ss;
     std::string s;
     ss.precision(3);
-    ss << "s:"<< speeds.format(commaFormat);
+    ss << std::fixed << "s:"<< speeds.format(commaFormat);
     s = ss.str();
     //std::cout << s << std::endl;
     zmq::message_t message(s.data(), s.size());

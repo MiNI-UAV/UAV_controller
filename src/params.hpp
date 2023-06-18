@@ -10,16 +10,18 @@ struct Params
         Params();
         ~Params();
         void loadConfig(std::string configFile);
-        void setName(const char* newName, size_t sz);
 
-        char* name;
+        std::string name;
         int noOfRotors;
         double hoverRotorSpeed;
         double maxRotorSpeed;
         std::map<std::string,PID> pids;
         std::function<Eigen::VectorXd(double,double,double,double)> mixer;
+
+        const int step_time = 3;
         
 
     private:      
         void setMass(rapidxml::xml_node<> * interiaNode);
+        PID parsePID(rapidxml::xml_node<>* PIDNode);
 };

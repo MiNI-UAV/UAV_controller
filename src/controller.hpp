@@ -26,23 +26,19 @@ class Controller
         void exitController();
 
     private:
-        std::map<std::string,PID> pids;
+
         std::function<void()> jobs[4];
-        std::function<Eigen::VectorXd(double,double,double,double)> mixer;
         ControllerMode mode;
-        const int step_time = 3;
-        double hoverRotorSpeed = 335.0;
-        double maxRotorSpeed = 1000.0;
 
         Status status;
         State state;
         GPS_AH gps;
 	    Gyro gyro;
 	    Control control;
+        Params& params;
         std::optional<TimedLoop> loop;
 
         void syncWithPhysicEngine(zmq::context_t *ctx,std::string uav_address);
-        void loadPIDs(std::string configPath);
         void setCurrentDemands();
         void acroControllLoop();
         void angleControllLoop();
