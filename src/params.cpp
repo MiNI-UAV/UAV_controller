@@ -16,7 +16,10 @@ Params::Params()
     noOfRotors = 4;
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5e30a2aae79354dbf6ecccf86e5b9a63effd4fd1
 Eigen::MatrixX4d  stringToMatrix(const std::string& input) {
     std::vector<double> values;
     std::istringstream iss(input);
@@ -113,5 +116,9 @@ void Params::loadConfig(std::string configFile)
 
 Params::~Params()
 {
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 5e30a2aae79354dbf6ecccf86e5b9a63effd4fd1
 }
