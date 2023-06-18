@@ -10,9 +10,8 @@ struct Params
         Params();
         ~Params();
         void loadConfig(std::string configFile);
-        void setName(const char* newName, size_t sz);
 
-        char* name;
+        std::string name;
         int noOfRotors;
         double hoverRotorSpeed;
         double maxRotorSpeed;

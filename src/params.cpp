@@ -12,15 +12,8 @@
 /// @brief Initialize default data
 Params::Params() 
 {
-    setName("default",7);
+    name = "default";
     noOfRotors = 4;
-}
-
-void Params::setName(const char* newName, size_t sz)
-{
-    name = new char[sz+1];
-    std::strncpy(name,newName,sz);
-    name[sz] = '\0';
 }
 
 Eigen::MatrixX4d  stringToMatrix(const std::string& input) {
@@ -74,7 +67,7 @@ void Params::loadConfig(std::string configFile)
     {
         if(std::strcmp(node->name(),"name") == 0)
         {
-            setName(node->value(), node->value_size());
+            name.assign(node->value(), node->value_size());
         }
         if(std::strcmp(node->name(),"rotors") == 0)
         {
@@ -118,5 +111,5 @@ void Params::loadConfig(std::string configFile)
 
 Params::~Params()
 {
-    delete[] name;
+    
 }
