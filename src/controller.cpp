@@ -142,13 +142,13 @@ void Controller::positionControllLoop()
     // double demandedU = params.pids.at("X").calc(state.demandedX - pos(0));
     // double demandedV = params.pids.at("Y").calc(state.demandedY - pos(1));
 
-    std::cout << vel << std::endl  << std::endl;
+    // std::cout << vel << std::endl  << std::endl;
 
-    double demandedU = 10.0;
-    double demandedV = 5.0;
+    double demandedU = 5.0;
+    double demandedV = 0.0;
 
-    double demandedFi_star = params.pids.at("V").calc(demandedV-vel(1));
-    double demandedTheta_star = params.pids.at("U").calc(demandedU-vel(0));
+    double demandedFi_star = params.pids.at("V").calc(demandedV - vel(1));
+    double demandedTheta_star = params.pids.at("U").calc(demandedU - vel(0));
 
     double PsiCos = std::cos(ori(2));
     double PsiSin = std::sin(ori(2));
