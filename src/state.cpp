@@ -128,7 +128,7 @@ double clampAngle(double angle)
 
 void State::handleJoystick(std::string content)
 {
-    constexpr double angleLimit = std::numbers::pi/4.0;
+    constexpr double angleLimit = std::numbers::pi/6.0;
     std::istringstream f(content);
     std::string value;
     double values[4];
@@ -151,8 +151,17 @@ void State::handleJoystick(std::string content)
         demandedZ -= values[1]/10.0;
 	    demandedFi = values[2]*angleLimit;
 	    demandedTheta = -values[3]*angleLimit;
-        //demandedPsi += values[0]/100.0;
         demandedPsi = clampAngle(demandedPsi + values[0]/100.0);
+    break;
+
+    case ControllerMode::position:
+        demandedZ -= values[1]/10.0;
+        demandedPsi = clampAngle(demandedPsi + values[0]/100.0);
+        demandedX += ((values[3]*angleLimit)*std::cos(demandedPsi) - (values[2]*angleLimit)*std::sin(demandedPsi))/2.0;
+        demandedY += ((values[3]*angleLimit)*std::sin(demandedPsi) + (values[2]*angleLimit)*std::cos(demandedPsi))/2.0;
+    break;
+
+    case ControllerMode::none:
     break;
     
     default:
