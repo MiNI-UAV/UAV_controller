@@ -139,14 +139,12 @@ void Controller::positionControllLoop()
     Eigen::Vector3d ori = gps.getAH();
     Eigen::Vector3d angVel = gyro.getAngularVel();
 
-    // double demandedU = params.pids.at("X").calc(state.demandedX - pos(0));
-    // double demandedV = params.pids.at("Y").calc(state.demandedY - pos(1));
+    double demandedU = params.pids.at("X").calc(state.demandedX - pos(0));
+    double demandedV = params.pids.at("Y").calc(state.demandedY - pos(1));
 
-    // std::cout << vel << std::endl  << std::endl;
-
-    double demandedU = 5.0;
-    double demandedV = 0.0;
-
+    std::cout << "X: "<< state.demandedX << ", Y: " << state.demandedY << std::endl;
+    std::cout << pos << std::endl  << std::endl;
+    
     double demandedFi_star = params.pids.at("V").calc(demandedV - vel(1));
     double demandedTheta_star = params.pids.at("U").calc(demandedU - vel(0));
 

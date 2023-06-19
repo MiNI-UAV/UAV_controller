@@ -157,8 +157,8 @@ void State::handleJoystick(std::string content)
     case ControllerMode::position:
         demandedZ -= values[1]/10.0;
         demandedPsi = clampAngle(demandedPsi + values[0]/100.0);
-        demandedX += ((values[2]*angleLimit)*std::cos(demandedPsi) - (-values[3]*angleLimit)*std::sin(demandedPsi))/10.0;
-        demandedY += ((values[2]*angleLimit)*std::sin(demandedPsi) + (-values[3]*angleLimit)*std::cos(demandedPsi))/10.0;
+        demandedX += ((values[3]*angleLimit)*std::cos(demandedPsi) - (values[2]*angleLimit)*std::sin(demandedPsi))/2.0;
+        demandedY += ((values[3]*angleLimit)*std::sin(demandedPsi) + (values[2]*angleLimit)*std::cos(demandedPsi))/2.0;
     break;
 
     case ControllerMode::none:
