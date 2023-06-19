@@ -9,7 +9,7 @@ control(ctx, uav_address),
 params{_params}
 {
     status = Status::running;
-    mode = ControllerMode::angle;
+    mode = ControllerMode::position;
     jobs[ControllerMode::none] = [](){};
     jobs[ControllerMode::angle] = [&](){angleControllLoop();};
     jobs[ControllerMode::acro] = [&](){acroControllLoop();};
@@ -96,6 +96,7 @@ void Controller::acroControllLoop()
     double roll_rate = params.pids.at("Roll").calc(state.demandedP-angVel(0));
     double pitch_rate = params.pids.at("Pitch").calc(state.demandedQ-angVel(1));
     double yaw_rate = params.pids.at("Yaw").calc(state.demandedR-angVel(2));
+
     Eigen::VectorXd vec = params.mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
     control.sendSpeed(vec);
 }
@@ -115,6 +116,8 @@ void Controller::angleControllLoop()
     Eigen::Vector3d ori = gps.getAH();
     Eigen::Vector3d angVel = gyro.getAngularVel();
 
+    std::cout << vel << std::endl  << std::endl;
+
     double demandedW = params.pids.at("Z").calc(state.demandedZ - pos(2));
     double demandedP = params.pids.at("Fi").calc(circularError(state.demandedFi, ori(0)));
     double demandedQ = params.pids.at("Theta").calc(circularError(state.demandedTheta, ori(1)));
@@ -124,13 +127,47 @@ void Controller::angleControllLoop()
     double roll_rate = params.pids.at("Roll").calc(demandedP-angVel(0));
     double pitch_rate = params.pids.at("Pitch").calc(demandedQ-angVel(1));
     double yaw_rate = params.pids.at("Yaw").calc(demandedR-angVel(2));
+
     Eigen::VectorXd vec = params.mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
     control.sendSpeed(vec);
 }
 
 void Controller::positionControllLoop()
 {
-    //TODO add position mode.
+    Eigen::Vector3d pos = gps.getGPSPos();
+    Eigen::Vector3d vel = gps.getGPSVel();
+    Eigen::Vector3d ori = gps.getAH();
+    Eigen::Vector3d angVel = gyro.getAngularVel();
+
+    // double demandedU = params.pids.at("X").calc(state.demandedX - pos(0));
+    // double demandedV = params.pids.at("Y").calc(state.demandedY - pos(1));
+
+    std::cout << vel << std::endl  << std::endl;
+
+    double demandedU = 10.0;
+    double demandedV = 5.0;
+
+    double demandedFi_star = params.pids.at("V").calc(demandedV-vel(1));
+    double demandedTheta_star = params.pids.at("U").calc(demandedU-vel(0));
+
+    double PsiCos = std::cos(ori(2));
+    double PsiSin = std::sin(ori(2));
+    double demandedFi = demandedFi_star*PsiCos + demandedTheta_star*PsiSin;
+    double demandedTheta = - demandedFi_star*PsiSin + demandedTheta_star*PsiCos;
+
+    double demandedP = params.pids.at("Fi").calc(demandedFi - ori(0));
+    double demandedQ = params.pids.at("Theta").calc(demandedTheta - ori(1));
+
+    double demandedW = params.pids.at("Z").calc(state.demandedZ - pos(2));
+    double demandedR = params.pids.at("Psi").calc(circularError(state.demandedPsi, ori(2)));
+
+    double climb_rate = params.pids.at("W").calc(demandedW-vel(2));
+    double roll_rate = params.pids.at("Roll").calc(demandedP-angVel(0));
+    double pitch_rate = params.pids.at("Pitch").calc(demandedQ-angVel(1));
+    double yaw_rate = params.pids.at("Yaw").calc(demandedR-angVel(2));
+
+    Eigen::VectorXd vec = params.mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
+    control.sendSpeed(vec);
 }
 
 
