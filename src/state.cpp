@@ -15,7 +15,7 @@ void orderServerJob(zmq::context_t *ctx, std::string uav_address, std::function<
     sock.set(zmq::sockopt::rcvtimeo,200);
     sock.bind(uav_address);
     //TODO: Remove below temporiary solution
-    sock.bind("tcp://*:"+std::to_string(1234));
+    //sock.bind("tcp://*:"+std::to_string(1234));
     sock.set(zmq::sockopt::subscribe, "");
     run = true;
     while(run)

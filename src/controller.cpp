@@ -141,9 +141,6 @@ void Controller::positionControllLoop()
 
     double demandedU = params.pids.at("X").calc(state.demandedX - pos(0));
     double demandedV = params.pids.at("Y").calc(state.demandedY - pos(1));
-
-    std::cout << "X: "<< state.demandedX << ", Y: " << state.demandedY << std::endl;
-    std::cout << pos << std::endl  << std::endl;
     
     double demandedFi_star = params.pids.at("V").calc(demandedV - vel(1));
     double demandedTheta_star = params.pids.at("U").calc(demandedU - vel(0));
