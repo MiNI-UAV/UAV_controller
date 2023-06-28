@@ -39,7 +39,10 @@ int main(int argc, char** argv)
     Params params;
     parseArgs(argc,argv,params);
 	std::string uav_address = "ipc:///tmp/" + std::string(params.name);
-    while(!std::filesystem::exists(uav_address)) std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::string folder = "/tmp/" + std::string(params.name);
+    std::cout << "Looking for folder: " << folder << std::endl;
+    while(!std::filesystem::exists(folder)) std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::cout << "Comunication folder found!" << std::endl;
 	Controller controller(&ctx,uav_address,params);
 	controller.run();
 }
