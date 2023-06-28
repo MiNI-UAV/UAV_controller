@@ -1,5 +1,8 @@
 #include <iostream>
 #include <cxxopts.hpp>
+#include <thread>
+#include <chrono>
+#include <filesystem>
 #include "zmq.hpp"
 #include "controller.hpp"
 #include "params.hpp"
@@ -36,6 +39,7 @@ int main(int argc, char** argv)
     Params params;
     parseArgs(argc,argv,params);
 	std::string uav_address = "ipc:///tmp/" + std::string(params.name);
+    while(!std::filesystem::exists(uav_address)) std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	Controller controller(&ctx,uav_address,params);
 	controller.run();
 }
