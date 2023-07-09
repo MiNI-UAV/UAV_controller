@@ -3,8 +3,11 @@
 #include <thread>
 #include <Eigen/Dense>
 #include <mutex>
+#include <vector>
+#include <memory>
 #include "sensor.hpp"
 
+class Sensor;
 
 class NS
 {
@@ -13,6 +16,7 @@ class NS
         friend class Sensor;
 
         NS(zmq::context_t* ctx, std::string uav_address);
+        ~NS() {run = false;};
         //In world frame
         Eigen::Vector3d getPosition();
         Eigen::Vector3d getOrientation();
@@ -26,6 +30,7 @@ class NS
 
     protected:
         bool run;
+        std::vector<std::unique_ptr<Sensor>> sensors;
 
         Eigen::Vector3d position;
         Eigen::Vector3d orientation;

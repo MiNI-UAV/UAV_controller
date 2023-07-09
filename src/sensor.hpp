@@ -10,7 +10,7 @@ class NS;
 
 class Sensor
 {
-    protected:
+    public:
         Sensor(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd1, double sd2, std::string name, std::string topic);
         ~Sensor();
 
@@ -38,7 +38,7 @@ class Sensor
         void listenerJob();
 };
 
-class GNSS : protected Sensor
+class GNSS : public Sensor
 {
     public:
         GNSS(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd);
@@ -46,7 +46,7 @@ class GNSS : protected Sensor
         void handleMsg(std::string msg) override;
 };
 
-class Gyroscope : protected Sensor
+class Gyroscope : public Sensor
 {
     public:
         Gyroscope(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd);
@@ -54,7 +54,7 @@ class Gyroscope : protected Sensor
         void handleMsg(std::string msg) override;
 };
 
-class Accelerometer : protected Sensor
+class Accelerometer : public Sensor
 {
     public:
         Accelerometer(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd1, double sd2);
@@ -62,7 +62,7 @@ class Accelerometer : protected Sensor
         void handleMsg(std::string msg) override;
 };
 
-class MagicOrientationSensor : protected Sensor
+class MagicOrientationSensor : public Sensor
 {
     public:
         MagicOrientationSensor(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run);
@@ -70,7 +70,7 @@ class MagicOrientationSensor : protected Sensor
         void handleMsg(std::string msg) override;
 };
 
-class MagicLinearVelocitySensor : protected Sensor
+class MagicLinearVelocitySensor : public Sensor
 {
     public:
         MagicLinearVelocitySensor(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run);

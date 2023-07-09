@@ -3,11 +3,25 @@
 #include <thread>
 #include <Eigen/Dense>
 #include <mutex>
+#include <vector>
+#include <memory>
+#include "sensor.hpp"
 
 Eigen::Vector3d safeGet(Eigen::Vector3d& vec, std::mutex& mtx)
 {
     std::lock_guard<std::mutex> guard(mtx);
     return vec;
+}
+
+NS::NS(zmq::context_t *ctx, std::string uav_address)
+{
+    run = true;
+    uav_address += "/state";
+    sensors.push_back(std::move(std::make_unique<GNSS>(ctx,uav_address,*this,run,0.0)));
+    sensors.push_back(std::move(std::make_unique<Gyroscope>(ctx,uav_address,*this,run,0.0)));
+    sensors.push_back(std::move(std::make_unique<Accelerometer>(ctx,uav_address,*this,run,0.0,0.0)));
+    sensors.push_back(std::move(std::make_unique<MagicLinearVelocitySensor>(ctx,uav_address,*this,run)));
+    sensors.push_back(std::move(std::make_unique<MagicOrientationSensor>(ctx,uav_address,*this,run)));
 }
 
 Eigen::Vector3d NS::getPosition()
