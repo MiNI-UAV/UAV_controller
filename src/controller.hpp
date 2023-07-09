@@ -5,8 +5,7 @@
 #include <functional>
 #include <optional>
 #include "PID.hpp"
-#include "GPS.hpp"
-#include "gyro.hpp"
+#include "NS.hpp"
 #include "mixers.hpp"
 #include "control.hpp"
 #include "PID.hpp"
@@ -31,8 +30,7 @@ class Controller
 
         Status status;
         State state;
-        GPS_AH gps;
-	    Gyro gyro;
+        NS navisys;
 	    Control control;
         Params& params;
         std::optional<TimedLoop> loop;

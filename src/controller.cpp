@@ -1,10 +1,10 @@
 #include "controller.hpp"
 #include <iostream>
+#include "NS.hpp"
 
 Controller::Controller(zmq::context_t *ctx, std::string uav_address, Params& _params):
 state(ctx, uav_address, mode,[this](ControllerMode mode){setMode(mode);},[this](){exitController();}),
-gps(ctx, uav_address),
-gyro(ctx, uav_address),
+navisys(ctx, uav_address),
 control(ctx, uav_address),
 params{_params}
 {
@@ -77,11 +77,11 @@ void Controller::syncWithPhysicEngine(zmq::context_t *ctx,std::string uav_addres
 
 void Controller::setCurrentDemands()
 {
-    auto pos = gps.getGPSPos();
+    auto pos = navisys.getPosition();
     state.demandedX = pos(0);
     state.demandedY = pos(1);
     state.demandedZ = pos(2);
-    auto ori = gps.getAH();
+    auto ori = navisys.getOrientation();
     state.demandedFi = ori(0);
     state.demandedTheta = ori(1);
     state.demandedPsi = ori(2);
@@ -90,7 +90,7 @@ void Controller::setCurrentDemands()
 
 void Controller::acroControllLoop()
 {
-    Eigen::Vector3d angVel = gyro.getAngularVel();
+    Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
     double climb_rate = (state.throttle+1.0)*params.hoverRotorSpeed;
     double roll_rate = params.pids.at("Roll").calc(state.demandedP-angVel(0));
@@ -111,10 +111,10 @@ double circularError(double demanded, double val)
 
 void Controller::angleControllLoop()
 {
-    Eigen::Vector3d pos = gps.getGPSPos();
-    Eigen::Vector3d vel = gps.getGPSVel();
-    Eigen::Vector3d ori = gps.getAH();
-    Eigen::Vector3d angVel = gyro.getAngularVel();
+    Eigen::Vector3d pos = navisys.getPosition();
+    Eigen::Vector3d vel = navisys.getWorldLinearVelocity();
+    Eigen::Vector3d ori = navisys.getOrientation();
+    Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
     std::cout << vel << std::endl  << std::endl;
 
@@ -134,10 +134,10 @@ void Controller::angleControllLoop()
 
 void Controller::positionControllLoop()
 {
-    Eigen::Vector3d pos = gps.getGPSPos();
-    Eigen::Vector3d vel = gps.getGPSVel();
-    Eigen::Vector3d ori = gps.getAH();
-    Eigen::Vector3d angVel = gyro.getAngularVel();
+    Eigen::Vector3d pos = navisys.getPosition();
+    Eigen::Vector3d vel = navisys.getWorldLinearVelocity();
+    Eigen::Vector3d ori = navisys.getOrientation();
+    Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
     double demandedU = params.pids.at("X").calc(state.demandedX - pos(0));
     double demandedV = params.pids.at("Y").calc(state.demandedY - pos(1));
