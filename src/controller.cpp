@@ -10,7 +10,10 @@ params{_params}
 {
     status = Status::running;
     mode = ControllerMode::position;
-    jobs[ControllerMode::none] = [](){};
+    jobs[ControllerMode::none] = [this](){
+        Eigen::VectorXd vec = params.mixer(0.0,0.0,0.0,0.0);
+        control.sendSpeed(vec);
+    };
     jobs[ControllerMode::angle] = [&](){angleControllLoop();};
     jobs[ControllerMode::acro] = [&](){acroControllLoop();};
     jobs[ControllerMode::position] = [&](){positionControllLoop();};

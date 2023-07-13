@@ -15,6 +15,13 @@ Eigen::Vector3d safeGet(Eigen::Vector3d& vec, std::mutex& mtx)
 
 NS::NS(zmq::context_t *ctx, std::string uav_address)
 {
+    position.setZero();
+    orientation.setZero();
+    linearVelocity.setZero();
+    angularVelocity.setZero();
+    linearAcceleration.setZero();
+    angularAcceleration.setZero();
+    
     run = true;
     uav_address += "/state";
     sensors.push_back(std::move(std::make_unique<GNSS>(ctx,uav_address,*this,run,0.0)));
