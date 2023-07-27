@@ -25,7 +25,6 @@ class NS
         Eigen::Vector3d getAngularVelocity();
         Eigen::Vector3d getLinearAcceleration();
         Eigen::Vector3d getAngularAcceleraton();
-
         Eigen::Vector3d getWorldLinearVelocity();
 
     protected:

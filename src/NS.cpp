@@ -6,12 +6,7 @@
 #include <vector>
 #include <memory>
 #include "sensor.hpp"
-
-Eigen::Vector3d safeGet(Eigen::Vector3d& vec, std::mutex& mtx)
-{
-    std::lock_guard<std::mutex> guard(mtx);
-    return vec;
-}
+#include "utils.hpp"
 
 NS::NS(zmq::context_t *ctx, std::string uav_address)
 {
