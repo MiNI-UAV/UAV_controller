@@ -6,6 +6,7 @@
 #include <vector>
 #include <memory>
 #include <atomic>
+#include "logger.hpp"
 
 class Environment
 {
@@ -33,8 +34,7 @@ private:
     Eigen::Vector3d angularVelocity;
     Eigen::Vector3d linearAcceleration;
     Eigen::Vector3d angularAcceleration;
-    
-    
+      
     std::mutex mtxPos;
     std::mutex mtxOri;
     std::mutex mtxLinVel;
@@ -47,6 +47,7 @@ private:
     zmq::socket_t vel_sock;
     zmq::socket_t accel_sock;
 
+    Logger logger;
     std::thread listener;
     void listenerJob();
 };

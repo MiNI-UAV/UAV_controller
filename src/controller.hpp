@@ -13,6 +13,7 @@
 #include "state.hpp"
 #include "controller_mode.hpp"
 #include "params.hpp"
+#include "environment.hpp"
 
 
 class Controller
@@ -31,6 +32,7 @@ class Controller
         Status status;
         State state;
         NS navisys;
+        Environment env;
 	    Control control;
         Params& params;
         std::optional<TimedLoop> loop;

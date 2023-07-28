@@ -6,7 +6,9 @@
 #include <vector>
 #include <memory>
 #include <iostream>
+#include <initializer_list>
 #include "utils.hpp"
+#include "logger.hpp"
 
 void connectConflateSocket(zmq::socket_t& sock, std::string address, std::string topic)
 {
@@ -19,7 +21,8 @@ Environment::Environment(zmq::context_t *ctx, std::string uav_address):
     time_sock(*ctx,zmq::socket_type::sub),
     pos_sock(*ctx,zmq::socket_type::sub),
     vel_sock(*ctx,zmq::socket_type::sub),
-    accel_sock(*ctx,zmq::socket_type::sub)
+    accel_sock(*ctx,zmq::socket_type::sub),
+    logger("env.csv", "time")
 {
     uav_address += "/state";
     connectConflateSocket(time_sock, uav_address, "t:");
@@ -33,6 +36,7 @@ Environment::Environment(zmq::context_t *ctx, std::string uav_address):
 Environment::~Environment()
 {
     run.store(false,std::memory_order_relaxed);
+    listener.join();
 
     time_sock.close();
     pos_sock.close();
@@ -40,7 +44,7 @@ Environment::~Environment()
     accel_sock.close();
 }
 
-void recvVectors(zmq::socket_t& sock, int skip, Eigen::Vector3d vec1, Eigen::Vector3d vec2)
+void recvVectors(zmq::socket_t& sock, int skip, Eigen::Vector3d& vec1, Eigen::Vector3d& vec2)
 {
     zmq::message_t msg;
     if(!sock.recv(msg, zmq::recv_flags::none))
@@ -103,7 +107,9 @@ void Environment::listenerJob()
         safeSet(linearVelocity,msg_linearVelocity,mtxLinVel);
         safeSet(angularVelocity,msg_angularVelocity,mtxAngVel);
         safeSet(linearAcceleration,msg_linearAcceleration,mtxLinAcc);
-        safeSet(angularAcceleration,msg_angularAcceleration,mtxAngAcc);        
+        safeSet(angularAcceleration,msg_angularAcceleration,mtxAngAcc);
+        logger.log(msg_time,{msg_position, msg_orientation, msg_linearVelocity,
+            msg_angularVelocity, msg_linearAcceleration, msg_angularAcceleration});    
     }
 }
 
