@@ -1,4 +1,4 @@
-#include "sensor.hpp"
+#include "oldsensor.hpp"
 #include <zmq.hpp>
 #include <thread>
 #include <Eigen/Dense>
@@ -7,43 +7,43 @@
 #include <iostream>
 #include "NS.hpp"
 
-Sensor::Sensor(zmq::context_t *ctx, std::string uav_address, NS &navisys, bool &run, double sd1, double sd2, std::string name , std::string topic):
+OldSensor::OldSensor(zmq::context_t *ctx, std::string uav_address, NS &navisys, bool &run, double sd1, double sd2, std::string name , std::string topic):
     _ctx{ctx}, _uav_address{uav_address}, _navisys{navisys}, _run{run}, _dist1(0.0,sd1), _dist2(0.0,sd2), _name{name}, _topic{topic}
 {
     listener = std::thread([this] () {listenerJob();});
 }
 
-Sensor::~Sensor() 
+OldSensor::~OldSensor() 
 {
     listener.join();
     std::cout << "Exiting " << _name <<  "!" << std::endl;
 }
 
-double Sensor::error1()
+double OldSensor::error1()
 {
     //TODO: use _dist
     return 0.0;
 }
 
-double Sensor::error2()
+double OldSensor::error2()
 {
     //TODO: use _dist
     return 0.0;
 }
 
-void Sensor::setPosition(Eigen::Vector3d newValue) {_navisys.setPosition(newValue);}
+void OldSensor::setPosition(Eigen::Vector3d newValue) {_navisys.setPosition(newValue);}
 
-void Sensor::setOrientation(Eigen::Vector3d newValue) {_navisys.setOrientation(newValue);}
+void OldSensor::setOrientation(Eigen::Vector3d newValue) {_navisys.setOrientation(newValue);}
 
-void Sensor::setLinearVelocity(Eigen::Vector3d newValue) {_navisys.setLinearVelocity(newValue);}
+void OldSensor::setLinearVelocity(Eigen::Vector3d newValue) {_navisys.setLinearVelocity(newValue);}
 
-void Sensor::setAngularVelocity(Eigen::Vector3d newValue) {_navisys.setAngularVelocity(newValue);}
+void OldSensor::setAngularVelocity(Eigen::Vector3d newValue) {_navisys.setAngularVelocity(newValue);}
 
-void Sensor::setLinearAcceleration(Eigen::Vector3d newValue) {_navisys.setLinearAcceleration(newValue);}
+void OldSensor::setLinearAcceleration(Eigen::Vector3d newValue) {_navisys.setLinearAcceleration(newValue);}
 
-void Sensor::setAngularAcceleraton(Eigen::Vector3d newValue) {_navisys.setAngularAcceleraton(newValue);}
+void OldSensor::setAngularAcceleraton(Eigen::Vector3d newValue) {_navisys.setAngularAcceleraton(newValue);}
 
-void Sensor::listenerJob() 
+void OldSensor::listenerJob() 
 {
     std::cout << "Starting " << _name << " listener: " + _uav_address + "\n";
     zmq::socket_t sock = zmq::socket_t(*_ctx, zmq::socket_type::sub);
@@ -67,12 +67,12 @@ void Sensor::listenerJob()
     std::cout << "Ending " << _name << " listener: " << _uav_address << std::endl;
 }
 
-GNSS::GNSS(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd):
-    Sensor(ctx,uav_address,navisys,run,sd,0.0,"GNSS","pos:")
+OldGNSS::OldGNSS(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd):
+    OldSensor(ctx,uav_address,navisys,run,sd,0.0,"GNSS","pos:")
 {
 }
 
-void GNSS::handleMsg(std::string msg) 
+void OldGNSS::handleMsg(std::string msg) 
 {
     std::istringstream f(msg.substr(4));
     std::string s;
@@ -99,12 +99,12 @@ void GNSS::handleMsg(std::string msg)
     setPosition(pos);
 }
 
-Gyroscope::Gyroscope(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd):
-    Sensor(ctx,uav_address,navisys,run,sd,0.0,"Gyroscope","vb:")
+OldGyroscope::OldGyroscope(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd):
+    OldSensor(ctx,uav_address,navisys,run,sd,0.0,"Gyroscope","vb:")
 {
 }
 
-void Gyroscope::handleMsg(std::string msg)
+void OldGyroscope::handleMsg(std::string msg)
 {
     std::istringstream f(msg.substr(3));
     std::string s;
@@ -132,12 +132,12 @@ void Gyroscope::handleMsg(std::string msg)
 }
 
 
-Accelerometer::Accelerometer(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd1, double sd2):
-    Sensor(ctx,uav_address,navisys,run,sd1,sd2,"Accelerometer","ab:")
+OldAccelerometer::OldAccelerometer(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd1, double sd2):
+    OldSensor(ctx,uav_address,navisys,run,sd1,sd2,"Accelerometer","ab:")
 {
 }
 
-void Accelerometer::handleMsg(std::string msg)
+void OldAccelerometer::handleMsg(std::string msg)
 {
     std::istringstream f(msg.substr(3));
     std::string s;
@@ -170,7 +170,7 @@ void Accelerometer::handleMsg(std::string msg)
 }
 
 MagicOrientationSensor::MagicOrientationSensor(zmq::context_t *ctx, std::string uav_address, NS &navisys, bool &run):
-    Sensor(ctx,uav_address,navisys,run,0.0,0.0,"Magic ori","pos:")
+    OldSensor(ctx,uav_address,navisys,run,0.0,0.0,"Magic ori","pos:")
 {
 }
 
@@ -202,7 +202,7 @@ void MagicOrientationSensor::handleMsg(std::string msg)
 }
 
 MagicLinearVelocitySensor::MagicLinearVelocitySensor(zmq::context_t *ctx, std::string uav_address, NS &navisys, bool &run):
-    Sensor(ctx,uav_address,navisys,run,0.0,0.0,"Magic vel","vb:")
+    OldSensor(ctx,uav_address,navisys,run,0.0,0.0,"Magic vel","vb:")
 {
 }
 

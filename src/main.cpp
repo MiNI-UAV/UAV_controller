@@ -1,3 +1,5 @@
+#define LOGGER_MASK -1
+
 #include <iostream>
 #include <cxxopts.hpp>
 #include <thread>

@@ -22,7 +22,10 @@ Environment::Environment(zmq::context_t *ctx, std::string uav_address):
     pos_sock(*ctx,zmq::socket_type::sub),
     vel_sock(*ctx,zmq::socket_type::sub),
     accel_sock(*ctx,zmq::socket_type::sub),
-    logger("env.csv", "time")
+    logger("logs/env.csv", 
+        "time,PosX,PosY,PosZ,Roll,Pitch,Yaw,"
+        "VelX,VelY,VelZ,OmX,OmY,OmZ,"
+        "AccX,AccY,AccZ,EpsX,EpsY,EpsZ")
 {
     uav_address += "/state";
     connectConflateSocket(time_sock, uav_address, "t:");
@@ -42,6 +45,11 @@ Environment::~Environment()
     pos_sock.close();
     vel_sock.close();
     accel_sock.close();
+}
+
+double Environment::getTime()
+{
+    return time.load();
 }
 
 void recvVectors(zmq::socket_t& sock, int skip, Eigen::Vector3d& vec1, Eigen::Vector3d& vec2)
@@ -104,6 +112,19 @@ void Environment::listenerJob()
         time.store(msg_time,std::memory_order_consume);
         safeSet(position,msg_position,mtxPos);
         safeSet(orientation,msg_orientation,mtxOri);
+
+        double cf = cos(msg_orientation(0));
+        double sf = sin(msg_orientation(0));
+        double ct = cos(msg_orientation(1));
+        double st = sin(msg_orientation(1));
+        double cp = cos(msg_orientation(2));
+        double sp = sin(msg_orientation(2));
+        mtxRnb.lock();
+        R_nb << ct*cp           , ct*sp           , -st,
+                sf*st*cp - cf*sp, sf*st*sp + cf*cp, sf*ct,
+                cf*st*cp + sf*sp, cf*st*sp - sf*cp, cf*ct;
+        mtxRnb.unlock();
+
         safeSet(linearVelocity,msg_linearVelocity,mtxLinVel);
         safeSet(angularVelocity,msg_angularVelocity,mtxAngVel);
         safeSet(linearAcceleration,msg_linearAcceleration,mtxLinAcc);
@@ -141,4 +162,9 @@ Eigen::Vector3d Environment::getLinearAcceleration()
 Eigen::Vector3d Environment::getAngularAcceleraton()
 {
     return safeGet(angularAcceleration,mtxAngAcc);
+}
+
+Eigen::Matrix3d Environment::getRnb()
+{
+    return safeGet(R_nb, mtxRnb);
 }

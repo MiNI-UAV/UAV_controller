@@ -5,7 +5,7 @@
 #include <mutex>
 #include <vector>
 #include <memory>
-#include "sensor.hpp"
+#include "oldsensor.hpp"
 #include "utils.hpp"
 
 NS::NS(zmq::context_t *ctx, std::string uav_address)
@@ -19,9 +19,9 @@ NS::NS(zmq::context_t *ctx, std::string uav_address)
     
     run = true;
     uav_address += "/state";
-    sensors.push_back(std::move(std::make_unique<GNSS>(ctx,uav_address,*this,run,0.0)));
-    sensors.push_back(std::move(std::make_unique<Gyroscope>(ctx,uav_address,*this,run,0.0)));
-    sensors.push_back(std::move(std::make_unique<Accelerometer>(ctx,uav_address,*this,run,0.0,0.0)));
+    sensors.push_back(std::move(std::make_unique<OldGNSS>(ctx,uav_address,*this,run,0.0)));
+    sensors.push_back(std::move(std::make_unique<OldGyroscope>(ctx,uav_address,*this,run,0.0)));
+    sensors.push_back(std::move(std::make_unique<OldAccelerometer>(ctx,uav_address,*this,run,0.0,0.0)));
     sensors.push_back(std::move(std::make_unique<MagicLinearVelocitySensor>(ctx,uav_address,*this,run)));
     sensors.push_back(std::move(std::make_unique<MagicOrientationSensor>(ctx,uav_address,*this,run)));
 }

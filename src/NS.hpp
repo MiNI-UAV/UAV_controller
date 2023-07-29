@@ -5,15 +5,15 @@
 #include <mutex>
 #include <vector>
 #include <memory>
-#include "sensor.hpp"
+#include "oldsensor.hpp"
 
-class Sensor;
+class OldSensor;
 
 class NS
 {
     public:
 
-        friend class Sensor;
+        friend class OldSensor;
 
         NS(zmq::context_t* ctx, std::string uav_address);
         ~NS() {run = false;};
@@ -29,7 +29,7 @@ class NS
 
     protected:
         bool run;
-        std::vector<std::unique_ptr<Sensor>> sensors;
+        std::vector<std::unique_ptr<OldSensor>> sensors;
 
         Eigen::Vector3d position;
         Eigen::Vector3d orientation;

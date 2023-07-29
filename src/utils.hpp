@@ -2,13 +2,15 @@
 #include <Eigen/Dense>
 #include <mutex>
 
-inline void safeSet(Eigen::Vector3d& vec, Eigen::Vector3d& new_val, std::mutex& mtx)
+template <typename T>
+inline void safeSet(T& vec, T& new_val, std::mutex& mtx)
 {
     std::lock_guard<std::mutex> guard(mtx);
     vec = new_val;
 }
 
-inline Eigen::Vector3d safeGet(Eigen::Vector3d& vec, std::mutex& mtx)
+template <typename T>
+inline T safeGet(T& vec, std::mutex& mtx)
 {
     std::lock_guard<std::mutex> guard(mtx);
     return vec;

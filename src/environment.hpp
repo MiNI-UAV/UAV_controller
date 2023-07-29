@@ -14,6 +14,7 @@ public:
     Environment(zmq::context_t* ctx, std::string uav_address);
     ~Environment();
 
+    double getTime();
     //In world frame
     Eigen::Vector3d getPosition();
     Eigen::Vector3d getOrientation();
@@ -22,7 +23,9 @@ public:
     Eigen::Vector3d getAngularVelocity();
     Eigen::Vector3d getLinearAcceleration();
     Eigen::Vector3d getAngularAcceleraton();
-    Eigen::Vector3d getWorldLinearVelocity();
+
+    Eigen::Matrix3d getRnb();
+
 
 private:
     std::atomic_bool run;
@@ -34,6 +37,7 @@ private:
     Eigen::Vector3d angularVelocity;
     Eigen::Vector3d linearAcceleration;
     Eigen::Vector3d angularAcceleration;
+    Eigen::Matrix3d R_nb;
       
     std::mutex mtxPos;
     std::mutex mtxOri;
@@ -41,6 +45,7 @@ private:
     std::mutex mtxAngVel;
     std::mutex mtxLinAcc;
     std::mutex mtxAngAcc;
+    std::mutex mtxRnb;
 
     zmq::socket_t time_sock;
     zmq::socket_t pos_sock;

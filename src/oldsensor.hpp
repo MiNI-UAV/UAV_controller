@@ -8,11 +8,11 @@
 
 class NS;
 
-class Sensor
+class OldSensor
 {
     public:
-        Sensor(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd1, double sd2, std::string name, std::string topic);
-        ~Sensor();
+        OldSensor(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd1, double sd2, std::string name, std::string topic);
+        ~OldSensor();
 
         zmq::context_t* _ctx;
         std::string _uav_address;
@@ -38,31 +38,31 @@ class Sensor
         void listenerJob();
 };
 
-class GNSS : public Sensor
+class OldGNSS : public OldSensor
 {
     public:
-        GNSS(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd);
+        OldGNSS(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd);
     private:
         void handleMsg(std::string msg) override;
 };
 
-class Gyroscope : public Sensor
+class OldGyroscope : public OldSensor
 {
     public:
-        Gyroscope(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd);
+        OldGyroscope(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd);
     private:
         void handleMsg(std::string msg) override;
 };
 
-class Accelerometer : public Sensor
+class OldAccelerometer : public OldSensor
 {
     public:
-        Accelerometer(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd1, double sd2);
+        OldAccelerometer(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run, double sd1, double sd2);
     private:
         void handleMsg(std::string msg) override;
 };
 
-class MagicOrientationSensor : public Sensor
+class MagicOrientationSensor : public OldSensor
 {
     public:
         MagicOrientationSensor(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run);
@@ -70,7 +70,7 @@ class MagicOrientationSensor : public Sensor
         void handleMsg(std::string msg) override;
 };
 
-class MagicLinearVelocitySensor : public Sensor
+class MagicLinearVelocitySensor : public OldSensor
 {
     public:
         MagicLinearVelocitySensor(zmq::context_t* ctx, std::string uav_address, NS& navisys, bool& run);
