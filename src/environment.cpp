@@ -12,6 +12,7 @@
 
 void connectConflateSocket(zmq::socket_t& sock, std::string address, std::string topic)
 {
+    sock.set(zmq::sockopt::rcvtimeo,200);
     sock.set(zmq::sockopt::conflate,1);
     sock.set(zmq::sockopt::subscribe, topic);
     sock.connect(address);
@@ -22,7 +23,7 @@ Environment::Environment(zmq::context_t *ctx, std::string uav_address):
     pos_sock(*ctx,zmq::socket_type::sub),
     vel_sock(*ctx,zmq::socket_type::sub),
     accel_sock(*ctx,zmq::socket_type::sub),
-    logger("logs/env.csv", 
+    logger("env.csv", 
         "time,PosX,PosY,PosZ,Roll,Pitch,Yaw,"
         "VelX,VelY,VelZ,OmX,OmY,OmZ,"
         "AccX,AccY,AccZ,EpsX,EpsY,EpsZ")
@@ -45,6 +46,7 @@ Environment::~Environment()
     pos_sock.close();
     vel_sock.close();
     accel_sock.close();
+    std::cout << "Env exited." << std::endl;
 }
 
 double Environment::getTime()
@@ -52,12 +54,13 @@ double Environment::getTime()
     return time.load();
 }
 
-void recvVectors(zmq::socket_t& sock, int skip, Eigen::Vector3d& vec1, Eigen::Vector3d& vec2)
+bool recvVectors(zmq::socket_t& sock, int skip, Eigen::Vector3d& vec1, Eigen::Vector3d& vec2)
 {
     zmq::message_t msg;
     if(!sock.recv(msg, zmq::recv_flags::none))
     {
-        std::cerr << " listener recv error" << std::endl;
+        if(zmq_errno() != EAGAIN) std::cerr << " listener recv error" << std::endl;
+        return true;
     }
     std::string msg_str =  std::string(static_cast<char*>(msg.data()), msg.size());
     std::istringstream f(msg_str.substr(skip));
@@ -82,8 +85,9 @@ void recvVectors(zmq::socket_t& sock, int skip, Eigen::Vector3d& vec1, Eigen::Ve
     if(i != 6)
     {
         std::cerr << "Invalid msg" << std::endl;
-        return;
+        return true;
     }
+    return false;
 }
 
 void Environment::listenerJob() 
@@ -101,13 +105,14 @@ void Environment::listenerJob()
         zmq::message_t msg;
         if(!time_sock.recv(msg, zmq::recv_flags::none))
         {
-            std::cerr << " listener recv error" << std::endl;
+            if(zmq_errno() != EAGAIN) std::cerr << " listener recv error" << std::endl;
+            continue;
         }
         std::string msg_str =  std::string(static_cast<char*>(msg.data()), msg.size());
         msg_time = std::stod(msg_str.substr(2));
-        recvVectors(pos_sock,4,msg_position,msg_orientation);
-        recvVectors(vel_sock,3,msg_linearVelocity,msg_angularVelocity);
-        recvVectors(accel_sock,3,msg_linearAcceleration,msg_angularAcceleration);
+        if(recvVectors(pos_sock,4,msg_position,msg_orientation)) continue;
+        if(recvVectors(vel_sock,3,msg_linearVelocity,msg_angularVelocity)) continue;
+        if(recvVectors(accel_sock,3,msg_linearAcceleration,msg_angularAcceleration)) continue;
 
         time.store(msg_time,std::memory_order_consume);
         safeSet(position,msg_position,mtxPos);

@@ -4,19 +4,24 @@
 #include <fstream>
 #include <initializer_list>
 
+extern std::string log_path;
+
 bool shouldLog(uint8_t group)
 {
-    return LOGGER_MASK & (1 < group);
+    return (LOGGER_MASK & (1 << group)) != 0;
 }
 
 Logger::Logger(std::string path, std::string fmt, uint8_t group):
-    file(path), group{group}
+    group{group}
 {
+    if(!shouldLog(group)) return;
+    file.open(log_path + path);
     file << fmt << std::endl;
 }
 
 Logger::~Logger() 
 {
+    if(!shouldLog(group)) return;
     file.close();
 }
 

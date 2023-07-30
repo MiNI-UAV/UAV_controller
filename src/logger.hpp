@@ -4,9 +4,7 @@
 #include <fstream>
 #include <initializer_list>
 
-#ifndef LOGGER_MASK
-#define LOGGER_MASK 0
-#endif
+#define LOGGER_MASK 5
 
 class Logger
 {

@@ -6,6 +6,7 @@ Controller::Controller(zmq::context_t *ctx, std::string uav_address, Params& _pa
 state(ctx, uav_address, mode,[this](ControllerMode mode){setMode(mode);},[this](){exitController();}),
 navisys(ctx, uav_address),
 env(ctx, uav_address),
+ahrs(env),
 control(ctx, uav_address),
 params{_params}
 {

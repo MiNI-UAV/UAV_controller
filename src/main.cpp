@@ -1,6 +1,7 @@
-#define LOGGER_MASK -1
+#define LOGGER_MASK 5
 
 #include <iostream>
+#include <fstream>
 #include <cxxopts.hpp>
 #include <thread>
 #include <chrono>
@@ -8,6 +9,8 @@
 #include "zmq.hpp"
 #include "controller.hpp"
 #include "params.hpp"
+
+std::string log_path = "logs/";
 
 Params parseArgs(int argc, char** argv, Params& params)
 {
@@ -35,11 +38,27 @@ Params parseArgs(int argc, char** argv, Params& params)
     return params;
 }
 
+void prepareNewLogFolder()
+{
+    int logNum;
+    std::ifstream last_log_read(log_path + "last_log");
+    last_log_read >> logNum;
+    last_log_read.close();
+    std::fstream last_log_write; 
+    last_log_write.open(log_path + "last_log", std::fstream::out | std::fstream::trunc);
+    last_log_write << logNum+1;
+    last_log_write.close();
+    log_path += std::to_string(logNum);
+    std::filesystem::create_directory(log_path);
+    log_path += "/";
+}
+
 int main(int argc, char** argv)
 {
 	zmq::context_t ctx;
     Params params;
     parseArgs(argc,argv,params);
+    prepareNewLogFolder();
 	std::string uav_address = "ipc:///tmp/" + std::string(params.name);
     std::string folder = "/tmp/" + std::string(params.name);
     std::cout << "Looking for folder: " << folder << std::endl;

@@ -23,7 +23,7 @@ double Sensor::error()
 }
 
 Accelerometer::Accelerometer(Environment &env, double sd):
-    Sensor(env,sd,"logs/accelerometer.csv,", "time,AccX,AccY,AccZ"),
+    Sensor(env,sd,"accelerometer.csv", "Time,AccX,AccY,AccZ"),
     g(0.0,0.0,9.81)
 {}
 
@@ -38,7 +38,7 @@ void Accelerometer::update()
 }
 
 Gyroscope::Gyroscope(Environment &env, double sd):
-    Sensor(env,sd,"logs/gyroscope.csv,", "time,GyrX,GyrY,GyrZ")
+    Sensor(env,sd,"gyroscope.csv", "Time,GyrX,GyrY,GyrZ")
 {}
 
 void Gyroscope::update() 
@@ -49,7 +49,7 @@ void Gyroscope::update()
 }
 
 Magnetometer::Magnetometer(Environment &env, double sd):
-    Sensor(env,sd,"logs/magnetometer.csv,", "time,MagX,MagY,MagZ"),
+    Sensor(env,sd,"magnetometer.csv", "Time,MagX,MagY,MagZ"),
     mag(60.0,0.0,0.0)
 {}
 
