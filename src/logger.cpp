@@ -30,7 +30,7 @@ void Logger::setFmt(std::string fmt)
     file << fmt << std::endl;
 }
 
-void Logger::log(double time, std::initializer_list<Eigen::Vector3d> args)
+void Logger::log(double time, std::initializer_list<Eigen::VectorXd> args)
 {
     static Eigen::IOFormat commaFormat(3, Eigen::DontAlignCols," ",",");
     if(!shouldLog(group)) return;

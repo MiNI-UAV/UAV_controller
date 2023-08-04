@@ -13,7 +13,7 @@ public:
     ~Logger();
 
     void setFmt(std::string fmt);
-    void log(double time, std::initializer_list<Eigen::Vector3d> args);
+    void log(double time, std::initializer_list<Eigen::VectorXd> args);
 
 private:
     std::ofstream file;
