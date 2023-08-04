@@ -14,7 +14,7 @@
 #include "controller_mode.hpp"
 #include "params.hpp"
 #include "environment.hpp"
-#include "AHRS.hpp"
+#include "AHRS_complementary.hpp"
 
 
 class Controller
@@ -34,7 +34,7 @@ class Controller
         State state;
         NS navisys;
         Environment env;
-        AHRS ahrs;
+        AHRS_complementary ahrs;
 	    Control control;
         Params& params;
         std::optional<TimedLoop> loop;

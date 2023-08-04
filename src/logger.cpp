@@ -16,7 +16,7 @@ Logger::Logger(std::string path, std::string fmt, uint8_t group):
 {
     if(!shouldLog(group)) return;
     file.open(log_path + path);
-    file << fmt << std::endl;
+    if(fmt != "") file << fmt << std::endl;
 }
 
 Logger::~Logger() 
@@ -25,7 +25,13 @@ Logger::~Logger()
     file.close();
 }
 
-void Logger::log(double time, std::initializer_list<Eigen::Vector3d> args) {
+void Logger::setFmt(std::string fmt)
+{
+    file << fmt << std::endl;
+}
+
+void Logger::log(double time, std::initializer_list<Eigen::Vector3d> args)
+{
     static Eigen::IOFormat commaFormat(3, Eigen::DontAlignCols," ",",");
     if(!shouldLog(group)) return;
     file << time;

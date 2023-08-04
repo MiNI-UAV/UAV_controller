@@ -12,7 +12,7 @@
 
 void connectConflateSocket(zmq::socket_t& sock, std::string address, std::string topic)
 {
-    sock.set(zmq::sockopt::rcvtimeo,200);
+    sock.set(zmq::sockopt::rcvtimeo,1);
     sock.set(zmq::sockopt::conflate,1);
     sock.set(zmq::sockopt::subscribe, topic);
     sock.connect(address);
