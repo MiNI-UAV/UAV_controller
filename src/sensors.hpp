@@ -1,6 +1,7 @@
 #pragma once
 #include <Eigen/Dense>
 #include <random>
+#include <atomic>
 #include "logger.hpp"
 
 class Environment;
@@ -14,14 +15,19 @@ public:
 
     virtual void update() = 0;
     bool shouldUpdate();
-    inline T getReading() {return value;};
+    inline T getReading() {
+        ready = false;
+        return value;
+        };
     inline double getSd() {return dist.stddev();}
+    inline bool isReady() {return ready.load();}
 
 protected:
     Environment& env;
     T value;
     double refreshTime;
     double lastUpdate;
+    std::atomic_bool ready;
 
     static std::mt19937 gen;
     std::normal_distribution<double> dist;
@@ -61,5 +67,19 @@ class Barometer : public Sensor<double>
 {
 public:
     Barometer(Environment& env, double sd);
+    void update() override;
+};
+
+class GPS : public Sensor<Eigen::Vector3d>
+{
+public:
+    GPS(Environment& env, double sd);
+    void update() override;
+};
+
+class GPSVel : public Sensor<Eigen::Vector3d>
+{
+public:
+    GPSVel(Environment& env, double sd);
     void update() override;
 };

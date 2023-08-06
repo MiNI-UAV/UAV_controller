@@ -32,7 +32,9 @@ Environment::Environment(zmq::context_t *ctx, std::string uav_address):
     acc(*this,0.0),
     gyro(*this,0.0),
     mag(*this, 0.0),
-    baro(*this, 0.0)
+    baro(*this, 0.0),
+    gps(*this,0.0),
+    gpsVel(*this, 0.0)
 {
     uav_address += "/state";
     connectConflateSocket(time_sock, uav_address, "t:");

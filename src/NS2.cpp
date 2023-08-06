@@ -44,5 +44,20 @@ void NS2::job()
 {
     env.updateSensors();
 
+    if(env.acc.isReady() && env.mag.isReady() && env.gyro.isReady())
+    {
+        auto acc = env.acc.getReading();
+        ahrs->update(env.gyro.getReading(), acc, env.mag.getReading());
+        ekf.predict(acc);
+    }
+
+    if(env.baro.isReady())
+        ekf.updateBaro(env.baro.getReading());
+    
+    if(env.gps.isReady())
+        ekf.updateGPS(env.gps.getReading());
+
+    if(env.gpsVel.isReady())
+        ekf.updateGPSVel(env.gpsVel.getReading());
 
 }

@@ -33,6 +33,8 @@ public:
     Gyroscope gyro;
     Magnetometer mag;
     Barometer baro;
+    GPS gps;
+    GPSVel gpsVel;
 
 
 private:
