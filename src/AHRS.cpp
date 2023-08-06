@@ -6,18 +6,15 @@
 #include "logger.hpp"
 #include "status.hpp"
 
-AHRS::AHRS(Environment& env, int updatePeriodInMs):
+AHRS::AHRS(Environment& env):
     env{env},
-    logger("ahrs.csv"),
-    updatePeriodInMs{updatePeriodInMs}
+    logger("ahrs.csv")
 {
     ori_est = Eigen::Vector3d(0.0,0.0,0.0);
-    status = Status::running;
 }
 
 AHRS::~AHRS() 
 {
-    status = Status::exiting;
     std::cout << "AHRS exited." << std::endl;
 }
 
@@ -27,10 +24,7 @@ Eigen::Vector3d AHRS::getOri()
     return ori_est;
 }
 
-void AHRS::run()
+Eigen::Vector3d AHRS::getGyroBias()
 {
-    loop.emplace(updatePeriodInMs,[this](){update();},status);
-    loopThread = std::thread([this]() {
-        loop->go();
-        });
+    return Eigen::Vector3d(0.0,0.0,0.0);
 }

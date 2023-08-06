@@ -9,15 +9,14 @@
 class AHRS_EKF : public AHRS
 {
 public:
-    AHRS_EKF(Environment& env, int updatePeriodInMs);
+    AHRS_EKF(Environment& env);
     ~AHRS_EKF();
 
+    Eigen::Vector3d getGyroBias() override;
     Eigen::Matrix3d rot_bw() override;
-
-protected:
-
     void update() override;
 
+protected:
     // q0, q1, q2, q3, bx, by, bz
     Eigen::Vector<double,7> x;
     Eigen::Matrix<double,7,7> P;

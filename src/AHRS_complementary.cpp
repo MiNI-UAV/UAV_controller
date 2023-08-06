@@ -6,12 +6,11 @@
 #include "sensors.hpp"
 #include "logger.hpp"
 
-AHRS_complementary::AHRS_complementary(Environment& env, int updatePeriodInMs, double alpha):
-    AHRS(env,updatePeriodInMs),
+AHRS_complementary::AHRS_complementary(Environment& env, double alpha):
+    AHRS(env),
     alpha{alpha}
 {
     logger.setFmt("Time, Roll, Pitch, Yaw");
-    run();
 }
 
 AHRS_complementary::~AHRS_complementary() 

@@ -10,12 +10,12 @@
 class AHRS_complementary : public AHRS
 {
 public:
-    AHRS_complementary(Environment& env, int updatePeriodInMs, double alpha);
+    AHRS_complementary(Environment& env, double alpha);
     ~AHRS_complementary();
 
     Eigen::Matrix3d rot_bw() override;
+    void update() override;
 
 protected:
-    void update() override;
     const double alpha;
 };

@@ -6,8 +6,8 @@
 #include "sensors.hpp"
 #include "logger.hpp"
 
-AHRS_EKF::AHRS_EKF(Environment &env, int updatePeriodInMs):
-    AHRS(env,updatePeriodInMs)
+AHRS_EKF::AHRS_EKF(Environment &env):
+    AHRS(env)
 {
     logger.setFmt("Time, Roll, Pitch, Yaw, q1, q2, q3, q4, bx, by, bz");
     x.setZero();
@@ -17,11 +17,15 @@ AHRS_EKF::AHRS_EKF(Environment &env, int updatePeriodInMs):
     R.setIdentity();
     R *= 0.00000001;
     P = Q;
-    run();
 }
 
 AHRS_EKF::~AHRS_EKF()
 {
+}
+
+Eigen::Vector3d AHRS_EKF::getGyroBias()
+{
+    return x.tail<3>();
 }
 
 Eigen::Matrix3d AHRS_EKF::rot_bw()
@@ -69,6 +73,7 @@ Eigen::Matrix<double,6,7> C(Eigen::Vector4d q)
 
 void AHRS_EKF::update() 
 {
+    static double last_update = 0.0;
     double time = env.getTime();
     if(time == 0.0) return;
 
@@ -77,7 +82,7 @@ void AHRS_EKF::update()
     Eigen::Vector<double,6> y;
     y << env.acc.getReading().normalized(), env.mag.getReading().normalized();
 
-    Eigen::Matrix<double,4,3> TS2 = (updatePeriodInMs/2000.0)*S(q());
+    Eigen::Matrix<double,4,3> TS2 = ((time-last_update)/2.0)*S(q());
     Eigen::Matrix<double,7,7> A;
     A.setIdentity();
     A.block<4,3>(0,4) = -TS2;
@@ -103,6 +108,7 @@ void AHRS_EKF::update()
     ori_est = ori;
     mtxOri.unlock();
     logger.log(time,{ori,x});
+    last_update = time;
 }
 
 Eigen::Vector3d AHRS_EKF::quaterionToRPY(Eigen::Vector4d q)
