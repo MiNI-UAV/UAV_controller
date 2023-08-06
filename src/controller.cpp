@@ -1,12 +1,13 @@
 #include "controller.hpp"
 #include <iostream>
 #include "NS.hpp"
+#include "NS2.hpp"
 
 Controller::Controller(zmq::context_t *ctx, std::string uav_address, Params& _params):
 state(ctx, uav_address, mode,[this](ControllerMode mode){setMode(mode);},[this](){exitController();}),
-navisys(ctx, uav_address),
 env(ctx, uav_address),
-ahrs(env),
+navisys(ctx, uav_address),
+navisys2(env),
 control(ctx, uav_address),
 params{_params}
 {

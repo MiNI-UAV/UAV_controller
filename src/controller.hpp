@@ -8,14 +8,12 @@
 #include "NS.hpp"
 #include "mixers.hpp"
 #include "control.hpp"
-#include "PID.hpp"
 #include "timed_loop.hpp"
 #include "state.hpp"
 #include "controller_mode.hpp"
 #include "params.hpp"
 #include "environment.hpp"
-#include "AHRS_complementary.hpp"
-#include "AHRS_EKF.hpp"
+#include "NS2.hpp"
 
 
 class Controller
@@ -33,9 +31,9 @@ class Controller
 
         Status status;
         State state;
-        NS navisys;
         Environment env;
-        AHRS_EKF ahrs;
+        NS navisys;
+        NS2 navisys2;
 	    Control control;
         Params& params;
         std::optional<TimedLoop> loop;
