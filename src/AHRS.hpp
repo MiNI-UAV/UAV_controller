@@ -17,7 +17,7 @@ public:
     virtual Eigen::Vector3d getGyroBias();
     virtual Eigen::Matrix3d rot_bw() = 0;
 
-    virtual void update() = 0;
+    virtual void update(Eigen::Vector3d gyro, Eigen::Vector3d acc, Eigen::Vector3d mag) = 0;
 
 protected:
     Eigen::Vector3d ori_est;

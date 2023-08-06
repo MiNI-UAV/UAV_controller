@@ -79,27 +79,23 @@ void clampOrientation(Eigen::Vector3d& vec)
     }
 }
 
-void AHRS_complementary::update()
+void AHRS_complementary::update(Eigen::Vector3d gyro, Eigen::Vector3d acc, Eigen::Vector3d mag)
 {
     static double last_time = 0.0;
     static Eigen::Vector3d ori_gyro = Eigen::Vector3d(0.0,0.0,0.0);
     double time = env.getTime();
     if(time == 0.0) return;
 
-    Eigen::Vector3d m_acc = env.acc.getReading();
-    Eigen::Vector3d m_gyro = env.gyro.getReading();
-    Eigen::Vector3d m_mag = env.mag.getReading();
-
-    ori_gyro += (time-last_time)*(calcTom(ori_gyro)*m_gyro);
+    ori_gyro += (time-last_time)*(calcTom(ori_gyro)*gyro);
     last_time = time;
     clampOrientation(ori_gyro);
     Eigen::Vector3d ori_acc = Eigen::Vector3d(
-        atan2(m_acc.y(), m_acc.z()),
-        atan2(-m_acc.x(), m_acc.y()*sin(ori_gyro.x()) + m_acc.z()*cos(ori_gyro.x())),
-        atan2(m_mag.z()*sin(ori_gyro.x()) - m_mag.y()*cos(ori_gyro.x()),
-        m_mag.x()*cos(ori_gyro.y()) 
-        + m_mag.y()*sin(ori_gyro.y())*sin(ori_gyro.x())
-        + m_mag.z()*sin(ori_gyro.y())*cos(ori_gyro.x())
+        atan2(acc.y(), acc.z()),
+        atan2(-acc.x(), acc.y()*sin(ori_gyro.x()) + acc.z()*cos(ori_gyro.x())),
+        atan2(mag.z()*sin(ori_gyro.x()) - mag.y()*cos(ori_gyro.x()),
+        mag.x()*cos(ori_gyro.y()) 
+        + mag.y()*sin(ori_gyro.y())*sin(ori_gyro.x())
+        + mag.z()*sin(ori_gyro.y())*cos(ori_gyro.x())
         )
     );
     Eigen::Vector3d new_ori = ori_acc;

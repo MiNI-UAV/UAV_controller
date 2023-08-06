@@ -71,16 +71,15 @@ Eigen::Matrix<double,6,7> C(Eigen::Vector4d q)
 
 
 
-void AHRS_EKF::update() 
+void AHRS_EKF::update(Eigen::Vector3d gyro, Eigen::Vector3d acc, Eigen::Vector3d mag) 
 {
     static double last_update = 0.0;
     double time = env.getTime();
     if(time == 0.0) return;
 
 
-    Eigen::Vector3d m_gyro = env.gyro.getReading();
     Eigen::Vector<double,6> y;
-    y << env.acc.getReading().normalized(), env.mag.getReading().normalized();
+    y << acc.normalized(), mag.normalized();
 
     Eigen::Matrix<double,4,3> TS2 = ((time-last_update)/2.0)*S(q());
     Eigen::Matrix<double,7,7> A;
@@ -91,7 +90,7 @@ void AHRS_EKF::update()
     B.block<4,3>(0,0) = TS2;
     
     //Predict
-    Eigen::Vector<double,7> xDash = A*x + B*m_gyro;
+    Eigen::Vector<double,7> xDash = A*x + B*gyro;
     Eigen::Matrix<double,7,7> PDash = A*P*A.transpose() + Q;
 
     //Update

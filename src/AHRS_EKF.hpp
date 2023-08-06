@@ -14,7 +14,7 @@ public:
 
     Eigen::Vector3d getGyroBias() override;
     Eigen::Matrix3d rot_bw() override;
-    void update() override;
+    void update(Eigen::Vector3d gyro, Eigen::Vector3d acc, Eigen::Vector3d mag) override;
 
 protected:
     // q0, q1, q2, q3, bx, by, bz

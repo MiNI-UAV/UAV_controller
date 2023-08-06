@@ -14,7 +14,7 @@ public:
     ~AHRS_complementary();
 
     Eigen::Matrix3d rot_bw() override;
-    void update() override;
+    void update(Eigen::Vector3d gyro, Eigen::Vector3d acc, Eigen::Vector3d mag) override;
 
 protected:
     const double alpha;
