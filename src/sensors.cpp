@@ -3,27 +3,25 @@
 #include <random>
 #include "environment.hpp"
 
-std::mt19937 Sensor::gen = std::mt19937(std::random_device()());
+template <class T>
+std::mt19937 Sensor<T>::gen = std::mt19937(std::random_device()());
 
-Sensor::Sensor(Environment &env, double sd,
+template <class T>
+Sensor<T>::Sensor(Environment &env, double sd,
     std::string path, std::string fmt):
     env{env}, dist(0.0,sd), logger(path,fmt,1)
 {
-    value = Eigen::Vector3d(0.0,0.0,0.0);
+    value = T();
 }
 
-Eigen::Vector3d Sensor::getReading()
-{
-    return value;
-}
-
-double Sensor::error()
+template <class T>
+double Sensor<T>::error()
 {
     return dist(gen);
 }
 
 Accelerometer::Accelerometer(Environment &env, double sd):
-    Sensor(env,sd,"accelerometer.csv", "Time,AccX,AccY,AccZ"),
+    Sensor<Eigen::Vector3d>(env,sd,"accelerometer.csv", "Time,AccX,AccY,AccZ"),
     g(0.0,0.0,9.81)
 {}
 
@@ -38,7 +36,7 @@ void Accelerometer::update()
 }
 
 Gyroscope::Gyroscope(Environment &env, double sd):
-    Sensor(env,sd,"gyroscope.csv", "Time,GyrX,GyrY,GyrZ")
+    Sensor<Eigen::Vector3d>(env,sd,"gyroscope.csv", "Time,GyrX,GyrY,GyrZ")
 {}
 
 void Gyroscope::update() 
@@ -49,7 +47,7 @@ void Gyroscope::update()
 }
 
 Magnetometer::Magnetometer(Environment &env, double sd):
-    Sensor(env,sd,"magnetometer.csv", "Time,MagX,MagY,MagZ"),
+    Sensor<Eigen::Vector3d>(env,sd,"magnetometer.csv", "Time,MagX,MagY,MagZ"),
     mag(60.0,0.0,0.0)
 {}
 
