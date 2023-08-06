@@ -13,8 +13,9 @@ public:
     AHRS(Environment& env, int updatePeriodInMs);
     ~AHRS();
 
-    virtual void update() = 0;
-    void run();
+    Eigen::Vector3d getOri();
+    virtual Eigen::Matrix3d rot_bw() = 0;
+
 
 protected:
     Eigen::Vector3d ori_est;
@@ -31,4 +32,7 @@ protected:
     const int updatePeriodInMs;
     std::optional<TimedLoop> loop;
     std::thread loopThread;
+
+    virtual void update() = 0;
+    void run();
 };

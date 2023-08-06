@@ -13,8 +13,9 @@ public:
     AHRS_complementary(Environment& env, int updatePeriodInMs, double alpha);
     ~AHRS_complementary();
 
-    void update() override;
+    Eigen::Matrix3d rot_bw() override;
 
-private:
+protected:
+    void update() override;
     const double alpha;
 };

@@ -12,9 +12,12 @@ public:
     AHRS_EKF(Environment& env, int updatePeriodInMs);
     ~AHRS_EKF();
 
+    Eigen::Matrix3d rot_bw() override;
+
+protected:
+
     void update() override;
 
-private:
     // q0, q1, q2, q3, bx, by, bz
     Eigen::Vector<double,7> x;
     Eigen::Matrix<double,7,7> P;

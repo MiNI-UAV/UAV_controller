@@ -24,6 +24,18 @@ AHRS_EKF::~AHRS_EKF()
 {
 }
 
+Eigen::Matrix3d AHRS_EKF::rot_bw()
+{
+    mtxOri.lock();
+    Eigen::Vector4d quat = q();
+    mtxOri.unlock();
+    Eigen::Matrix3d Rbw;
+    Rbw << quat(0)*quat(0) + quat(1)*quat(1) - quat(2)*quat(2) - quat(3)*quat(3), 2*(quat(1)*quat(2) - quat(0)*quat(3))                     , 2*(quat(1)*quat(3) + quat(0)*quat(2)),
+           2*(quat(1)*quat(2) + quat(0)*quat(3))                    , quat(0)*quat(0) - quat(1)*quat(1) + quat(2)*quat(2) - quat(3)*quat(3) , 2*(quat(2)*quat(3) - quat(0)*quat(1)),
+           2*(quat(1)*quat(3) - quat(0)*quat(2))                    , 2*(quat(2)*quat(3) + quat(0)*quat(1))                     , quat(0)*quat(0) - quat(1)*quat(1) - quat(2)*quat(2) + quat(3)*quat(3);
+    return Rbw;
+}
+
 Eigen::Vector4d AHRS_EKF::q()
 {
     return x.head<4>();

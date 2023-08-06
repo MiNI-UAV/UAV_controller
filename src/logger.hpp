@@ -14,6 +14,7 @@ public:
 
     void setFmt(std::string fmt);
     void log(double time, std::initializer_list<Eigen::VectorXd> args);
+    void log(double time, std::initializer_list<double> args);
 
 private:
     std::ofstream file;

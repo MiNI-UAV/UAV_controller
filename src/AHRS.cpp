@@ -24,6 +24,12 @@ AHRS::~AHRS()
     std::cout << "AHRS exited." << std::endl;
 }
 
+Eigen::Vector3d AHRS::getOri()
+{
+    std::scoped_lock lck(mtxOri);
+    return ori_est;
+}
+
 void AHRS::run()
 {
     loop.emplace(updatePeriodInMs,[this](){update();},status);

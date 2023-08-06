@@ -58,3 +58,15 @@ void Magnetometer::update()
     value = rnb*mag + Eigen::Vector3d(error(),error(),error()) + bias;
     logger.log(time,{value});
 }
+
+Barometer::Barometer(Environment &env, double sd):
+    Sensor<double>(env, sd, 0.0, "barometer.csv", "Time,Height")
+{}
+
+void Barometer::update()
+{
+    double time = env.getTime();
+    auto pos = env.getPosition();
+    value = pos(2);
+    logger.log(time,{value});
+}

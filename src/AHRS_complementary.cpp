@@ -18,6 +18,8 @@ AHRS_complementary::~AHRS_complementary()
 {
 }
 
+
+
 Eigen::Matrix3d calcRnb(Eigen::Vector3d ori)
 {
     double cf = cos(ori(0));
@@ -46,6 +48,12 @@ Eigen::Matrix3d calcRbn(Eigen::Vector3d ori)
             ct*sp, sf*st*sp + cf*cp, cf*st*sp - sf*cp,
             -st  , sf*ct           , cf*ct;
     return R_bn;
+}
+
+Eigen::Matrix3d AHRS_complementary::rot_bw()
+{
+    std::scoped_lock lck(mtxOri);
+    return calcRbn(ori_est);
 }
 
 Eigen::Matrix3d calcTom(Eigen::Vector3d ori)

@@ -41,3 +41,14 @@ void Logger::log(double time, std::initializer_list<Eigen::VectorXd> args)
     }
     file << std::endl;
 }
+
+void Logger::log(double time, std::initializer_list<double> args)
+{
+    if(!shouldLog(group)) return;
+    file << time;
+    for(auto v: args)
+    {
+        file << ',' << v;
+    }
+    file << std::endl;
+}

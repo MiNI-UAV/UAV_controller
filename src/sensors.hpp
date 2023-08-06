@@ -51,3 +51,10 @@ public:
 private:
     const Eigen::Vector3d mag;
 };
+
+class Barometer : public Sensor<double>
+{
+public:
+    Barometer(Environment& env, double sd);
+    void update() override;
+};
