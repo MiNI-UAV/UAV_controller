@@ -9,9 +9,6 @@
 AHRS::AHRS(Environment& env, int updatePeriodInMs):
     env{env},
     logger("ahrs.csv"),
-    acc(env,0.0),
-    gyro(env,0.0),
-    mag(env, 0.0),
     updatePeriodInMs{updatePeriodInMs}
 {
     ori_est = Eigen::Vector3d(0.0,0.0,0.0);

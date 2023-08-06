@@ -72,13 +72,10 @@ void AHRS_EKF::update()
     double time = env.getTime();
     if(time == 0.0) return;
 
-    acc.update();
-    gyro.update();
-    mag.update();
 
-    Eigen::Vector3d m_gyro = gyro.getReading();
+    Eigen::Vector3d m_gyro = env.gyro.getReading();
     Eigen::Vector<double,6> y;
-    y << acc.getReading().normalized(), mag.getReading().normalized();
+    y << env.acc.getReading().normalized(), env.mag.getReading().normalized();
 
     Eigen::Matrix<double,4,3> TS2 = (updatePeriodInMs/2000.0)*S(q());
     Eigen::Matrix<double,7,7> A;

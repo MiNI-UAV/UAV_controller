@@ -1,22 +1,27 @@
 #pragma once
 #include <Eigen/Dense>
 #include <random>
-#include "environment.hpp"
+#include "logger.hpp"
+
+class Environment;
 
 template <class T>
 class Sensor
 {
 public:
     Sensor(Environment& env, double sd, T bias,
-        std::string path, std::string fmt);
+        std::string path, std::string fmt, double refreshTime);
 
     virtual void update() = 0;
+    bool shouldUpdate();
     inline T getReading() {return value;};
     inline double getSd() {return dist.stddev();}
 
 protected:
     Environment& env;
     T value;
+    double refreshTime;
+    double lastUpdate;
 
     static std::mt19937 gen;
     std::normal_distribution<double> dist;

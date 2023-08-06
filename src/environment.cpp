@@ -9,6 +9,7 @@
 #include <initializer_list>
 #include "utils.hpp"
 #include "logger.hpp"
+#include "sensors.hpp"
 
 void connectConflateSocket(zmq::socket_t& sock, std::string address, std::string topic)
 {
@@ -24,9 +25,14 @@ Environment::Environment(zmq::context_t *ctx, std::string uav_address):
     vel_sock(*ctx,zmq::socket_type::sub),
     accel_sock(*ctx,zmq::socket_type::sub),
     logger("env.csv", 
-        "time,PosX,PosY,PosZ,Roll,Pitch,Yaw,"
-        "VelX,VelY,VelZ,OmX,OmY,OmZ,"
-        "AccX,AccY,AccZ,EpsX,EpsY,EpsZ")
+    "time,PosX,PosY,PosZ,Roll,Pitch,Yaw,"
+    "VelX,VelY,VelZ,OmX,OmY,OmZ,"
+    "AccX,AccY,AccZ,EpsX,EpsY,EpsZ"),
+
+    acc(*this,0.0),
+    gyro(*this,0.0),
+    mag(*this, 0.0),
+    baro(*this, 0.0)
 {
     uav_address += "/state";
     connectConflateSocket(time_sock, uav_address, "t:");
@@ -172,4 +178,12 @@ Eigen::Vector3d Environment::getAngularAcceleraton()
 Eigen::Matrix3d Environment::getRnb()
 {
     return safeGet(R_nb, mtxRnb);
+}
+
+void Environment::updateSensors() 
+{
+    acc.update();
+    gyro.update();
+    mag.update();
+    baro.update();
 }

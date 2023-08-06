@@ -7,6 +7,7 @@
 #include <memory>
 #include <atomic>
 #include "logger.hpp"
+#include "sensors.hpp"
 
 class Environment
 {
@@ -25,6 +26,13 @@ public:
     Eigen::Vector3d getAngularAcceleraton();
 
     Eigen::Matrix3d getRnb();
+
+    //Sensors
+    void updateSensors();
+    Accelerometer acc;
+    Gyroscope gyro;
+    Magnetometer mag;
+    Barometer baro;
 
 
 private:

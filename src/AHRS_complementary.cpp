@@ -87,13 +87,9 @@ void AHRS_complementary::update()
     double time = env.getTime();
     if(time == 0.0) return;
 
-    acc.update();
-    gyro.update();
-    mag.update();
-
-    Eigen::Vector3d m_acc = acc.getReading();
-    Eigen::Vector3d m_gyro = gyro.getReading();
-    Eigen::Vector3d m_mag = mag.getReading();
+    Eigen::Vector3d m_acc = env.acc.getReading();
+    Eigen::Vector3d m_gyro = env.gyro.getReading();
+    Eigen::Vector3d m_mag = env.mag.getReading();
 
     ori_gyro += (time-last_time)*(calcTom(ori_gyro)*m_gyro);
     last_time = time;

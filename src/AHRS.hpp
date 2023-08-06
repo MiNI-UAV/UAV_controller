@@ -24,10 +24,6 @@ protected:
     Environment& env;
     Logger logger;
 
-    Accelerometer acc;
-    Gyroscope gyro;
-    Magnetometer mag;
-
     Status status;
     const int updatePeriodInMs;
     std::optional<TimedLoop> loop;
