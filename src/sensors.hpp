@@ -7,9 +7,9 @@ template <class T>
 class Sensor
 {
 public:
-    Sensor(Environment& env, double sd,
+    Sensor(Environment& env, double sd, T bias,
         std::string path, std::string fmt);
-        
+
     virtual void update() = 0;
     inline T getReading() {return value;};
     inline double getSd() {return dist.stddev();}
@@ -20,6 +20,7 @@ protected:
 
     static std::mt19937 gen;
     std::normal_distribution<double> dist;
+    T bias;
     
     double error();
 
