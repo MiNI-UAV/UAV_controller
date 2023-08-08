@@ -54,7 +54,7 @@ void Accelerometer::update()
 }
 
 Gyroscope::Gyroscope(Environment &env, double sd):
-    Sensor<Eigen::Vector3d>(env, sd, Eigen::Vector3d(0.01,-0.02,0.03), "gyroscope.csv", "Time,GyrX,GyrY,GyrZ",0.0025)
+    Sensor<Eigen::Vector3d>(env, sd, Eigen::Vector3d(0.00,0.00,0.00), "gyroscope.csv", "Time,GyrX,GyrY,GyrZ",0.0025)
 {}
 
 void Gyroscope::update() 
@@ -82,7 +82,7 @@ void Magnetometer::update()
 }
 
 Barometer::Barometer(Environment &env, double sd):
-    Sensor<double>(env, sd, 0.0, "barometer.csv", "Time,Height",0.0025)
+    Sensor<double>(env, sd, 0.0, "barometer.csv", "Time,Height",0.01)
 {}
 
 void Barometer::update()
@@ -96,7 +96,7 @@ void Barometer::update()
 }
 
 GPS::GPS(Environment &env, double sd):
-    Sensor<Eigen::Vector3d>(env, sd, Eigen::Vector3d(0.0,0.0,0.0), "GPS.csv", "Time,PosX,PosY,PosZ",0.5)
+    Sensor<Eigen::Vector3d>(env, sd, Eigen::Vector3d(0.0,0.0,0.0), "GPS.csv", "Time,PosX,PosY,PosZ",0.3)
 {}
 
 void GPS::update() 
@@ -110,14 +110,14 @@ void GPS::update()
 }
 
 GPSVel::GPSVel(Environment &env, double sd):
-    Sensor<Eigen::Vector3d>(env, sd, Eigen::Vector3d(0.0,0.0,0.0), "GPSVel.csv", "Time,VelX,VelY,VelZ",0.5)
+    Sensor<Eigen::Vector3d>(env, sd, Eigen::Vector3d(0.0,0.0,0.0), "GPSVel.csv", "Time,VelX,VelY,VelZ",0.3)
 {}
 
 void GPSVel::update()
 {
     if(!shouldUpdate()) return;
     double time = env.getTime();
-    auto vel = env.getLinearVelocity();
+    auto vel = env.getWorldLinearVelocity();
     value = vel + Eigen::Vector3d(error(),error(),error()) + bias;;
     logger.log(time,{value});
     ready = true;

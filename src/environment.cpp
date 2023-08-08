@@ -19,27 +19,30 @@ void connectConflateSocket(zmq::socket_t& sock, std::string address, std::string
     sock.connect(address);
 }
 
-Environment::Environment(zmq::context_t *ctx, std::string uav_address):
-    time_sock(*ctx,zmq::socket_type::sub),
-    pos_sock(*ctx,zmq::socket_type::sub),
-    vel_sock(*ctx,zmq::socket_type::sub),
-    accel_sock(*ctx,zmq::socket_type::sub),
-    logger("env.csv", 
-    "time,PosX,PosY,PosZ,Roll,Pitch,Yaw,"
-    "VelX,VelY,VelZ,OmX,OmY,OmZ,"
-    "AccX,AccY,AccZ,EpsX,EpsY,EpsZ"),
-
+Environment::Environment(zmq::context_t *ctx, std::string uav_address): 
     acc(*this,0.0),
     gyro(*this,0.0),
     mag(*this, 0.0),
     baro(*this, 0.0),
     gps(*this,0.0),
-    gpsVel(*this, 0.0)
+    gpsVel(*this, 0.0),
+
+    time_sock(*ctx,zmq::socket_type::sub),
+    pos_sock(*ctx,zmq::socket_type::sub),
+    vel_sock(*ctx,zmq::socket_type::sub),
+    vel_world_sock(*ctx,zmq::socket_type::sub),
+    accel_sock(*ctx,zmq::socket_type::sub),
+    logger("env.csv", 
+    "time,PosX,PosY,PosZ,Roll,Pitch,Yaw,"
+    "VelX,VelY,VelZ,OmX,OmY,OmZ,"
+    "VelBX,VelBY,VelBZ,OmBX,OmBY,OmBZ,"
+    "AccX,AccY,AccZ,EpsX,EpsY,EpsZ")
 {
     uav_address += "/state";
     connectConflateSocket(time_sock, uav_address, "t:");
     connectConflateSocket(pos_sock, uav_address, "pos:");
     connectConflateSocket(vel_sock, uav_address, "vb:");
+    connectConflateSocket(vel_world_sock, uav_address, "vn:");
     connectConflateSocket(accel_sock, uav_address, "ab:");
     run.store(true,std::memory_order_relaxed);
     listener = std::thread(&Environment::listenerJob, this);
@@ -53,6 +56,7 @@ Environment::~Environment()
     time_sock.close();
     pos_sock.close();
     vel_sock.close();
+    vel_world_sock.close();
     accel_sock.close();
     std::cout << "Env exited." << std::endl;
 }
@@ -103,6 +107,8 @@ void Environment::listenerJob()
     double msg_time;
     Eigen::Vector3d msg_position;
     Eigen::Vector3d msg_orientation;
+    Eigen::Vector3d msg_worldLinearVelocity;
+    Eigen::Vector3d msg_worldAngularVelocity;
     Eigen::Vector3d msg_linearVelocity;
     Eigen::Vector3d msg_angularVelocity;
     Eigen::Vector3d msg_linearAcceleration;
@@ -120,6 +126,7 @@ void Environment::listenerJob()
         msg_time = std::stod(msg_str.substr(2));
         if(recvVectors(pos_sock,4,msg_position,msg_orientation)) continue;
         if(recvVectors(vel_sock,3,msg_linearVelocity,msg_angularVelocity)) continue;
+        if(recvVectors(vel_world_sock,3,msg_worldLinearVelocity,msg_worldAngularVelocity)) continue;
         if(recvVectors(accel_sock,3,msg_linearAcceleration,msg_angularAcceleration)) continue;
 
         time.store(msg_time,std::memory_order_consume);
@@ -138,12 +145,16 @@ void Environment::listenerJob()
                 cf*st*cp + sf*sp, cf*st*sp - sf*cp, cf*ct;
         mtxRnb.unlock();
 
+        safeSet(worldLinearVelocity,msg_worldLinearVelocity,mtxWorldLinVel);
+        safeSet(worldAngularVelocity,msg_worldAngularVelocity,mtxWorldAngVel);
         safeSet(linearVelocity,msg_linearVelocity,mtxLinVel);
         safeSet(angularVelocity,msg_angularVelocity,mtxAngVel);
         safeSet(linearAcceleration,msg_linearAcceleration,mtxLinAcc);
         safeSet(angularAcceleration,msg_angularAcceleration,mtxAngAcc);
-        logger.log(msg_time,{msg_position, msg_orientation, msg_linearVelocity,
-            msg_angularVelocity, msg_linearAcceleration, msg_angularAcceleration});    
+        logger.log(msg_time,{msg_position, msg_orientation,
+                   msg_worldLinearVelocity, msg_worldAngularVelocity,
+                   msg_linearVelocity, msg_angularVelocity,
+                   msg_linearAcceleration, msg_angularAcceleration});    
     }
 }
 
@@ -155,6 +166,16 @@ Eigen::Vector3d Environment::getPosition()
 Eigen::Vector3d Environment::getOrientation()
 {
     return safeGet(orientation,mtxOri);
+}
+
+Eigen::Vector3d Environment::getWorldLinearVelocity() 
+{
+  return safeGet(worldLinearVelocity,mtxWorldLinVel);
+}
+
+Eigen::Vector3d Environment::getWorldAngularVelocity()
+{
+  return safeGet(worldAngularVelocity,mtxWorldAngVel);
 }
 
 Eigen::Vector3d Environment::getLinearVelocity()
@@ -188,4 +209,6 @@ void Environment::updateSensors()
     gyro.update();
     mag.update();
     baro.update();
+    gps.update();
+    gpsVel.update();
 }

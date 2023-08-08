@@ -19,6 +19,8 @@ public:
     //In world frame
     Eigen::Vector3d getPosition();
     Eigen::Vector3d getOrientation();
+    Eigen::Vector3d getWorldLinearVelocity();
+    Eigen::Vector3d getWorldAngularVelocity();
     //In body frame
     Eigen::Vector3d getLinearVelocity();
     Eigen::Vector3d getAngularVelocity();
@@ -43,6 +45,8 @@ private:
     std::atomic<double> time;
     Eigen::Vector3d position;
     Eigen::Vector3d orientation;
+    Eigen::Vector3d worldLinearVelocity;
+    Eigen::Vector3d worldAngularVelocity;
     Eigen::Vector3d linearVelocity;
     Eigen::Vector3d angularVelocity;
     Eigen::Vector3d linearAcceleration;
@@ -51,6 +55,8 @@ private:
       
     std::mutex mtxPos;
     std::mutex mtxOri;
+    std::mutex mtxWorldLinVel;
+    std::mutex mtxWorldAngVel;
     std::mutex mtxLinVel;
     std::mutex mtxAngVel;
     std::mutex mtxLinAcc;
@@ -60,6 +66,7 @@ private:
     zmq::socket_t time_sock;
     zmq::socket_t pos_sock;
     zmq::socket_t vel_sock;
+    zmq::socket_t vel_world_sock;
     zmq::socket_t accel_sock;
 
     Logger logger;

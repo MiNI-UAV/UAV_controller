@@ -43,7 +43,6 @@ class Accelerometer : public Sensor<Eigen::Vector3d>
 public:
     Accelerometer(Environment& env, double sd);
     void update() override;
-private:
     const Eigen::Vector3d g;
 };
 

@@ -1,16 +1,20 @@
 #include "NS2.hpp"
 #include <Eigen/Dense>
+#include <iostream>
+#include "status.hpp"
 #include "environment.hpp"
 #include "sensors.hpp"
 #include "timed_loop.hpp"
 #include "AHRS.hpp"
 #include "AHRS_EKF.hpp"
+#include "AHRS_complementary.hpp"
 
 NS2::NS2(Environment &env):
     env{env},
     loop(3,[this](){job();},status)
 {
-    ahrs = std::make_unique<AHRS_EKF>(env);
+    status = Status::running;
+    ahrs = std::make_unique<AHRS_complementary>(env,0.98);
     loop_thread = std::thread([this]() {loop.go();});
 }
 
@@ -43,21 +47,23 @@ Eigen::Vector3d NS2::getAngularVelocity()
 void NS2::job() 
 {
     env.updateSensors();
+    double time = env.getTime();
 
     if(env.acc.isReady() && env.mag.isReady() && env.gyro.isReady())
     {
         auto acc = env.acc.getReading();
         ahrs->update(env.gyro.getReading(), acc, env.mag.getReading());
-        ekf.predict(acc);
+        ekf.predict(time, ahrs->rot_bw()*acc - env.acc.g);
     }
 
-    if(env.baro.isReady())
-        ekf.updateBaro(env.baro.getReading());
+    // if(env.baro.isReady())
+    //     ekf.updateBaro(time, env.baro.getReading());
     
     if(env.gps.isReady())
-        ekf.updateGPS(env.gps.getReading());
+        ekf.updateGPS(time, env.gps.getReading());
 
     if(env.gpsVel.isReady())
-        ekf.updateGPSVel(env.gpsVel.getReading());
+        ekf.updateGPSVel(time, env.gpsVel.getReading());
 
+    ekf.log(time);
 }
