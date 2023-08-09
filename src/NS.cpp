@@ -1,112 +1,100 @@
 #include "NS.hpp"
-#include <zmq.hpp>
-#include <thread>
 #include <Eigen/Dense>
-#include <mutex>
-#include <vector>
-#include <memory>
-#include "oldsensor.hpp"
-#include "utils.hpp"
+#include <iostream>
+#include "status.hpp"
+#include "environment.hpp"
+#include "sensors.hpp"
+#include "timed_loop.hpp"
+#include "AHRS.hpp"
+#include "AHRS_EKF.hpp"
+#include "AHRS_complementary.hpp"
 
-NS::NS(zmq::context_t *ctx, std::string uav_address)
+
+NS::NS(Environment &env):
+    env{env},
+    loop(BASE_TIME_MS,[this](){job();},status)
 {
-    position.setZero();
-    orientation.setZero();
-    linearVelocity.setZero();
-    angularVelocity.setZero();
-    linearAcceleration.setZero();
-    angularAcceleration.setZero();
-    
-    run = true;
-    uav_address += "/state";
-    sensors.push_back(std::move(std::make_unique<OldGNSS>(ctx,uav_address,*this,run,0.0)));
-    sensors.push_back(std::move(std::make_unique<OldGyroscope>(ctx,uav_address,*this,run,0.0)));
-    sensors.push_back(std::move(std::make_unique<OldAccelerometer>(ctx,uav_address,*this,run,0.0,0.0)));
-    sensors.push_back(std::move(std::make_unique<MagicLinearVelocitySensor>(ctx,uav_address,*this,run)));
-    sensors.push_back(std::move(std::make_unique<MagicOrientationSensor>(ctx,uav_address,*this,run)));
+    status = Status::running;
+    ahrs = std::make_unique<AHRS_complementary>(env,0.98);
+    ekf = std::make_unique<EKF>(calcParams());
+    loop_thread = std::thread([this]() {loop.go();});
+    std::cout << "NS initialized" << std::endl;
+}
+
+NS::~NS()
+{
+    status = Status::exiting;
+    loop_thread.join();
 }
 
 Eigen::Vector3d NS::getPosition()
 {
-    return safeGet(position,mtxPos);
-}
-
-Eigen::Vector3d NS::getOrientation()
-{
-    return safeGet(orientation,mtxOri);
+    return ekf->getPos();
 }
 
 Eigen::Vector3d NS::getLinearVelocity()
 {
-    return safeGet(linearVelocity,mtxLinVel);
+    return ekf->getVel();
+}
+
+Eigen::Vector3d NS::getOrientation()
+{
+    return ahrs->getOri();
 }
 
 Eigen::Vector3d NS::getAngularVelocity()
 {
-    return safeGet(angularVelocity,mtxAngVel);
+    return env.gyro.getReading() - ahrs->getGyroBias();
 }
 
-Eigen::Vector3d NS::getLinearAcceleration()
+void NS::job() 
 {
-    return safeGet(linearAcceleration,mtxLinAcc);
-}
+    env.updateSensors();
+    double time = env.getTime();
 
-Eigen::Vector3d NS::getAngularAcceleraton()
-{
-    return safeGet(angularAcceleration,mtxAngAcc);
-}
+    if(env.acc.isReady() && env.mag.isReady() && env.gyro.isReady())
+    {
+        auto acc = env.acc.getReading();
+        ahrs->update(env.gyro.getReading(), acc, env.mag.getReading());
+        ekf->predict(time, ahrs->rot_bw()*acc - env.acc.g);
+    }
 
-Eigen::Matrix3d T(Eigen::Vector3d ori)
-{
-    Eigen::Matrix3d Tv;
-    double fi = ori(0);
-    double theta = ori(1);
-    double psi = ori(2);
-
-    Tv  << cos(theta)*cos(psi), sin(fi)*sin(theta)*cos(psi) - cos(fi)*sin(psi), cos(fi)*sin(theta)*cos(psi) + sin(fi)*sin(psi),
-           cos(theta)*sin(psi), sin(fi)*sin(theta)*sin(psi) + cos(fi)*cos(psi), cos(fi)*sin(theta)*sin(psi) - sin(fi)*cos(psi),
-           -sin(theta)        , sin(fi)*cos(theta)                            , cos(fi)*cos(theta);
+    // if(env.baro.isReady())
+    //     ekf.updateBaro(time, env.baro.getReading());
     
-    return Tv;
+    if(env.gps.isReady())
+        ekf->updateGPS(time, env.gps.getReading());
+
+    if(env.gpsVel.isReady())
+        ekf->updateGPSVel(time, env.gpsVel.getReading());
+
+    ekf->log(time);
 }
 
-Eigen::Vector3d NS::getWorldLinearVelocity()
+EKFParams NS::calcParams()
 {
-    return T(orientation)*linearVelocity;
-}
+    constexpr double T = BASE_TIME_MS/1000.0;
+    constexpr double predict_scaler = 1e1;
+    constexpr double update_scaler = 1e-4;
+    constexpr double baro_scaler = 1e-4;
+    constexpr double z_extra_scaler = 1e3;
 
-void safeSet(Eigen::Vector3d& vec, std::mutex& mtx, Eigen::Vector3d& newValue)
-{
-    std::lock_guard<std::mutex> guard(mtx);
-    vec = newValue;
-}
 
-void NS::setPosition(Eigen::Vector3d newValue)
-{
-    safeSet(position,mtxPos,newValue);
-}
-
-void NS::setOrientation(Eigen::Vector3d newValue) 
-{
-    safeSet(orientation,mtxOri,newValue);
-}
-
-void NS::setLinearVelocity(Eigen::Vector3d newValue) 
-{
-    safeSet(linearVelocity,mtxLinVel,newValue);
-}
-
-void NS::setAngularVelocity(Eigen::Vector3d newValue) 
-{
-    safeSet(angularVelocity,mtxAngVel,newValue);
-}
-
-void NS::setLinearAcceleration(Eigen::Vector3d newValue) 
-{
-    safeSet(linearAcceleration,mtxLinAcc,newValue);
-}
-
-void NS::setAngularAcceleraton(Eigen::Vector3d newValue) 
-{
-    safeSet(angularAcceleration,mtxAngAcc,newValue);
+    EKFParams p;
+    p.Q.setZero();
+    p.Q.block<3,3>(0,0) = ((std::pow(T,4)/4.0)* std::pow(env.gyro.getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(3,0) = ((std::pow(T,3)/2.0)* std::pow(env.gyro.getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(0,3) = ((std::pow(T,3)/2.0)* std::pow(env.gyro.getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(3,3) = ((std::pow(T,2)/1.0)* std::pow(env.gyro.getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q(2,2) *= z_extra_scaler;
+    p.Q(2,5) *= z_extra_scaler;
+    p.Q(5,2) *= z_extra_scaler;
+    p.Q(5,5) *= z_extra_scaler;
+    p.RBaro = std::pow(env.baro.getSd(),2) * update_scaler * baro_scaler;
+    p.RGPSPos.setIdentity();
+    p.RGPSPos = Eigen::Matrix3d::Identity() * std::pow(env.gps.getSd(),2) * update_scaler;
+    p.RGPSVel.setIdentity();
+    p.RGPSVel = Eigen::Matrix3d::Identity() *std::pow(env.gpsVel.getSd(),2) * update_scaler;
+    p.P0.setZero();
+    return p;
 }

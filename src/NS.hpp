@@ -1,55 +1,35 @@
 #pragma once
-#include <zmq.hpp>
-#include <thread>
 #include <Eigen/Dense>
-#include <mutex>
-#include <vector>
-#include <memory>
-#include "oldsensor.hpp"
+#include "environment.hpp"
+#include "sensors.hpp"
+#include "timed_loop.hpp"
+#include "AHRS.hpp"
+#include "EKF.hpp"
 
-class OldSensor;
+#define BASE_TIME_MS 3
 
 class NS
 {
-    public:
+public:
 
-        friend class OldSensor;
+    NS(Environment& env);
+    ~NS();
+    //In world frame
+    Eigen::Vector3d getPosition();
+    Eigen::Vector3d getLinearVelocity();
+    Eigen::Vector3d getOrientation();
+    //In body frame
+    Eigen::Vector3d getAngularVelocity();
 
-        NS(zmq::context_t* ctx, std::string uav_address);
-        ~NS() {run = false;};
-        //In world frame
-        Eigen::Vector3d getPosition();
-        Eigen::Vector3d getOrientation();
-        //In body frame
-        Eigen::Vector3d getLinearVelocity();
-        Eigen::Vector3d getAngularVelocity();
-        Eigen::Vector3d getLinearAcceleration();
-        Eigen::Vector3d getAngularAcceleraton();
-        Eigen::Vector3d getWorldLinearVelocity();
+private:
+    Environment& env;
+    std::unique_ptr<AHRS> ahrs;
+    std::unique_ptr<EKF> ekf;
 
-    protected:
-        bool run;
-        std::vector<std::unique_ptr<OldSensor>> sensors;
+    std::thread loop_thread;
+    TimedLoop loop;
+    Status status;
 
-        Eigen::Vector3d position;
-        Eigen::Vector3d orientation;
-        Eigen::Vector3d linearVelocity;
-        Eigen::Vector3d angularVelocity;
-        Eigen::Vector3d linearAcceleration;
-        Eigen::Vector3d angularAcceleration;
-        
-        
-        std::mutex mtxPos;
-        std::mutex mtxOri;
-        std::mutex mtxLinVel;
-        std::mutex mtxAngVel;
-        std::mutex mtxLinAcc;
-        std::mutex mtxAngAcc;
-
-        void setPosition(Eigen::Vector3d newValue);
-        void setOrientation(Eigen::Vector3d newValue);
-        void setLinearVelocity(Eigen::Vector3d newValue);
-        void setAngularVelocity(Eigen::Vector3d newValue);
-        void setLinearAcceleration(Eigen::Vector3d newValue);
-        void setAngularAcceleraton(Eigen::Vector3d newValue);
+    void job();
+    EKFParams calcParams();
 };
