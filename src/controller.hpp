@@ -32,7 +32,7 @@ class Controller
         Status status;
         State state;
         Environment env;
-        NS navisys;
+        //NS navisys;
         NS2 navisys2;
 	    Control control;
         Params& params;

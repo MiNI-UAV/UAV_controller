@@ -6,6 +6,8 @@
 #include "AHRS.hpp"
 #include "EKF.hpp"
 
+#define BASE_TIME_MS 3
+
 class NS2
 {
 public:
@@ -22,11 +24,12 @@ public:
 private:
     Environment& env;
     std::unique_ptr<AHRS> ahrs;
-    EKF ekf;
+    std::unique_ptr<EKF> ekf;
 
     std::thread loop_thread;
     TimedLoop loop;
     Status status;
 
     void job();
+    EKFParams calcParams();
 };

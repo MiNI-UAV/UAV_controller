@@ -6,7 +6,7 @@
 Controller::Controller(zmq::context_t *ctx, std::string uav_address, Params& _params):
 state(ctx, uav_address, mode,[this](ControllerMode mode){setMode(mode);},[this](){exitController();}),
 env(ctx, uav_address),
-navisys(ctx, uav_address),
+//navisys(ctx, uav_address),
 navisys2(env),
 control(ctx, uav_address),
 params{_params}
@@ -83,11 +83,11 @@ void Controller::syncWithPhysicEngine(zmq::context_t *ctx,std::string uav_addres
 
 void Controller::setCurrentDemands()
 {
-    auto pos = navisys.getPosition();
+    auto pos = navisys2.getPosition();
     state.demandedX = pos(0);
     state.demandedY = pos(1);
     state.demandedZ = pos(2);
-    auto ori = navisys.getOrientation();
+    auto ori = navisys2.getOrientation();
     state.demandedFi = ori(0);
     state.demandedTheta = ori(1);
     state.demandedPsi = ori(2);
@@ -96,7 +96,7 @@ void Controller::setCurrentDemands()
 
 void Controller::acroControllLoop()
 {
-    Eigen::Vector3d angVel = navisys.getAngularVelocity();
+    Eigen::Vector3d angVel = navisys2.getAngularVelocity();
 
     double climb_rate = (state.throttle+1.0)*params.hoverRotorSpeed;
     double roll_rate = params.pids.at("Roll").calc(state.demandedP-angVel(0));
@@ -117,10 +117,10 @@ double circularError(double demanded, double val)
 
 void Controller::angleControllLoop()
 {
-    Eigen::Vector3d pos = navisys.getPosition();
-    Eigen::Vector3d vel = navisys.getWorldLinearVelocity();
-    Eigen::Vector3d ori = navisys.getOrientation();
-    Eigen::Vector3d angVel = navisys.getAngularVelocity();
+    Eigen::Vector3d pos = navisys2.getPosition();
+    Eigen::Vector3d vel = navisys2.getLinearVelocity();
+    Eigen::Vector3d ori = navisys2.getOrientation();
+    Eigen::Vector3d angVel = navisys2.getAngularVelocity();
 
     std::cout << vel << std::endl  << std::endl;
 
@@ -140,10 +140,10 @@ void Controller::angleControllLoop()
 
 void Controller::positionControllLoop()
 {
-    Eigen::Vector3d pos = navisys.getPosition();
-    Eigen::Vector3d vel = navisys.getWorldLinearVelocity();
-    Eigen::Vector3d ori = navisys.getOrientation();
-    Eigen::Vector3d angVel = navisys.getAngularVelocity();
+    Eigen::Vector3d pos = navisys2.getPosition();
+    Eigen::Vector3d vel = navisys2.getLinearVelocity();
+    Eigen::Vector3d ori = navisys2.getOrientation();
+    Eigen::Vector3d angVel = navisys2.getAngularVelocity();
 
     double demandedU = params.pids.at("X").calc(state.demandedX - pos(0));
     double demandedV = params.pids.at("Y").calc(state.demandedY - pos(1));

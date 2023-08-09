@@ -20,12 +20,12 @@ void connectConflateSocket(zmq::socket_t& sock, std::string address, std::string
 }
 
 Environment::Environment(zmq::context_t *ctx, std::string uav_address): 
-    acc(*this,0.0),
-    gyro(*this,0.0),
-    mag(*this, 0.0),
-    baro(*this, 0.0),
-    gps(*this,0.0),
-    gpsVel(*this, 0.0),
+    acc(*this,0.001),
+    gyro(*this,0.01),
+    mag(*this, 0.01),
+    baro(*this, 0.01),
+    gps(*this,0.5),
+    gpsVel(*this, 0.5),
 
     time_sock(*ctx,zmq::socket_type::sub),
     pos_sock(*ctx,zmq::socket_type::sub),
@@ -75,6 +75,7 @@ bool recvVectors(zmq::socket_t& sock, int skip, Eigen::Vector3d& vec1, Eigen::Ve
         return true;
     }
     std::string msg_str =  std::string(static_cast<char*>(msg.data()), msg.size());
+    std::cout << "[" << msg_str << "]" << std::endl;
     std::istringstream f(msg_str.substr(skip));
     std::string s;
     int i; 
@@ -123,6 +124,7 @@ void Environment::listenerJob()
             continue;
         }
         std::string msg_str =  std::string(static_cast<char*>(msg.data()), msg.size());
+        std::cout << "[" << msg_str << "]" << std::endl;
         msg_time = std::stod(msg_str.substr(2));
         if(recvVectors(pos_sock,4,msg_position,msg_orientation)) continue;
         if(recvVectors(vel_sock,3,msg_linearVelocity,msg_angularVelocity)) continue;

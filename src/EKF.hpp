@@ -4,10 +4,19 @@
 #include "sensors.hpp"
 #include "timed_loop.hpp"
 
+struct EKFParams
+{
+    Eigen::Matrix<double,6,6> P0;
+    Eigen::Matrix<double,6,6> Q;
+    double RBaro;
+    Eigen::Matrix3d RGPSPos;
+    Eigen::Matrix3d RGPSVel;
+};
+
 class EKF
 {
 public:
-    EKF();
+    EKF(EKFParams params);
     Eigen::Vector3d getPos();
     Eigen::Vector3d getVel();
 
@@ -19,16 +28,13 @@ public:
 
 private:
     Logger logger;
-
+    std::mutex mtx;
     Eigen::Vector<double,6> x;
     Eigen::Matrix<double,6,6> P;
-    Eigen::Matrix<double,6,6> Q;
-
-    double RBaro;
-    Eigen::Matrix3d RGPSPos;
-    Eigen::Matrix3d RGPSVel;
 
     Eigen::Matrix<double,1,6> CBaro;
     Eigen::Matrix<double,3,6> CGPSPos;
     Eigen::Matrix<double,3,6> CGPSVel;
+
+    const EKFParams params;
 };
