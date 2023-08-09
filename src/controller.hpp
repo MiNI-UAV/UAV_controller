@@ -4,16 +4,16 @@
 #include <Eigen/Dense>
 #include <functional>
 #include <optional>
-#include "PID.hpp"
-#include "NS.hpp"
+#include "UAV_common/PID.hpp"
+#include "UAV_NS/NS.hpp"
 #include "mixers.hpp"
 #include "control.hpp"
-#include "timed_loop.hpp"
+#include "UAV_common/timed_loop.hpp"
 #include "state.hpp"
 #include "controller_mode.hpp"
 #include "params.hpp"
-#include "environment.hpp"
-#include "NS.hpp"
+#include "UAV_NS/environment.hpp"
+#include "UAV_NS/NS.hpp"
 
 
 class Controller

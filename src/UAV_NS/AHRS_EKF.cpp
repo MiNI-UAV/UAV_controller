@@ -4,7 +4,7 @@
 #include <iostream>
 #include "environment.hpp"
 #include "sensors.hpp"
-#include "logger.hpp"
+#include "../UAV_logger/logger.hpp"
 
 AHRS_EKF::AHRS_EKF(Environment &env):
     AHRS(env)

@@ -6,7 +6,7 @@
 #include <vector>
 #include <memory>
 #include <atomic>
-#include "logger.hpp"
+#include "../UAV_logger/logger.hpp"
 #include "sensors.hpp"
 
 class Environment

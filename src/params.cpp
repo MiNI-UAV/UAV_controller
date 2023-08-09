@@ -7,7 +7,7 @@
 #include <vector>
 #include "rapidxml/rapidxml.hpp"
 #include "mixers.hpp"
-#include "PID.hpp"
+#include "UAV_common/PID.hpp"
 
 /// @brief Initialize default data
 Params::Params() 

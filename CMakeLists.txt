@@ -9,7 +9,7 @@ set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build)
 
-file(GLOB SOURCES ${SOURCE_DIR}/*.cpp)
+file(GLOB_RECURSE SOURCES ${SOURCE_DIR}/*.cpp)
 
 include_directories(${INCLUDE_DIR})
 link_directories(${LIB_DIR})

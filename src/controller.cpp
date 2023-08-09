@@ -1,6 +1,6 @@
 #include "controller.hpp"
 #include <iostream>
-#include "NS.hpp"
+#include "UAV_NS/NS.hpp"
 
 Controller::Controller(zmq::context_t *ctx, std::string uav_address, Params& _params):
 state(ctx, uav_address, mode,[this](ControllerMode mode){setMode(mode);},[this](){exitController();}),

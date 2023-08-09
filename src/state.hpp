@@ -3,7 +3,7 @@
 #include <thread>
 #include <zmq.hpp>
 #include <functional>
-#include "status.hpp"
+#include "UAV_common/status.hpp"
 #include "controller_mode.hpp"
 
 class State
