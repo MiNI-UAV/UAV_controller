@@ -4,7 +4,7 @@
 #include <iostream>
 #include "environment.hpp"
 #include "sensors.hpp"
-#include "../UAV_logger/logger.hpp"
+#include "common.hpp"
 
 AHRS_complementary::AHRS_complementary(Environment& env, double alpha):
     AHRS(env),

@@ -8,7 +8,7 @@
 #include <iostream>
 #include <initializer_list>
 #include "../utils.hpp"
-#include "../UAV_logger/logger.hpp"
+#include "common.hpp"
 #include "sensors.hpp"
 
 void connectConflateSocket(zmq::socket_t& sock, std::string address, std::string topic)

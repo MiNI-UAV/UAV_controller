@@ -1,6 +1,7 @@
 #include "EKF.hpp"
 #include <Eigen/Dense>
 #include <iostream>
+#include "common.hpp"
 
 EKF::EKF(EKFParams params):
     logger("EKF.csv", "Time,PosX,PosY,PosZ,VelX,VelY,VelZ"),

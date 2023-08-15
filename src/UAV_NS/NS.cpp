@@ -1,8 +1,6 @@
 #include "NS.hpp"
 #include <Eigen/Dense>
 #include <iostream>
-#include "../UAV_common/status.hpp"
-#include "../UAV_common/timed_loop.hpp"
 #include "environment.hpp"
 #include "sensors.hpp"
 #include "AHRS.hpp"

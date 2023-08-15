@@ -1,13 +1,3 @@
-[submodule "lib/eigen"]
-	path = lib/eigen
-	url = https://gitlab.com/libeigen/eigen
-	branch = 3.4
-[submodule "lib/cppzmq"]
-	path = lib/cppzmq
-	url = https://github.com/zeromq/cppzmq.git
-[submodule "lib/libzmq"]
-	path = lib/libzmq
-	url = https://github.com/zeromq/libzmq.git
-[submodule "lib/cxxopts"]
-	path = lib/cxxopts
-	url = https://github.com/jarro2783/cxxopts.git
+[submodule "lib/UAV_common"]
+	path = lib/UAV_common
+	url = https://github.com/MiNI-UAV/UAV_common.git

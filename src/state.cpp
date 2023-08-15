@@ -5,7 +5,6 @@
 #include <numbers>
 #include <cmath>
 #include "controller_mode.hpp"
-#include "UAV_common/status.hpp"
 
 void orderServerJob(zmq::context_t *ctx, std::string uav_address, std::function<void(std::string)> handleMsg, bool& run)
 {

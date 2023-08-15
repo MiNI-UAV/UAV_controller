@@ -2,7 +2,6 @@
 #include <Eigen/Dense>
 #include "environment.hpp"
 #include "sensors.hpp"
-#include "../UAV_common/timed_loop.hpp"
 
 struct EKFParams
 {

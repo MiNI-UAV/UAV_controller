@@ -2,7 +2,7 @@
 #include <Eigen/Dense>
 #include <random>
 #include <atomic>
-#include "../UAV_logger/logger.hpp"
+#include "common.hpp"
 
 class Environment;
 
