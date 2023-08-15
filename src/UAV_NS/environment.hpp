@@ -7,7 +7,7 @@
 #include <memory>
 #include <atomic>
 #include <map>
-#include "../UAV_logger/logger.hpp"
+#include "..//logger.hpp"
 #include "sensors.hpp"
 #include "../params.hpp"
 
