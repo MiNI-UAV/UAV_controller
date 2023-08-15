@@ -36,9 +36,10 @@ double Sensor<T>::error()
     return dist(gen);
 }
 
-Accelerometer::Accelerometer(Environment &env, double sd):
-    Sensor<Eigen::Vector3d>(env, sd, Eigen::Vector3d(0.0,0.0,0.0), "accelerometer.csv", "Time,AccX,AccY,AccZ",0.0025),
-    g(0.0,0.0,9.81)
+const Eigen::Vector3d Accelerometer::g = Eigen::Vector3d(0.0,0.0,9.81);
+
+Accelerometer::Accelerometer(Environment &env, double sd, Eigen::Vector3d bias, double refreshTime):
+    Sensor<Eigen::Vector3d>(env, sd, bias, "accelerometer.csv", "Time,AccX,AccY,AccZ", refreshTime)
 {}
 
 void Accelerometer::update() 
@@ -53,8 +54,8 @@ void Accelerometer::update()
     ready = true;
 }
 
-Gyroscope::Gyroscope(Environment &env, double sd):
-    Sensor<Eigen::Vector3d>(env, sd, Eigen::Vector3d(0.00,0.00,0.00), "gyroscope.csv", "Time,GyrX,GyrY,GyrZ",0.0025)
+Gyroscope::Gyroscope(Environment &env, double sd, Eigen::Vector3d bias, double refreshTime):
+    Sensor<Eigen::Vector3d>(env, sd, bias, "gyroscope.csv", "Time,GyrX,GyrY,GyrZ", refreshTime)
 {}
 
 void Gyroscope::update() 
@@ -66,9 +67,10 @@ void Gyroscope::update()
     ready = true;
 }
 
-Magnetometer::Magnetometer(Environment &env, double sd):
-    Sensor<Eigen::Vector3d>(env, sd, Eigen::Vector3d(0.0,0.0,0.0), "magnetometer.csv", "Time,MagX,MagY,MagZ",0.0025),
-    mag(60.0,0.0,0.0)
+const Eigen::Vector3d Magnetometer::mag = Eigen::Vector3d(60.0,0.0,0.0);
+
+Magnetometer::Magnetometer(Environment &env, double sd, Eigen::Vector3d bias, double refreshTime):
+    Sensor<Eigen::Vector3d>(env, sd, bias, "magnetometer.csv", "Time,MagX,MagY,MagZ", refreshTime)
 {}
 
 void Magnetometer::update() 
@@ -81,8 +83,8 @@ void Magnetometer::update()
     ready = true;
 }
 
-Barometer::Barometer(Environment &env, double sd):
-    Sensor<double>(env, sd, 0.0, "barometer.csv", "Time,Height",0.01)
+Barometer::Barometer(Environment &env, double sd, Eigen::Vector3d bias, double refreshTime):
+    Sensor<double>(env, sd, bias[0], "barometer.csv", "Time,Height", refreshTime)
 {}
 
 void Barometer::update()
@@ -95,8 +97,8 @@ void Barometer::update()
     ready = true;
 }
 
-GPS::GPS(Environment &env, double sd):
-    Sensor<Eigen::Vector3d>(env, sd, Eigen::Vector3d(0.0,0.0,0.0), "GPS.csv", "Time,PosX,PosY,PosZ",0.3)
+GPS::GPS(Environment &env, double sd, Eigen::Vector3d bias, double refreshTime):
+    Sensor<Eigen::Vector3d>(env, sd, bias, "GPS.csv", "Time,PosX,PosY,PosZ", refreshTime)
 {}
 
 void GPS::update() 
@@ -109,8 +111,8 @@ void GPS::update()
     ready = true;
 }
 
-GPSVel::GPSVel(Environment &env, double sd):
-    Sensor<Eigen::Vector3d>(env, sd, Eigen::Vector3d(0.0,0.0,0.0), "GPSVel.csv", "Time,VelX,VelY,VelZ",0.3)
+GPSVel::GPSVel(Environment &env, double sd, Eigen::Vector3d bias, double refreshTime):
+    Sensor<Eigen::Vector3d>(env, sd, bias, "GPSVel.csv", "Time,VelX,VelY,VelZ", refreshTime)
 {}
 
 void GPSVel::update()

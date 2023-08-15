@@ -41,44 +41,43 @@ protected:
 class Accelerometer : public Sensor<Eigen::Vector3d>
 {
 public:
-    Accelerometer(Environment& env, double sd);
+    Accelerometer(Environment& env, double sd, Eigen::Vector3d bias, double refreshTime);
     void update() override;
-    const Eigen::Vector3d g;
+    static const Eigen::Vector3d g;
 };
 
 class Gyroscope : public Sensor<Eigen::Vector3d>
 {
 public:
-    Gyroscope(Environment& env, double sd);
+    Gyroscope(Environment& env, double sd, Eigen::Vector3d bias, double refreshTime);
     void update() override;
 };
 
 class Magnetometer : public Sensor<Eigen::Vector3d>
 {
 public:
-    Magnetometer(Environment& env, double sd);
+    Magnetometer(Environment& env, double sd, Eigen::Vector3d bias, double refreshTime);
     void update() override;
-private:
-    const Eigen::Vector3d mag;
+    static const Eigen::Vector3d mag;
 };
 
 class Barometer : public Sensor<double>
 {
 public:
-    Barometer(Environment& env, double sd);
+    Barometer(Environment& env, double sd, Eigen::Vector3d bias, double refreshTime);
     void update() override;
 };
 
 class GPS : public Sensor<Eigen::Vector3d>
 {
 public:
-    GPS(Environment& env, double sd);
+    GPS(Environment& env, double sd, Eigen::Vector3d bias, double refreshTime);
     void update() override;
 };
 
 class GPSVel : public Sensor<Eigen::Vector3d>
 {
 public:
-    GPSVel(Environment& env, double sd);
+    GPSVel(Environment& env, double sd, Eigen::Vector3d bias, double refreshTime);
     void update() override;
 };

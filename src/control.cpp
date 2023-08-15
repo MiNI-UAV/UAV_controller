@@ -56,7 +56,7 @@ void Control::sendSpeed(Eigen::VectorXd speeds)
     ss.precision(5);
     ss << "s:"<< speeds.format(commaFormat);
     s = ss.str();
-    std::cout << "[" << s << "]" << std::endl;
+    //std::cout << "[" << s << "]" << std::endl;
     zmq::message_t message(s.data(), s.size());
     sock.send(message,zmq::send_flags::none);
 }

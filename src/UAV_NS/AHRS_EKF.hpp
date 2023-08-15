@@ -9,7 +9,7 @@
 class AHRS_EKF : public AHRS
 {
 public:
-    AHRS_EKF(Environment& env);
+    AHRS_EKF(Environment& env, double Q_scaler, double R_scaler);
     ~AHRS_EKF();
 
     Eigen::Vector3d getGyroBias() override;

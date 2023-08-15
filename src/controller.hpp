@@ -32,8 +32,7 @@ class Controller
         Status status;
         State state;
         Environment env;
-        //NS navisys;
-        NS navisys2;
+        NS navisys;
 	    Control control;
         Params& params;
         std::optional<TimedLoop> loop;

@@ -10,13 +10,24 @@
 #include "AHRS_complementary.hpp"
 
 
-NS::NS(Environment &env):
+NS::NS(Environment &env, Params& params):
     env{env},
+    params{params},
     loop(BASE_TIME_MS,[this](){job();},status)
 {
+    std::cout << "NS initializing..." << std::endl;
     status = Status::running;
-    ahrs = std::make_unique<AHRS_complementary>(env,0.98);
+    if(params.ahrs.type.compare("EKF") ==0)
+    {
+        ahrs = std::make_unique<AHRS_EKF>(env,params.ahrs.Q,params.ahrs.R);
+    }
+    if(params.ahrs.type.compare("Complementary") ==0)
+    {
+        ahrs = std::make_unique<AHRS_complementary>(env,params.ahrs.alpha);
+    }
+    if(ahrs.get() != nullptr) std::cout << "AHRS OK" << std::endl;
     ekf = std::make_unique<EKF>(calcParams());
+    std::cout << "Parameters calculated" << std::endl;
     loop_thread = std::thread([this]() {loop.go();});
     std::cout << "NS initialized" << std::endl;
 }
@@ -44,7 +55,7 @@ Eigen::Vector3d NS::getOrientation()
 
 Eigen::Vector3d NS::getAngularVelocity()
 {
-    return env.gyro.getReading() - ahrs->getGyroBias();
+    return env.sensorsVec3d.at("gyroscope")->getReading() - ahrs->getGyroBias();
 }
 
 void NS::job() 
@@ -52,49 +63,47 @@ void NS::job()
     env.updateSensors();
     double time = env.getTime();
 
-    if(env.acc.isReady() && env.mag.isReady() && env.gyro.isReady())
+    if(env.sensorsVec3d.at("accelerometer")->isReady() && env.sensorsVec3d.at("magnetometer")->isReady() && env.sensorsVec3d.at("gyroscope")->isReady())
     {
-        auto acc = env.acc.getReading();
-        ahrs->update(env.gyro.getReading(), acc, env.mag.getReading());
-        ekf->predict(time, ahrs->rot_bw()*acc - env.acc.g);
+        auto acc = env.sensorsVec3d.at("accelerometer")->getReading();
+        ahrs->update(env.sensorsVec3d.at("gyroscope")->getReading(), acc.normalized(), env.sensorsVec3d.at("magnetometer")->getReading().normalized());
+        ekf->predict(time, ahrs->rot_bw()*acc - Accelerometer::g);
     }
 
-    // if(env.baro.isReady())
-    //     ekf.updateBaro(time, env.baro.getReading());
+    if(env.sensors.at("barometer")->isReady())
+        ekf->updateBaro(time, env.sensors.at("barometer")->getReading());
     
-    if(env.gps.isReady())
-        ekf->updateGPS(time, env.gps.getReading());
+    if(env.sensorsVec3d.at("GPS")->isReady())
+        ekf->updateGPS(time, env.sensorsVec3d.at("GPS")->getReading());
 
-    if(env.gpsVel.isReady())
-        ekf->updateGPSVel(time, env.gpsVel.getReading());
+    if(env.sensorsVec3d.at("GPSVel")->isReady())
+        ekf->updateGPSVel(time, env.sensorsVec3d.at("GPSVel")->getReading());
 
     ekf->log(time);
 }
 
 EKFParams NS::calcParams()
 {
-    constexpr double T = BASE_TIME_MS/1000.0;
-    constexpr double predict_scaler = 1e1;
-    constexpr double update_scaler = 1e-4;
-    constexpr double baro_scaler = 1e-4;
-    constexpr double z_extra_scaler = 1e3;
-
-
+    const double T = step_time/1000.0;
+    const double predict_scaler = params.ekf.predictScaler;
+    const double update_scaler = params.ekf.updateScaler;
+    const double baro_scaler = params.ekf.baroScaler;
+    const double z_extra_scaler = params.ekf.zScaler;
     EKFParams p;
     p.Q.setZero();
-    p.Q.block<3,3>(0,0) = ((std::pow(T,4)/4.0)* std::pow(env.gyro.getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
-    p.Q.block<3,3>(3,0) = ((std::pow(T,3)/2.0)* std::pow(env.gyro.getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
-    p.Q.block<3,3>(0,3) = ((std::pow(T,3)/2.0)* std::pow(env.gyro.getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
-    p.Q.block<3,3>(3,3) = ((std::pow(T,2)/1.0)* std::pow(env.gyro.getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(0,0) = ((std::pow(T,4)/4.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(3,0) = ((std::pow(T,3)/2.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(0,3) = ((std::pow(T,3)/2.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(3,3) = ((std::pow(T,2)/1.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
     p.Q(2,2) *= z_extra_scaler;
     p.Q(2,5) *= z_extra_scaler;
     p.Q(5,2) *= z_extra_scaler;
     p.Q(5,5) *= z_extra_scaler;
-    p.RBaro = std::pow(env.baro.getSd(),2) * update_scaler * baro_scaler;
+    p.RBaro = std::pow(env.sensors.at("barometer")->getSd(),2) * update_scaler * baro_scaler;
     p.RGPSPos.setIdentity();
-    p.RGPSPos = Eigen::Matrix3d::Identity() * std::pow(env.gps.getSd(),2) * update_scaler;
+    p.RGPSPos = Eigen::Matrix3d::Identity() * std::pow(env.sensorsVec3d.at("GPS")->getSd(),2) * update_scaler;
     p.RGPSVel.setIdentity();
-    p.RGPSVel = Eigen::Matrix3d::Identity() *std::pow(env.gpsVel.getSd(),2) * update_scaler;
+    p.RGPSVel = Eigen::Matrix3d::Identity() *std::pow(env.sensorsVec3d.at("GPSVel")->getSd(),2) * update_scaler;
     p.P0.setZero();
     return p;
 }
