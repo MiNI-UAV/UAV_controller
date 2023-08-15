@@ -24,7 +24,6 @@ link_directories("/usr/local/include")
 
 add_executable(controller ${SOURCES})
 set_property(TARGET controller PROPERTY CXX_STANDARD 20)
-target_include_directories(controller PUBLIC include ${CMAKE_SOURCE_DIR}/lib/UAV_common/header)
 target_compile_features(controller PUBLIC cxx_std_20)
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 target_link_libraries(controller Eigen3::Eigen)
