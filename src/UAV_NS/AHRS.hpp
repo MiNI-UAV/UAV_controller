@@ -4,8 +4,6 @@
 #include <optional>
 #include "environment.hpp"
 #include "sensors.hpp"
-#include "../UAV_logger/logger.hpp"
-#include "../UAV_common/timed_loop.hpp"
 
 class AHRS
 {

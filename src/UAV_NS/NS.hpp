@@ -4,7 +4,6 @@
 #include "sensors.hpp"
 #include "AHRS.hpp"
 #include "EKF.hpp"
-#include "../UAV_common/timed_loop.hpp"
 
 
 #define BASE_TIME_MS 3

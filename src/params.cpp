@@ -7,7 +7,6 @@
 #include <vector>
 #include "rapidxml/rapidxml.hpp"
 #include "mixers.hpp"
-#include "UAV_common/PID.hpp"
 
 Params::Params() 
 {
