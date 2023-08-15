@@ -4,11 +4,9 @@
 #include <Eigen/Dense>
 #include <functional>
 #include <optional>
-#include "UAV_common/PID.hpp"
 #include "UAV_NS/NS.hpp"
 #include "mixers.hpp"
 #include "control.hpp"
-#include "UAV_common/timed_loop.hpp"
 #include "state.hpp"
 #include "controller_mode.hpp"
 #include "params.hpp"
@@ -32,8 +30,7 @@ class Controller
         Status status;
         State state;
         Environment env;
-        //NS navisys;
-        NS navisys2;
+        NS navisys;
 	    Control control;
         Params& params;
         std::optional<TimedLoop> loop;

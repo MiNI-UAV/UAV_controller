@@ -4,7 +4,7 @@
 #include <iostream>
 #include "environment.hpp"
 #include "sensors.hpp"
-#include "../UAV_logger/logger.hpp"
+#include "common.hpp"
 
 AHRS_complementary::AHRS_complementary(Environment& env, double alpha):
     AHRS(env),
@@ -98,7 +98,7 @@ void AHRS_complementary::update(Eigen::Vector3d gyro, Eigen::Vector3d acc, Eigen
         + mag.z()*sin(ori_gyro.y())*cos(ori_gyro.x())
         )
     );
-    Eigen::Vector3d new_ori = ori_acc;
+    Eigen::Vector3d new_ori;
     for(int i = 0; i < 3; i++)
     {
         if(std::abs(ori_gyro(i)-ori_acc(i)) > std::numbers::pi)
@@ -122,5 +122,5 @@ void AHRS_complementary::update(Eigen::Vector3d gyro, Eigen::Vector3d acc, Eigen
     mtxOri.lock();
     ori_est = new_ori;
     mtxOri.unlock();
-    logger.log(time,{new_ori});
+    logger.log(time,{new_ori, ori_gyro, ori_acc});
 }

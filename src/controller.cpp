@@ -4,9 +4,8 @@
 
 Controller::Controller(zmq::context_t *ctx, std::string uav_address, Params& _params):
 state(ctx, uav_address, mode,[this](ControllerMode mode){setMode(mode);},[this](){exitController();}),
-env(ctx, uav_address),
-//navisys(ctx, uav_address),
-navisys2(env),
+env(ctx, uav_address,_params),
+navisys(env,_params),
 control(ctx, uav_address),
 params{_params}
 {
@@ -21,6 +20,7 @@ params{_params}
     jobs[ControllerMode::position] = [&](){positionControllLoop();};
     loop.emplace(std::round(step_time),jobs[mode],status);
     syncWithPhysicEngine(ctx,uav_address);
+    std::cout << "Constructing controller done" << std::endl;
 }
 
 Controller::~Controller()
@@ -30,6 +30,7 @@ Controller::~Controller()
 
 void Controller::run()
 {
+    std::cout << "Initializing controller" << std::endl;
     bool run = true;
     
     while(run)
@@ -82,11 +83,11 @@ void Controller::syncWithPhysicEngine(zmq::context_t *ctx,std::string uav_addres
 
 void Controller::setCurrentDemands()
 {
-    auto pos = navisys2.getPosition();
+    auto pos = navisys.getPosition();
     state.demandedX = pos(0);
     state.demandedY = pos(1);
     state.demandedZ = pos(2);
-    auto ori = navisys2.getOrientation();
+    auto ori = navisys.getOrientation();
     state.demandedFi = ori(0);
     state.demandedTheta = ori(1);
     state.demandedPsi = ori(2);
@@ -95,7 +96,7 @@ void Controller::setCurrentDemands()
 
 void Controller::acroControllLoop()
 {
-    Eigen::Vector3d angVel = navisys2.getAngularVelocity();
+    Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
     double climb_rate = (state.throttle+1.0)*params.hoverRotorSpeed;
     double roll_rate = params.pids.at("Roll").calc(state.demandedP-angVel(0));
@@ -116,12 +117,10 @@ double circularError(double demanded, double val)
 
 void Controller::angleControllLoop()
 {
-    Eigen::Vector3d pos = navisys2.getPosition();
-    Eigen::Vector3d vel = navisys2.getLinearVelocity();
-    Eigen::Vector3d ori = navisys2.getOrientation();
-    Eigen::Vector3d angVel = navisys2.getAngularVelocity();
-
-    std::cout << vel << std::endl  << std::endl;
+    Eigen::Vector3d pos = navisys.getPosition();
+    Eigen::Vector3d vel = navisys.getLinearVelocity();
+    Eigen::Vector3d ori = navisys.getOrientation();
+    Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
     double demandedW = params.pids.at("Z").calc(state.demandedZ - pos(2));
     double demandedP = params.pids.at("Fi").calc(circularError(state.demandedFi, ori(0)));
@@ -139,10 +138,10 @@ void Controller::angleControllLoop()
 
 void Controller::positionControllLoop()
 {
-    Eigen::Vector3d pos = navisys2.getPosition();
-    Eigen::Vector3d vel = navisys2.getLinearVelocity();
-    Eigen::Vector3d ori = navisys2.getOrientation();
-    Eigen::Vector3d angVel = navisys2.getAngularVelocity();
+    Eigen::Vector3d pos = navisys.getPosition();
+    Eigen::Vector3d vel = navisys.getLinearVelocity();
+    Eigen::Vector3d ori = navisys.getOrientation();
+    Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
     double demandedU = params.pids.at("X").calc(state.demandedX - pos(0));
     double demandedV = params.pids.at("Y").calc(state.demandedY - pos(1));

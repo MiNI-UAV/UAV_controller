@@ -2,14 +2,14 @@
 #include <Eigen/Dense>
 #include "environment.hpp"
 #include "sensors.hpp"
-#include "../UAV_logger/logger.hpp"
+#include "common.hpp"
 #include "AHRS.hpp"
 
 
 class AHRS_EKF : public AHRS
 {
 public:
-    AHRS_EKF(Environment& env);
+    AHRS_EKF(Environment& env, double Q_scaler, double R_scaler);
     ~AHRS_EKF();
 
     Eigen::Vector3d getGyroBias() override;

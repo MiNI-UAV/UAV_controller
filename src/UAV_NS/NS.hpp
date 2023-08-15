@@ -4,7 +4,6 @@
 #include "sensors.hpp"
 #include "AHRS.hpp"
 #include "EKF.hpp"
-#include "../UAV_common/timed_loop.hpp"
 
 
 #define BASE_TIME_MS 3
@@ -13,7 +12,7 @@ class NS
 {
 public:
 
-    NS(Environment& env);
+    NS(Environment& env, Params& params);
     ~NS();
     //In world frame
     Eigen::Vector3d getPosition();
@@ -24,6 +23,7 @@ public:
 
 private:
     Environment& env;
+    Params& params;
     std::unique_ptr<AHRS> ahrs;
     std::unique_ptr<EKF> ekf;
 

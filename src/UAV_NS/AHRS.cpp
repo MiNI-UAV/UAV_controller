@@ -3,8 +3,7 @@
 #include <random>
 #include "environment.hpp"
 #include "sensors.hpp"
-#include "../UAV_logger/logger.hpp"
-#include "../UAV_common/status.hpp"
+#include "common.hpp"
 
 AHRS::AHRS(Environment& env):
     env{env},

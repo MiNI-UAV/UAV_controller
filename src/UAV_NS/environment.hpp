@@ -6,13 +6,14 @@
 #include <vector>
 #include <memory>
 #include <atomic>
-#include "../UAV_logger/logger.hpp"
+#include <map>
 #include "sensors.hpp"
+#include "../params.hpp"
 
 class Environment
 {
 public:
-    Environment(zmq::context_t* ctx, std::string uav_address);
+    Environment(zmq::context_t* ctx, std::string uav_address, Params& params);
     ~Environment();
 
     double getTime();
@@ -31,13 +32,8 @@ public:
 
     //Sensors
     void updateSensors();
-    Accelerometer acc;
-    Gyroscope gyro;
-    Magnetometer mag;
-    Barometer baro;
-    GPS gps;
-    GPSVel gpsVel;
-
+    std::map<std::string,std::unique_ptr<Sensor<Eigen::Vector3d>>> sensorsVec3d;
+    std::map<std::string,std::unique_ptr<Sensor<double>>> sensors;
 
 private:
     std::atomic_bool run;

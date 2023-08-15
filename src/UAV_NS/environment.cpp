@@ -7,8 +7,8 @@
 #include <memory>
 #include <iostream>
 #include <initializer_list>
-#include "../UAV_common/utils.hpp"
-#include "../UAV_logger/logger.hpp"
+#include "../utils.hpp"
+#include "common.hpp"
 #include "sensors.hpp"
 
 void connectConflateSocket(zmq::socket_t& sock, std::string address, std::string topic)
@@ -19,14 +19,7 @@ void connectConflateSocket(zmq::socket_t& sock, std::string address, std::string
     sock.connect(address);
 }
 
-Environment::Environment(zmq::context_t *ctx, std::string uav_address): 
-    acc(*this,0.001),
-    gyro(*this,0.01),
-    mag(*this, 0.01),
-    baro(*this, 0.01),
-    gps(*this,0.5),
-    gpsVel(*this, 0.5),
-
+Environment::Environment(zmq::context_t *ctx, std::string uav_address, Params& params):
     time_sock(*ctx,zmq::socket_type::sub),
     pos_sock(*ctx,zmq::socket_type::sub),
     vel_sock(*ctx,zmq::socket_type::sub),
@@ -38,6 +31,22 @@ Environment::Environment(zmq::context_t *ctx, std::string uav_address):
     "VelBX,VelBY,VelBZ,OmBX,OmBY,OmBZ,"
     "AccX,AccY,AccZ,EpsX,EpsY,EpsZ")
 {
+    for(auto& sensor: params.sensors)
+    {   
+        if(sensor.name.compare("accelerometer") == 0)
+            sensorsVec3d.insert(std::make_pair(sensor.name,std::make_unique<Accelerometer>(*this,sensor.sd,sensor.bias,sensor.refreshTime)));
+        if(sensor.name.compare("gyroscope") == 0)
+            sensorsVec3d.insert(std::make_pair(sensor.name,std::make_unique<Gyroscope>(*this,sensor.sd,sensor.bias,sensor.refreshTime)));
+        if(sensor.name.compare("magnetometer") == 0)
+            sensorsVec3d.insert(std::make_pair(sensor.name,std::make_unique<Magnetometer>(*this,sensor.sd,sensor.bias,sensor.refreshTime)));
+        if(sensor.name.compare("barometer") == 0)
+            sensors.insert(std::make_pair(sensor.name,std::make_unique<Barometer>(*this,sensor.sd,sensor.bias,sensor.refreshTime)));
+        if(sensor.name.compare("GPS") == 0)
+            sensorsVec3d.insert(std::make_pair(sensor.name,std::make_unique<GPS>(*this,sensor.sd,sensor.bias,sensor.refreshTime)));
+        if(sensor.name.compare("GPSVel") == 0)
+            sensorsVec3d.insert(std::make_pair(sensor.name,std::make_unique<GPSVel>(*this,sensor.sd,sensor.bias,sensor.refreshTime)));
+    }
+    
     uav_address += "/state";
     connectConflateSocket(time_sock, uav_address, "t:");
     connectConflateSocket(pos_sock, uav_address, "pos:");
@@ -46,6 +55,8 @@ Environment::Environment(zmq::context_t *ctx, std::string uav_address):
     connectConflateSocket(accel_sock, uav_address, "ab:");
     run.store(true,std::memory_order_relaxed);
     listener = std::thread(&Environment::listenerJob, this);
+
+    std::cout << "Initializing environment done" << std::endl;
 }
 
 Environment::~Environment()
@@ -75,7 +86,7 @@ bool recvVectors(zmq::socket_t& sock, int skip, Eigen::Vector3d& vec1, Eigen::Ve
         return true;
     }
     std::string msg_str =  std::string(static_cast<char*>(msg.data()), msg.size());
-    std::cout << "[" << msg_str << "]" << std::endl;
+    //std::cout << "[" << msg_str << "]" << std::endl;
     std::istringstream f(msg_str.substr(skip));
     std::string s;
     int i; 
@@ -124,7 +135,7 @@ void Environment::listenerJob()
             continue;
         }
         std::string msg_str =  std::string(static_cast<char*>(msg.data()), msg.size());
-        std::cout << "[" << msg_str << "]" << std::endl;
+        //std::cout << "[" << msg_str << "]" << std::endl;
         msg_time = std::stod(msg_str.substr(2));
         if(recvVectors(pos_sock,4,msg_position,msg_orientation)) continue;
         if(recvVectors(vel_sock,3,msg_linearVelocity,msg_angularVelocity)) continue;
@@ -207,10 +218,12 @@ Eigen::Matrix3d Environment::getRnb()
 
 void Environment::updateSensors() 
 {
-    acc.update();
-    gyro.update();
-    mag.update();
-    baro.update();
-    gps.update();
-    gpsVel.update();
+    for (auto& [_, value]: sensors)
+    {
+        value->update();
+    }
+    for (auto& [_, value]: sensorsVec3d)
+    {
+        value->update();
+    }
 }

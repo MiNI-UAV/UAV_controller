@@ -4,18 +4,18 @@
 #include <iostream>
 #include "environment.hpp"
 #include "sensors.hpp"
-#include "../UAV_logger/logger.hpp"
+#include "common.hpp"
 
-AHRS_EKF::AHRS_EKF(Environment &env):
+AHRS_EKF::AHRS_EKF(Environment &env, double Q_scaler, double R_scaler):
     AHRS(env)
 {
     logger.setFmt("Time, Roll, Pitch, Yaw, q1, q2, q3, q4, bx, by, bz");
     x.setZero();
     x(0) = 1.0;
     Q.setIdentity();
-    Q *= 0.000000001;
+    Q *= Q_scaler;
     R.setIdentity();
-    R *= 0.000001;
+    R *= R_scaler;
     P = Q;
 }
 
@@ -94,13 +94,15 @@ void AHRS_EKF::update(Eigen::Vector3d gyro, Eigen::Vector3d acc, Eigen::Vector3d
     Eigen::Matrix<double,7,7> PDash = A*P*A.transpose() + Q;
 
     //Update
-    Eigen::Matrix<double,6,7> C_val = C(xDash.head<4>());
-    Eigen::Matrix<double,6,6> inv_den = (C_val*PDash*C_val.transpose() + R).inverse();
-    Eigen::Matrix<double,7,6> K = (PDash*C_val.transpose())*inv_den;
-    x = xDash + K*(y-C_val*xDash);
-    Eigen::Matrix<double,7,7> I;
-    I.setIdentity();
-    P = (I - K*C_val)*PDash;
+    // Eigen::Matrix<double,6,7> C_val = C(xDash.head<4>());
+    // Eigen::Matrix<double,6,6> inv_den = (C_val*PDash*C_val.transpose() + R).inverse();
+    // Eigen::Matrix<double,7,6> K = (PDash*C_val.transpose())*inv_den;
+    // x = xDash + K*(y-C_val*xDash);
+    // Eigen::Matrix<double,7,7> I;
+    // I.setIdentity();
+    // P = (I - K*C_val)*PDash;
+    x = xDash;
+    P = PDash;
 
     Eigen::Vector3d ori = quaterionToRPY(q());
     mtxOri.lock();
