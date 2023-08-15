@@ -3,6 +3,7 @@
 #include <random>
 #include <limits>
 #include "environment.hpp"
+#include "common.hpp"
 
 
 template <class T>

@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <sstream>
 #include <vector>
+#include "common.hpp"
 #include "rapidxml/rapidxml.hpp"
 #include "mixers.hpp"
 

@@ -2,6 +2,7 @@
 #include <Eigen/Dense>
 #include "rapidxml/rapidxml.hpp"
 #include <map>
+#include "common.hpp"
 
 const int step_time = 3;
 

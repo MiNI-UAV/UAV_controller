@@ -7,7 +7,6 @@
 #include <memory>
 #include <atomic>
 #include <map>
-#include "..//logger.hpp"
 #include "sensors.hpp"
 #include "../params.hpp"
 

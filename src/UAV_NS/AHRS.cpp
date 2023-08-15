@@ -3,7 +3,7 @@
 #include <random>
 #include "environment.hpp"
 #include "sensors.hpp"
-#include "..//logger.hpp"
+#include "common.hpp"
 
 AHRS::AHRS(Environment& env):
     env{env},
