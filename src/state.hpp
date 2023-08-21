@@ -5,6 +5,8 @@
 #include <functional>
 #include "controller_mode.hpp"
 
+#define INFO_PERIOD 10
+
 class State
 {
     public:
@@ -28,7 +30,7 @@ class State
 
         State(zmq::context_t* ctx, std::string uav_address, const ControllerMode& mode, std::function<void(ControllerMode)> setControlMode, std::function<void()> exitController);
         ~State();
-        void handleMsg(std::string msg);
+        std::string handleMsg(std::string msg);
 
     private:
         bool run;
@@ -39,7 +41,8 @@ class State
 
 
         void clearAll();
-        void handleControl(std::string content);
-        void handleMode(std::string content);
-        void handleJoystick(std::string content);
+        std::string handleControl(std::string content);
+        std::string handleMode(std::string content);
+        std::string handleJoystick(std::string content);
+        std::string demandedInfo();
 };
