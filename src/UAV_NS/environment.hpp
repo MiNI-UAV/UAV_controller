@@ -19,7 +19,11 @@ public:
     double getTime();
     //In world frame
     Eigen::Vector3d getPosition();
+#ifdef USE_QUATERIONS
+    Eigen::Vector4d getOrientation();
+#else
     Eigen::Vector3d getOrientation();
+#endif
     Eigen::Vector3d getWorldLinearVelocity();
     Eigen::Vector3d getWorldAngularVelocity();
     //In body frame
@@ -40,7 +44,11 @@ private:
 
     std::atomic<double> time;
     Eigen::Vector3d position;
+#ifdef USE_QUATERIONS
+    Eigen::Vector4d orientation;
+#else
     Eigen::Vector3d orientation;
+#endif
     Eigen::Vector3d worldLinearVelocity;
     Eigen::Vector3d worldAngularVelocity;
     Eigen::Vector3d linearVelocity;

@@ -77,7 +77,8 @@ double Environment::getTime()
     return time.load();
 }
 
-bool recvVectors(zmq::socket_t& sock, int skip, Eigen::Vector3d& vec1, Eigen::Vector3d& vec2)
+template <int Size1, int Size2>
+bool recvVectors(zmq::socket_t& sock, int skip, Eigen::Vector<double,Size1>& vec1, Eigen::Vector<double,Size2>& vec2)
 {
     zmq::message_t msg;
     if(!sock.recv(msg, zmq::recv_flags::none))
@@ -90,23 +91,23 @@ bool recvVectors(zmq::socket_t& sock, int skip, Eigen::Vector3d& vec1, Eigen::Ve
     std::istringstream f(msg_str.substr(skip));
     std::string s;
     int i; 
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < Size1 + Size2; i++)
     {
         if(!getline(f, s, ','))
         {
             std::cerr << "Invalid msg" << std::endl;
             break;
         }
-        if(i < 3)
+        if(i < Size1)
         {
             vec1(i) = std::stod(s);
         }
         else
         {
-            vec2(i-3) = std::stod(s);
+            vec2(i-Size1) = std::stod(s);
         }
     }
-    if(i != 6)
+    if(i != Size1 + Size2)
     {
         std::cerr << "Invalid msg" << std::endl;
         return true;
@@ -114,17 +115,44 @@ bool recvVectors(zmq::socket_t& sock, int skip, Eigen::Vector3d& vec1, Eigen::Ve
     return false;
 }
 
+Eigen::Matrix<double, 3, 3> r_nb(const Eigen::Vector3d&  RPY)
+{
+    double fi = RPY(0);
+    double theta = RPY(1);
+    double psi = RPY(2);
+    Eigen::Matrix<double, 3, 3> r_nb;
+    r_nb << cos(theta)*cos(psi),                            cos(theta)*sin(psi),                           -sin(theta),
+            sin(fi)*sin(theta)*cos(psi) - cos(fi)*sin(psi), sin(fi)*sin(theta)*sin(psi) + cos(fi)*cos(psi), sin(fi)*cos(theta),
+            cos(fi)*sin(theta)*cos(psi) + sin(fi)*sin(psi), cos(fi)*sin(theta)*sin(psi) - sin(fi)*cos(psi), cos(fi)*cos(theta);
+    return r_nb;
+}
+
+Eigen::Matrix<double, 3, 3> r_nb(const Eigen::Vector4d&  e)
+{
+    Eigen::Matrix<double, 3, 3> r_nb;
+    r_nb << e(0)*e(0)+e(1)*e(1)-e(2)*e(2)-e(3)*e(3)  , 2*(e(1)*e(2)+e(0)*e(3))                   , 2*(e(1)*e(3)-e(0)*e(2)),
+            2*(e(1)*e(2)-e(0)*e(3))                  , e(0)*e(0)-e(1)*e(1)+e(2)*e(2)-e(3)*e(3)   , 2*(e(2)*e(3)+e(0)*e(1)),
+            2*(e(1)*e(3)+e(0)*e(2))                  , 2*(e(2)*e(3)-e(0)*e(1))                   , e(0)*e(0)-e(1)*e(1)-e(2)*e(2)+e(3)*e(3);
+    return r_nb;
+}
+
+
 void Environment::listenerJob() 
 {
     double msg_time;
     Eigen::Vector3d msg_position;
+#ifdef USE_QUATERIONS
+    Eigen::Vector4d msg_orientation;
+#else
     Eigen::Vector3d msg_orientation;
+#endif
     Eigen::Vector3d msg_worldLinearVelocity;
     Eigen::Vector3d msg_worldAngularVelocity;
     Eigen::Vector3d msg_linearVelocity;
     Eigen::Vector3d msg_angularVelocity;
     Eigen::Vector3d msg_linearAcceleration;
     Eigen::Vector3d msg_angularAcceleration;
+    Eigen::Matrix3d msg_r_nb;
 
     while(run.load())
     {
@@ -141,23 +169,12 @@ void Environment::listenerJob()
         if(recvVectors(vel_sock,3,msg_linearVelocity,msg_angularVelocity)) continue;
         if(recvVectors(vel_world_sock,3,msg_worldLinearVelocity,msg_worldAngularVelocity)) continue;
         if(recvVectors(accel_sock,3,msg_linearAcceleration,msg_angularAcceleration)) continue;
+        msg_r_nb = r_nb(msg_orientation);
 
         time.store(msg_time,std::memory_order_consume);
         safeSet(position,msg_position,mtxPos);
         safeSet(orientation,msg_orientation,mtxOri);
-
-        double cf = cos(msg_orientation(0));
-        double sf = sin(msg_orientation(0));
-        double ct = cos(msg_orientation(1));
-        double st = sin(msg_orientation(1));
-        double cp = cos(msg_orientation(2));
-        double sp = sin(msg_orientation(2));
-        mtxRnb.lock();
-        R_nb << ct*cp           , ct*sp           , -st,
-                sf*st*cp - cf*sp, sf*st*sp + cf*cp, sf*ct,
-                cf*st*cp + sf*sp, cf*st*sp - sf*cp, cf*ct;
-        mtxRnb.unlock();
-
+        safeSet(R_nb,msg_r_nb,mtxRnb);
         safeSet(worldLinearVelocity,msg_worldLinearVelocity,mtxWorldLinVel);
         safeSet(worldAngularVelocity,msg_worldAngularVelocity,mtxWorldAngVel);
         safeSet(linearVelocity,msg_linearVelocity,mtxLinVel);
@@ -176,7 +193,11 @@ Eigen::Vector3d Environment::getPosition()
     return safeGet(position,mtxPos);
 }
 
+#ifdef USE_QUATERIONS
+Eigen::Vector4d Environment::getOrientation()
+#else
 Eigen::Vector3d Environment::getOrientation()
+#endif
 {
     return safeGet(orientation,mtxOri);
 }
