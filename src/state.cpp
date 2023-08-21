@@ -129,7 +129,7 @@ double clampAngle(double angle)
 
 std::string State::handleJoystick(std::string content)
 {
-    constexpr double angleLimit = std::numbers::pi/2.0;
+    constexpr double angleLimit = std::numbers::pi/5.0;
 
     std::istringstream f(content);
     std::string value;

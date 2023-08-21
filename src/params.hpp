@@ -4,6 +4,8 @@
 #include <map>
 #include "common.hpp"
 
+#define USE_QUATERIONS 1
+
 const int step_time = 3;
 
 struct SensorParams
