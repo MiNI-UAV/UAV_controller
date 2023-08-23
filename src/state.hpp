@@ -5,7 +5,7 @@
 #include <functional>
 #include "controller_mode.hpp"
 
-#define INFO_PERIOD 10
+#define INFO_PERIOD 2
 
 class State
 {
