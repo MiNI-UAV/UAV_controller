@@ -12,7 +12,7 @@ class NS
 {
 public:
 
-    NS(Environment& env, Params& params);
+    NS(Environment& env);
     ~NS();
     //In world frame
     Eigen::Vector3d getPosition();
@@ -23,7 +23,6 @@ public:
 
 private:
     Environment& env;
-    Params& params;
     std::unique_ptr<AHRS> ahrs;
     std::unique_ptr<EKF> ekf;
 

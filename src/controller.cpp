@@ -2,17 +2,16 @@
 #include <iostream>
 #include "UAV_NS/NS.hpp"
 
-Controller::Controller(zmq::context_t *ctx, std::string uav_address, Params& _params):
+Controller::Controller(zmq::context_t *ctx, std::string uav_address):
 state(ctx, uav_address, mode,[this](ControllerMode mode){setMode(mode);},[this](){exitController();}),
-env(ctx, uav_address,_params),
-navisys(env,_params),
-control(ctx, uav_address),
-params{_params}
+env(ctx, uav_address),
+navisys(env),
+control(ctx, uav_address)
 {
     status = Status::running;
     mode = ControllerMode::position;
     jobs[ControllerMode::none] = [this](){
-        Eigen::VectorXd vec = params.mixer(0.0,0.0,0.0,0.0);
+        Eigen::VectorXd vec = Params::getSingleton()->mixer(0.0,0.0,0.0,0.0);
         control.sendSpeed(vec);
     };
     jobs[ControllerMode::angle] = [&](){angleControllLoop();};
@@ -96,14 +95,15 @@ void Controller::setCurrentDemands()
 
 void Controller::acroControllLoop()
 {
+    Params* params = Params::getSingleton();
     Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
-    double climb_rate = (state.throttle+1.0)*params.hoverRotorSpeed;
-    double roll_rate = params.pids.at("Roll").calc(state.demandedP-angVel(0));
-    double pitch_rate = params.pids.at("Pitch").calc(state.demandedQ-angVel(1));
-    double yaw_rate = params.pids.at("Yaw").calc(state.demandedR-angVel(2));
+    double climb_rate = (state.throttle+1.0)*params->hoverRotorSpeed;
+    double roll_rate = params->pids.at("Roll").calc(state.demandedP-angVel(0));
+    double pitch_rate = params->pids.at("Pitch").calc(state.demandedQ-angVel(1));
+    double yaw_rate = params->pids.at("Yaw").calc(state.demandedR-angVel(2));
 
-    Eigen::VectorXd vec = params.mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
+    Eigen::VectorXd vec = params->mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
     control.sendSpeed(vec);
 }
 
@@ -117,55 +117,57 @@ double circularError(double demanded, double val)
 
 void Controller::angleControllLoop()
 {
+    Params* params = Params::getSingleton();
     Eigen::Vector3d pos = navisys.getPosition();
     Eigen::Vector3d vel = navisys.getLinearVelocity();
     Eigen::Vector3d ori = navisys.getOrientation();
     Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
-    double demandedW = params.pids.at("Z").calc(state.demandedZ - pos(2));
-    double demandedP = params.pids.at("Fi").calc(circularError(state.demandedFi, ori(0)));
-    double demandedQ = params.pids.at("Theta").calc(circularError(state.demandedTheta, ori(1)));
-    double demandedR = params.pids.at("Psi").calc(circularError(state.demandedPsi, ori(2)));
+    double demandedW = params->pids.at("Z").calc(state.demandedZ - pos(2));
+    double demandedP = params->pids.at("Fi").calc(circularError(state.demandedFi, ori(0)));
+    double demandedQ = params->pids.at("Theta").calc(circularError(state.demandedTheta, ori(1)));
+    double demandedR = params->pids.at("Psi").calc(circularError(state.demandedPsi, ori(2)));
 
-    double climb_rate = params.pids.at("W").calc(demandedW-vel(2));
-    double roll_rate = params.pids.at("Roll").calc(demandedP-angVel(0));
-    double pitch_rate = params.pids.at("Pitch").calc(demandedQ-angVel(1));
-    double yaw_rate = params.pids.at("Yaw").calc(demandedR-angVel(2));
+    double climb_rate = params->pids.at("W").calc(demandedW-vel(2));
+    double roll_rate = params->pids.at("Roll").calc(demandedP-angVel(0));
+    double pitch_rate = params->pids.at("Pitch").calc(demandedQ-angVel(1));
+    double yaw_rate = params->pids.at("Yaw").calc(demandedR-angVel(2));
 
-    Eigen::VectorXd vec = params.mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
+    Eigen::VectorXd vec = params->mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
     control.sendSpeed(vec);
 }
 
 void Controller::positionControllLoop()
 {
+    Params* params = Params::getSingleton();
     Eigen::Vector3d pos = navisys.getPosition();
     Eigen::Vector3d vel = navisys.getLinearVelocity();
     Eigen::Vector3d ori = navisys.getOrientation();
     Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
-    double demandedU = params.pids.at("X").calc(state.demandedX - pos(0));
-    double demandedV = params.pids.at("Y").calc(state.demandedY - pos(1));
+    double demandedU = params->pids.at("X").calc(state.demandedX - pos(0));
+    double demandedV = params->pids.at("Y").calc(state.demandedY - pos(1));
     
-    double demandedFi_star = params.pids.at("V").calc(demandedV - vel(1));
-    double demandedTheta_star = params.pids.at("U").calc(demandedU - vel(0));
+    double demandedFi_star = params->pids.at("V").calc(demandedV - vel(1));
+    double demandedTheta_star = params->pids.at("U").calc(demandedU - vel(0));
 
     double PsiCos = std::cos(ori(2));
     double PsiSin = std::sin(ori(2));
     double demandedFi = demandedFi_star*PsiCos + demandedTheta_star*PsiSin;
     double demandedTheta = - demandedFi_star*PsiSin + demandedTheta_star*PsiCos;
 
-    double demandedP = params.pids.at("Fi").calc(demandedFi - ori(0));
-    double demandedQ = params.pids.at("Theta").calc(demandedTheta - ori(1));
+    double demandedP = params->pids.at("Fi").calc(demandedFi - ori(0));
+    double demandedQ = params->pids.at("Theta").calc(demandedTheta - ori(1));
 
-    double demandedW = params.pids.at("Z").calc(state.demandedZ - pos(2));
-    double demandedR = params.pids.at("Psi").calc(circularError(state.demandedPsi, ori(2)));
+    double demandedW = params->pids.at("Z").calc(state.demandedZ - pos(2));
+    double demandedR = params->pids.at("Psi").calc(circularError(state.demandedPsi, ori(2)));
 
-    double climb_rate = params.pids.at("W").calc(demandedW-vel(2));
-    double roll_rate = params.pids.at("Roll").calc(demandedP-angVel(0));
-    double pitch_rate = params.pids.at("Pitch").calc(demandedQ-angVel(1));
-    double yaw_rate = params.pids.at("Yaw").calc(demandedR-angVel(2));
+    double climb_rate = params->pids.at("W").calc(demandedW-vel(2));
+    double roll_rate = params->pids.at("Roll").calc(demandedP-angVel(0));
+    double pitch_rate = params->pids.at("Pitch").calc(demandedQ-angVel(1));
+    double yaw_rate = params->pids.at("Yaw").calc(demandedR-angVel(2));
 
-    Eigen::VectorXd vec = params.mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
+    Eigen::VectorXd vec = params->mixer(climb_rate,roll_rate,pitch_rate,yaw_rate);
     control.sendSpeed(vec);
 }
 
@@ -173,7 +175,7 @@ void Controller::positionControllLoop()
 
 void Controller::setMode(ControllerMode new_mode)
 {
-    for(auto pid: params.pids)
+    for(auto pid: Params::getSingleton()->pids)
     {
         pid.second.clear();
     }

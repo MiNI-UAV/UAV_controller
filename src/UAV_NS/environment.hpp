@@ -13,7 +13,7 @@
 class Environment
 {
 public:
-    Environment(zmq::context_t* ctx, std::string uav_address, Params& params);
+    Environment(zmq::context_t* ctx, std::string uav_address);
     ~Environment();
 
     double getTime();

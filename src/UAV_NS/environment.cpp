@@ -19,7 +19,7 @@ void connectConflateSocket(zmq::socket_t& sock, std::string address, std::string
     sock.connect(address);
 }
 
-Environment::Environment(zmq::context_t *ctx, std::string uav_address, Params& params):
+Environment::Environment(zmq::context_t *ctx, std::string uav_address):
     time_sock(*ctx,zmq::socket_type::sub),
     pos_sock(*ctx,zmq::socket_type::sub),
     vel_sock(*ctx,zmq::socket_type::sub),
@@ -31,7 +31,7 @@ Environment::Environment(zmq::context_t *ctx, std::string uav_address, Params& p
     "VelBX,VelBY,VelBZ,OmBX,OmBY,OmBZ,"
     "AccX,AccY,AccZ,EpsX,EpsY,EpsZ")
 {
-    for(auto& sensor: params.sensors)
+    for(auto& sensor: Params::getSingleton()->sensors)
     {   
         if(sensor.name.compare("accelerometer") == 0)
             sensorsVec3d.insert(std::make_pair(sensor.name,std::make_unique<Accelerometer>(*this,sensor.sd,sensor.bias,sensor.refreshTime)));
