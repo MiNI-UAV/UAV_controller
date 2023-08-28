@@ -11,8 +11,6 @@
 
 Params::Params() 
 {
-    name = "default";
-    noOfRotors = 4;
     if(singleton != nullptr)
     {
         std::cerr << "Only one instance of UAVParams should exist";
