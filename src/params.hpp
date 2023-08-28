@@ -36,7 +36,7 @@ struct Params
 {
     public:
         Params();
-        ~Params() = default;
+        ~Params();
         void loadConfig(std::string configFile);
 
         std::string name;
@@ -50,8 +50,12 @@ struct Params
         AHRSParams ahrs;
         EKFScalers ekf;
 
+        static Params* getSingleton();
+
     private:      
         void parseSensors(rapidxml::xml_node<>* sensorNode);
         void parseAHRS(rapidxml::xml_node<>* AHRSNode);
         void parseEKF(rapidxml::xml_node<>* EKFNode);
+
+        static Params* singleton;
 };

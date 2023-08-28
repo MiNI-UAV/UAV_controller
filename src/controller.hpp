@@ -17,7 +17,7 @@
 class Controller
 {
     public:
-        Controller(zmq::context_t *ctx, std::string uav_address, Params& params);
+        Controller(zmq::context_t *ctx, std::string uav_address);
         ~Controller();
         void run();
         void setMode(ControllerMode new_mode);
@@ -32,7 +32,6 @@ class Controller
         Environment env;
         NS navisys;
 	    Control control;
-        Params& params;
         std::optional<TimedLoop> loop;
 
         void syncWithPhysicEngine(zmq::context_t *ctx,std::string uav_address);

@@ -11,8 +11,17 @@
 
 Params::Params() 
 {
-    name = "default";
-    noOfRotors = 4;
+    if(singleton != nullptr)
+    {
+        std::cerr << "Only one instance of UAVParams should exist";
+        return;
+    }
+    singleton = this;
+}
+
+Params::~Params() 
+{
+    singleton = nullptr;
 }
 
 Eigen::MatrixX4d  stringToMatrix(const std::string& input) {
@@ -125,6 +134,13 @@ void Params::loadConfig(std::string configFile)
         }  
     }
     std::cout << "Loading config done!" << std::endl;
+}
+
+Params* Params::singleton = nullptr;
+
+Params *Params::getSingleton()
+{
+    return singleton;
 }
 
 void Params::parseSensors(rapidxml::xml_node<> *sensorNode)

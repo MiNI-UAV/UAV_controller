@@ -8,20 +8,20 @@
 #include "AHRS_complementary.hpp"
 
 
-NS::NS(Environment &env, Params& params):
+NS::NS(Environment &env):
     env{env},
-    params{params},
     loop(BASE_TIME_MS,[this](){job();},status)
 {
     std::cout << "NS initializing..." << std::endl;
+    Params* params = Params::getSingleton();
     status = Status::running;
-    if(params.ahrs.type.compare("EKF") ==0)
+    if(params->ahrs.type.compare("EKF") ==0)
     {
-        ahrs = std::make_unique<AHRS_EKF>(env,params.ahrs.Q,params.ahrs.R);
+        ahrs = std::make_unique<AHRS_EKF>(env,params->ahrs.Q,params->ahrs.R);
     }
-    if(params.ahrs.type.compare("Complementary") ==0)
+    if(params->ahrs.type.compare("Complementary") ==0)
     {
-        ahrs = std::make_unique<AHRS_complementary>(env,params.ahrs.alpha);
+        ahrs = std::make_unique<AHRS_complementary>(env,params->ahrs.alpha);
     }
     if(ahrs.get() != nullptr) std::cout << "AHRS OK" << std::endl;
     ekf = std::make_unique<EKF>(calcParams());
@@ -82,11 +82,13 @@ void NS::job()
 
 EKFParams NS::calcParams()
 {
+    Params* params = Params::getSingleton();
     const double T = step_time/1000.0;
-    const double predict_scaler = params.ekf.predictScaler;
-    const double update_scaler = params.ekf.updateScaler;
-    const double baro_scaler = params.ekf.baroScaler;
-    const double z_extra_scaler = params.ekf.zScaler;
+    const double predict_scaler = params->ekf.predictScaler;
+    const double update_scaler = params->ekf.updateScaler;
+    const double baro_scaler = params->ekf.baroScaler;
+    const double z_extra_scaler = params->ekf.zScaler;
+
     EKFParams p;
     p.Q.setZero();
     p.Q.block<3,3>(0,0) = ((std::pow(T,4)/4.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
