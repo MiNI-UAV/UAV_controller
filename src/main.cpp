@@ -34,8 +34,7 @@ void parseArgs(int argc, char** argv)
     {
         params->name = result["name"].as<std::string>();
     }
-    std::cout << "Name: " << params.name <<std::endl;
-    return params;
+    std::cout << "Name: " << params->name <<std::endl;
 }
 
 int main(int argc, char** argv)
