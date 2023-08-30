@@ -152,12 +152,12 @@ std::string State::handleJoystick(std::string content)
         demandedZ -= values[1]/10.0;
 	    demandedFi = values[2]*angleLimit;
 	    demandedTheta = -values[3]*angleLimit;
-        demandedPsi = clampAngle(demandedPsi + values[0]/100.0);
+        demandedPsi = clampAngle(demandedPsi + values[0]/20.0);
     return demandedInfo();
 
     case ControllerMode::position:
         demandedZ -= values[1]/10.0;
-        demandedPsi = clampAngle(demandedPsi + values[0]/100.0);
+        demandedPsi = clampAngle(demandedPsi + values[0]/20.0);
         demandedX += ((values[3]*angleLimit)*std::cos(demandedPsi) - (values[2]*angleLimit)*std::sin(demandedPsi))/2.0;
         demandedY += ((values[3]*angleLimit)*std::sin(demandedPsi) + (values[2]*angleLimit)*std::cos(demandedPsi))/2.0;
     return demandedInfo();
