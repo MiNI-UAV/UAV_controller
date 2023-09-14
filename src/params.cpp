@@ -79,13 +79,7 @@ void Params::loadConfig(std::string configFile)
         }
         if(std::strcmp(node->name(),"rotors") == 0)
         {
-            for (rapidxml::xml_node<>* rotorNode = node->first_node(); rotorNode; rotorNode = rotorNode->next_sibling()) 
-            {
-                if(std::strcmp(rotorNode->name(),"no") == 0)
-                {
-                    noOfRotors = std::stod(rotorNode->value());
-                }
-            }
+            noOfRotors = std::stoi(node->first_attribute()->value());
         }
         if(std::strcmp(node->name(),"PID") == 0)
         {
