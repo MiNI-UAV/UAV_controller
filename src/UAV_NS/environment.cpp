@@ -10,6 +10,7 @@
 #include "../utils.hpp"
 #include "common.hpp"
 #include "sensors.hpp"
+#include "../defines.hpp"
 
 void connectConflateSocket(zmq::socket_t& sock, std::string address, std::string topic)
 {
@@ -141,7 +142,7 @@ void Environment::listenerJob()
 {
     double msg_time;
     Eigen::Vector3d msg_position;
-#ifdef USE_QUATERIONS
+#if USE_QUATERIONS
     Eigen::Vector4d msg_orientation;
 #else
     Eigen::Vector3d msg_orientation;
@@ -193,7 +194,7 @@ Eigen::Vector3d Environment::getPosition()
     return safeGet(position,mtxPos);
 }
 
-#ifdef USE_QUATERIONS
+#if USE_QUATERIONS
 Eigen::Vector4d Environment::getOrientation()
 #else
 Eigen::Vector3d Environment::getOrientation()

@@ -99,7 +99,7 @@ void Controller::setCurrentDemands()
 void Controller::acroControllLoop()
 {
     Eigen::Vector3d angVel = navisys.getAngularVelocity();
-    
+
     double roll_rate = pids.at("Roll").calc(step_time,state.demandedP-angVel(0));
     double pitch_rate = pids.at("Pitch").calc(step_time,state.demandedQ-angVel(1));
     double yaw_rate = pids.at("Yaw").calc(step_time,state.demandedR-angVel(2));

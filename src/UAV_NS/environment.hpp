@@ -9,6 +9,7 @@
 #include <map>
 #include "sensors.hpp"
 #include "common.hpp"
+#include "../defines.hpp"
 
 class Environment
 {
@@ -19,7 +20,7 @@ public:
     double getTime();
     //In world frame
     Eigen::Vector3d getPosition();
-#ifdef USE_QUATERIONS
+#if USE_QUATERIONS
     Eigen::Vector4d getOrientation();
 #else
     Eigen::Vector3d getOrientation();
@@ -44,7 +45,7 @@ private:
 
     std::atomic<double> time;
     Eigen::Vector3d position;
-#ifdef USE_QUATERIONS
+#if USE_QUATERIONS
     Eigen::Vector4d orientation;
 #else
     Eigen::Vector3d orientation;
