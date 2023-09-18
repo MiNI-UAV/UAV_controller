@@ -8,7 +8,7 @@
 #include <atomic>
 #include <map>
 #include "sensors.hpp"
-#include "../params.hpp"
+#include "common.hpp"
 
 class Environment
 {

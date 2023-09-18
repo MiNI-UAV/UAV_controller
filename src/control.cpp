@@ -47,23 +47,56 @@ void Control::stop()
 
 void Control::sendSpeed(Eigen::VectorXd speeds)
 {
-    static Eigen::IOFormat commaFormat(4, Eigen::DontAlignCols," ",",");
+    sendVectorXd("s:",speeds);
+}
 
-    recv();
-    speeds = speeds.unaryExpr([](auto d) {return std::abs(d) < 1e-4 ? 0.0 : d;});
+void Control::sendSurface(Eigen::VectorXd angels) 
+{
+    sendVectorXd("e:",angels);
+}
+
+void Control::startJet(int index) 
+{
+    static const char* prefix = "j:";
+
     std::stringstream ss;
-    std::string s;
-    ss.precision(5);
-    ss << "s:"<< speeds.format(commaFormat);
-    s = ss.str();
-    //std::cout << "[" << s << "]" << std::endl;
-    zmq::message_t message(s.data(), s.size());
-    sock.send(message,zmq::send_flags::none);
+    ss << prefix << index;
+    sendString(ss.str());
+}
+
+void Control::sendHinge(char type, int index, int hinge_index, double value) 
+{
+    static const char* prefix = "h:";
+
+    std::stringstream ss;
+    ss << prefix <<type << index << hinge_index << value;
+    sendString(ss.str());
 }
 
 Control::~Control()
 {
     sock.close();
+}
+
+void Control::sendVectorXd(std::string prefix, Eigen::VectorXd vec) 
+{
+    static Eigen::IOFormat commaFormat(4, Eigen::DontAlignCols," ",",");
+
+    vec = vec.unaryExpr([](auto d) {return std::abs(d) < 1e-4 ? 0.0 : d;});
+    std::stringstream ss;
+    std::string s;
+    ss.precision(5);
+    ss << prefix << vec.format(commaFormat);
+    s = ss.str();
+    sendString(ss.str());
+}
+
+void Control::sendString(std::string msg) 
+{
+    //std::cout << "[" << msg << "]" << std::endl;
+    recv();
+    zmq::message_t message(msg.data(), msg.size());
+    sock.send(message,zmq::send_flags::none);
 }
 
 void Control::recv()

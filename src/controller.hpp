@@ -9,7 +9,7 @@
 #include "control.hpp"
 #include "state.hpp"
 #include "controller_mode.hpp"
-#include "params.hpp"
+#include "common.hpp"
 #include "UAV_NS/environment.hpp"
 #include "UAV_NS/NS.hpp"
 
@@ -33,6 +33,7 @@ class Controller
         NS navisys;
 	    Control control;
         std::optional<TimedLoop> loop;
+        std::map<std::string,PID> pids;
 
         void syncWithPhysicEngine(zmq::context_t *ctx,std::string uav_address);
         void setCurrentDemands();

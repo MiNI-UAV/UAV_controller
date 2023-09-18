@@ -31,7 +31,7 @@ Environment::Environment(zmq::context_t *ctx, std::string uav_address):
     "VelBX,VelBY,VelBZ,OmBX,OmBY,OmBZ,"
     "AccX,AccY,AccZ,EpsX,EpsY,EpsZ")
 {
-    for(auto& sensor: Params::getSingleton()->sensors)
+    for(auto& sensor: UAVparams::getSingleton()->sensors)
     {   
         if(sensor.name.compare("accelerometer") == 0)
             sensorsVec3d.insert(std::make_pair(sensor.name,std::make_unique<Accelerometer>(*this,sensor.sd,sensor.bias,sensor.refreshTime)));

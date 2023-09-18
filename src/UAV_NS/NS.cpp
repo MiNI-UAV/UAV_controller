@@ -6,6 +6,7 @@
 #include "AHRS.hpp"
 #include "AHRS_EKF.hpp"
 #include "AHRS_complementary.hpp"
+#include "../defines.hpp"
 
 
 NS::NS(Environment &env):
@@ -13,7 +14,7 @@ NS::NS(Environment &env):
     loop(BASE_TIME_MS,[this](){job();},status)
 {
     std::cout << "NS initializing..." << std::endl;
-    Params* params = Params::getSingleton();
+    const UAVparams* params = UAVparams::getSingleton();
     status = Status::running;
     if(params->ahrs.type.compare("EKF") ==0)
     {
@@ -82,8 +83,7 @@ void NS::job()
 
 EKFParams NS::calcParams()
 {
-    Params* params = Params::getSingleton();
-    const double T = step_time/1000.0;
+    const UAVparams* params = UAVparams::getSingleton();
     const double predict_scaler = params->ekf.predictScaler;
     const double update_scaler = params->ekf.updateScaler;
     const double baro_scaler = params->ekf.baroScaler;
@@ -91,10 +91,10 @@ EKFParams NS::calcParams()
 
     EKFParams p;
     p.Q.setZero();
-    p.Q.block<3,3>(0,0) = ((std::pow(T,4)/4.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
-    p.Q.block<3,3>(3,0) = ((std::pow(T,3)/2.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
-    p.Q.block<3,3>(0,3) = ((std::pow(T,3)/2.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
-    p.Q.block<3,3>(3,3) = ((std::pow(T,2)/1.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(0,0) = ((std::pow(step_time,4)/4.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(3,0) = ((std::pow(step_time,3)/2.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(0,3) = ((std::pow(step_time,3)/2.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(3,3) = ((std::pow(step_time,2)/1.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
     p.Q(2,2) *= z_extra_scaler;
     p.Q(2,5) *= z_extra_scaler;
     p.Q(5,2) *= z_extra_scaler;

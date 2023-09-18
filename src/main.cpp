@@ -8,13 +8,12 @@
 #include <filesystem>
 #include "zmq.hpp"
 #include "controller.hpp"
-#include "params.hpp"
+#include "common.hpp"
 
 std::string log_path = "logs/";
 
-void parseArgs(int argc, char** argv)
+void parseArgs(int argc, char** argv, UAVparams* params)
 {
-    Params* params = Params::getSingleton();
     cxxopts::Options options("controller", "Process representing PID controller of one UAV");
     options.add_options()
 		("c,config", "Path of config file", cxxopts::value<std::string>()->default_value("config.xml"))
@@ -40,8 +39,8 @@ void parseArgs(int argc, char** argv)
 int main(int argc, char** argv)
 {
 	zmq::context_t ctx;
-    Params params;
-    parseArgs(argc,argv);
+    UAVparams params;
+    parseArgs(argc,argv,&params);
     Logger::setLogDirectory(params.name);
 	std::string uav_address = "ipc:///tmp/" + std::string(params.name);
     std::string folder = "/tmp/" + std::string(params.name);
