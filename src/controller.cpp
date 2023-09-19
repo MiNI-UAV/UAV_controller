@@ -4,22 +4,24 @@
 #include "defines.hpp"
 
 Controller::Controller(zmq::context_t *ctx, std::string uav_address):
-state(ctx, uav_address, mode,[this](ControllerMode mode){setMode(mode);},[this](){exitController();}),
+controller_loop{ControllerLoop::ControllerLoopFactory(ControllerMode::QANGLE)},
+state{new State(
+    ctx,
+    uav_address,
+    this
+    )},
 env(ctx, uav_address),
 navisys(env),
 control(ctx, uav_address)
 {
     const UAVparams* params = UAVparams::getSingleton();
     status = Status::running;
-    mode = ControllerMode::position;
-    jobs[ControllerMode::none] = [this](){
-        Eigen::VectorXd vec = applyMixerRotors(0.0,0.0,0.0,0.0);
-        control.sendSpeed(vec);
-    };
-    jobs[ControllerMode::angle] = [&](){angleControllLoop();};
-    jobs[ControllerMode::acro] = [&](){acroControllLoop();};
-    jobs[ControllerMode::position] = [&](){positionControllLoop();};
-    loop.emplace(std::round(step_time*1000.0),jobs[mode],status);
+    loop.emplace(std::round(step_time*1000.0),[this]() {controller_loop->job(
+        state,
+        pids,
+        control,
+        navisys
+    );},status);
     pids = params->pids;
     for(auto& elem : pids)
     {
@@ -31,6 +33,8 @@ control(ctx, uav_address)
 
 Controller::~Controller()
 {
+    delete controller_loop;
+    delete state;
     std::cout << "Exiting controller!" << std::endl;
 }
 
@@ -48,7 +52,7 @@ void Controller::run()
             break;
             case Status::running:
                 control.start();
-                std::cout << "Running in " << ToString(mode) << " mode" << std::endl;
+                std::cout << "Running in " << ControllerModeToString(controller_loop->getMode()) << " mode" << std::endl;
                 loop->go();
                 control.recv();
             break;
@@ -58,7 +62,12 @@ void Controller::run()
                 run = false;
             break;
             case Status::reload:
-                loop.emplace(std::round(step_time*1000.0),jobs[mode],status);
+                loop.emplace(std::round(step_time*1000.0),[this] () {controller_loop->job(
+                    state,
+                    pids,
+                    control,
+                    navisys
+                );},status);
                 status = Status::running;
             break;
         }
@@ -90,91 +99,15 @@ void Controller::syncWithPhysicEngine(zmq::context_t *ctx,std::string uav_addres
 void Controller::setCurrentDemands()
 {
     auto pos = navisys.getPosition();
-    state.demandedX = pos(0);
-    state.demandedY = pos(1);
-    state.demandedZ = pos(2);
+    state->demandedX = pos(0);
+    state->demandedY = pos(1);
+    state->demandedZ = pos(2);
     auto ori = navisys.getOrientation();
-    state.demandedFi = ori(0);
-    state.demandedTheta = ori(1);
-    state.demandedPsi = ori(2);
+    state->demandedFi = ori(0);
+    state->demandedTheta = ori(1);
+    state->demandedPsi = ori(2);
     
 }
-
-void Controller::acroControllLoop()
-{
-    Eigen::Vector3d angVel = navisys.getAngularVelocity();
-
-    double roll_rate = pids.at("Roll").calc(state.demandedP-angVel(0));
-    double pitch_rate = pids.at("Pitch").calc(state.demandedQ-angVel(1));
-    double yaw_rate = pids.at("Yaw").calc(state.demandedR-angVel(2));
-
-    Eigen::VectorXd vec = applyMixerRotorsHover(state.throttle,roll_rate,pitch_rate,yaw_rate);
-    control.sendSpeed(vec);
-}
-
-double circularError(double demanded, double val)
-{
-    double diff = demanded-val;
-    if(diff > std::numbers::pi) return -2*std::numbers::pi + diff;
-    if(diff < -std::numbers::pi) return +2*std::numbers::pi + diff;
-    return diff;
-}
-
-void Controller::angleControllLoop()
-{
-    Eigen::Vector3d pos = navisys.getPosition();
-    Eigen::Vector3d vel = navisys.getLinearVelocity();
-    Eigen::Vector3d ori = navisys.getOrientation();
-    Eigen::Vector3d angVel = navisys.getAngularVelocity();
-
-    double demandedW = pids.at("Z").calc(state.demandedZ - pos(2));
-    double demandedP = pids.at("Fi").calc(circularError(state.demandedFi, ori(0)));
-    double demandedQ = pids.at("Theta").calc(circularError(state.demandedTheta, ori(1)));
-    double demandedR = pids.at("Psi").calc(circularError(state.demandedPsi, ori(2)));
-
-    double climb_rate = pids.at("W").calc(demandedW-vel(2));
-    double roll_rate = pids.at("Roll").calc(demandedP-angVel(0));
-    double pitch_rate = pids.at("Pitch").calc(demandedQ-angVel(1));
-    double yaw_rate = pids.at("Yaw").calc(demandedR-angVel(2));
-
-    Eigen::VectorXd vec = applyMixerRotors(climb_rate,roll_rate,pitch_rate,yaw_rate);
-    control.sendSpeed(vec);
-}
-
-void Controller::positionControllLoop()
-{
-    Eigen::Vector3d pos = navisys.getPosition();
-    Eigen::Vector3d vel = navisys.getLinearVelocity();
-    Eigen::Vector3d ori = navisys.getOrientation();
-    Eigen::Vector3d angVel = navisys.getAngularVelocity();
-
-    double demandedU = pids.at("X").calc(state.demandedX - pos(0));
-    double demandedV = pids.at("Y").calc(state.demandedY - pos(1));
-    
-    double demandedFi_star = pids.at("V").calc(demandedV - vel(1));
-    double demandedTheta_star = pids.at("U").calc(demandedU - vel(0));
-
-    double PsiCos = std::cos(ori(2));
-    double PsiSin = std::sin(ori(2));
-    double demandedFi = demandedFi_star*PsiCos + demandedTheta_star*PsiSin;
-    double demandedTheta = - demandedFi_star*PsiSin + demandedTheta_star*PsiCos;
-
-    double demandedP = pids.at("Fi").calc(demandedFi - ori(0));
-    double demandedQ = pids.at("Theta").calc(demandedTheta - ori(1));
-
-    double demandedW = pids.at("Z").calc(state.demandedZ - pos(2));
-    double demandedR = pids.at("Psi").calc(circularError(state.demandedPsi, ori(2)));
-
-    double climb_rate = pids.at("W").calc(demandedW-vel(2));
-    double roll_rate = pids.at("Roll").calc(demandedP-angVel(0));
-    double pitch_rate = pids.at("Pitch").calc(demandedQ-angVel(1));
-    double yaw_rate = pids.at("Yaw").calc(demandedR-angVel(2));
-
-    Eigen::VectorXd vec = applyMixerRotors(climb_rate,roll_rate,pitch_rate,yaw_rate);
-    control.sendSpeed(vec);
-}
-
-
 
 void Controller::setMode(ControllerMode new_mode)
 {
@@ -183,7 +116,8 @@ void Controller::setMode(ControllerMode new_mode)
         pid.second.clear();
     }
     setCurrentDemands();
-    mode = new_mode;
+    if(controller_loop != nullptr) delete controller_loop;
+    controller_loop = ControllerLoop::ControllerLoopFactory(new_mode);
     status = Status::reload;
 }
 

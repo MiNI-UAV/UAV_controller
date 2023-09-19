@@ -1,10 +1,12 @@
 #include "state.hpp"
 #include <zmq.hpp>
+#include <Eigen/Dense>
 #include <iostream>
 #include <functional>
 #include <numbers>
 #include <cmath>
-#include "controller_mode.hpp"
+#include "Controller/controller_mode.hpp"
+#include "Controller/controller_loop.hpp"
 
 void orderServerJob(zmq::context_t *ctx, std::string uav_address, std::function<std::string(std::string)> handleMsg, bool& run)
 {
@@ -31,13 +33,13 @@ void orderServerJob(zmq::context_t *ctx, std::string uav_address, std::function<
     sock.close();
 }
 
-State::State(zmq::context_t* ctx, std::string uav_address, const ControllerMode& mode, std::function<void(ControllerMode)> setControlMode, std::function<void()> exitController):
-_mode{mode},
-_setControlMode{setControlMode},
-_exitController{exitController}
-{
-    run = true;
-    orderServer = std::thread(orderServerJob,ctx, uav_address, [this](std::string msg) {return this->handleMsg(msg);},std::ref(run));
+State::State(zmq::context_t *ctx, std::string uav_address,
+             Controller* controller)
+    : _controller{controller} {
+  run = true;
+  orderServer = std::thread(
+      orderServerJob, ctx, uav_address,
+      [this](std::string msg) { return this->handleMsg(msg); }, std::ref(run));
 }
 
 State::~State()
@@ -87,7 +89,7 @@ std::string State::handleControl(std::string content)
 {
     if(content.compare("exit") == 0)
     { 
-        _exitController();
+        _controller->exitController();
         return "ok";
     }
     return "unknown";
@@ -96,109 +98,40 @@ std::string State::handleControl(std::string content)
 std::string State::handleMode(std::string content)
 {
     clearAll();
-    if(content.compare("none") == 0)
+    try
     {
-        _setControlMode(ControllerMode::none);
+        auto mode = ControllerModeFromString(content.data());
+        _controller->setMode(mode);
         return "ok";
     }
-    if(content.compare("acro") == 0)
+    catch(const std::exception& e)
     {
-        _setControlMode(ControllerMode::acro);
-        return "ok";
+        return "unknown";
     }
-    if(content.compare("pos") == 0)
-    {
-        _setControlMode(ControllerMode::position);
-        return "ok";
-    }
-    if(content.compare("angle") == 0)
-    {
-        _setControlMode(ControllerMode::angle);
-        return "ok";
-    }
-    return "unknown";
 }
 
-double clampAngle(double angle)
-{
-    angle = std::fmod(angle + std::numbers::pi,2*std::numbers::pi);
-    if (angle < 0)
-        angle += 2*std::numbers::pi;
-    return angle - std::numbers::pi;
-}
+
 
 std::string State::handleJoystick(std::string content)
 {
-    constexpr double angleLimit = std::numbers::pi/5.0;
+    static int i = 0;
 
     std::istringstream f(content);
     std::string value;
-    double values[4];
+    Eigen::Vector4d values;
     for(int i = 0; i < 4; i++)
     {
         if(!getline(f, value, ',')) break;
         values[i] = (std::stoi(value)-512)/512.0;
     }
-    switch (_mode)
+
+    if(_controller->controller_loop == nullptr)
     {
-    case ControllerMode::acro:
-        throttle = values[1];
-        demandedP = values[2]*5.0;
-	    demandedQ = -values[3]*5.0;
-	    demandedR = values[0]*3.0;
-    return demandedInfo();
-
-    case ControllerMode::angle:
-        demandedZ -= values[1]/10.0;
-	    demandedFi = values[2]*angleLimit;
-	    demandedTheta = -values[3]*angleLimit;
-        demandedPsi = clampAngle(demandedPsi + values[0]/20.0);
-    return demandedInfo();
-
-    case ControllerMode::position:
-        demandedZ -= values[1]/10.0;
-        demandedPsi = clampAngle(demandedPsi + values[0]/20.0);
-        demandedX += ((values[3]*angleLimit)*std::cos(demandedPsi) - (values[2]*angleLimit)*std::sin(demandedPsi))/2.0;
-        demandedY += ((values[3]*angleLimit)*std::sin(demandedPsi) + (values[2]*angleLimit)*std::cos(demandedPsi))/2.0;
-    return demandedInfo();
-
-    case ControllerMode::none:
-    return ToString(_mode);
-    
-    default:
-        std::cerr << "Not implemented yet!" << std::endl;
-    return "unknown";
+        return "ok";
     }
-}
-
-std::string State::demandedInfo() 
-{
-    static int i = 0;
+    _controller->controller_loop->handleJoystick(this,values);
     i++;
-    if(i != INFO_PERIOD) return "ok";
+    if( i < INFO_PERIOD ) return "ok";
     i = 0;
-
-    std::stringstream ss;
-    std::string s;
-    ss.precision(3);
-    ss << std::fixed << ToString(_mode) << ",";
-
-    switch (_mode)
-    {
-        case ControllerMode::acro:
-            ss << demandedP << "," << demandedQ << "," << demandedR << "," << throttle;
-        break;
-
-        case ControllerMode::angle:
-            ss << demandedFi << "," << demandedTheta << "," << demandedPsi << "," << demandedZ;
-        break;
-
-        case ControllerMode::position:
-            ss << demandedX << "," << demandedY << "," << demandedZ << "," << demandedPsi;
-        break;
-
-        default:
-        break;
-    }
-    return ss.str(); 
+    return _controller->controller_loop->demandInfo(this);
 }

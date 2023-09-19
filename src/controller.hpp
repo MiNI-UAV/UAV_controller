@@ -7,15 +7,19 @@
 #include "UAV_NS/NS.hpp"
 #include "mixers.hpp"
 #include "control.hpp"
-#include "state.hpp"
-#include "controller_mode.hpp"
+#include "Controller/controller_mode.hpp"
+#include "Controller/controller_loop.hpp"
 #include "common.hpp"
 #include "UAV_NS/environment.hpp"
-#include "UAV_NS/NS.hpp"
+#include "state.hpp"
 
+class State;
+class ControllerLoop;
 
 class Controller
 {
+    friend class State;
+
     public:
         Controller(zmq::context_t *ctx, std::string uav_address);
         ~Controller();
@@ -24,11 +28,9 @@ class Controller
         void exitController();
 
     private:
-        std::function<void()> jobs[4];
-        ControllerMode mode;
-
+        ControllerLoop* controller_loop;
+        State* state;
         Status status;
-        State state;
         Environment env;
         NS navisys;
 	    Control control;

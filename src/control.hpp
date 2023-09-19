@@ -1,3 +1,5 @@
+#pragma once
+
 #include <zmq.hpp>
 #include <Eigen/Dense>
 
