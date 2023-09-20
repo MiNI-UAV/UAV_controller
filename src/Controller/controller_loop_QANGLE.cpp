@@ -1,5 +1,5 @@
 #include "controller_loop_QANGLE.hpp"
-#include "controller_loop_common.hpp"
+#include "../utils.hpp"
 
 ControllerLoopQANGLE::ControllerLoopQANGLE():
     ControllerLoop(ControllerMode::QANGLE)
