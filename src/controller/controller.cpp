@@ -1,7 +1,6 @@
 #include "controller.hpp"
 #include <iostream>
-#include "UAV_NS/NS.hpp"
-#include "defines.hpp"
+#include "../defines.hpp"
 
 Controller::Controller(
     zmq::context_t *ctx,

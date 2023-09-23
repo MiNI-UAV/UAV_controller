@@ -2,9 +2,6 @@
 #include <Eigen/Dense>
 #include <random>
 #include <iostream>
-#include "environment.hpp"
-#include "sensors.hpp"
-#include "common.hpp"
 
 AHRS_EKF::AHRS_EKF(Environment &env, double Q_scaler, double R_scaler):
     AHRS(env)

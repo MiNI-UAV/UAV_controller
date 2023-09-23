@@ -1,9 +1,9 @@
 #include "controller_loop.hpp"
 
-#include "controller_loop_NONE.hpp"
-#include "controller_loop_QACRO.hpp"
-#include "controller_loop_QANGLE.hpp"
-#include "controller_loop_QPOS.hpp"
+#include "modes/controller_loop_NONE.hpp"
+#include "modes/controller_loop_QACRO.hpp"
+#include "modes/controller_loop_QANGLE.hpp"
+#include "modes/controller_loop_QPOS.hpp"
 
 ControllerLoop::ControllerLoop(ControllerMode mode):
     _mode{mode}

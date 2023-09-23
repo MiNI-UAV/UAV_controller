@@ -7,7 +7,7 @@
 #include <chrono>
 #include <filesystem>
 #include "zmq.hpp"
-#include "controller.hpp"
+#include "controller/controller.hpp"
 #include "common.hpp"
 
 std::string log_path = "logs/";

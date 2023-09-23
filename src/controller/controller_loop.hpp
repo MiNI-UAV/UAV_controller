@@ -4,10 +4,10 @@
 #include <map>
 #include "controller_mode.hpp"
 #include "common.hpp"
-#include "../mixers.hpp"
-#include "../control.hpp"
-#include "../UAV_NS/NS.hpp"
-#include "../state.hpp"
+#include "mixers.hpp"
+#include "../communication/control.hpp"
+#include "../navigation/NS.hpp"
+#include "../communication/state.hpp"
 
 class State;
 

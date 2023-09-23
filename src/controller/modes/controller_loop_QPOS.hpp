@@ -1,10 +1,10 @@
 #pragma once
-#include "controller_loop.hpp"
+#include "../controller_loop.hpp"
 
-class ControllerLoopQANGLE: public ControllerLoop
+class ControllerLoopQPOS: public ControllerLoop
 {
 public:
-    ControllerLoopQANGLE();
+    ControllerLoopQPOS();
 
     void job(
         State* state,

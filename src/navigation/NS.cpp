@@ -1,11 +1,8 @@
 #include "NS.hpp"
 #include <Eigen/Dense>
 #include <iostream>
-#include "environment.hpp"
-#include "sensors.hpp"
-#include "AHRS.hpp"
-#include "AHRS_EKF.hpp"
-#include "AHRS_complementary.hpp"
+#include "AHRS/AHRS_EKF.hpp"
+#include "AHRS/AHRS_complementary.hpp"
 #include "../defines.hpp"
 
 

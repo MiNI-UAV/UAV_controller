@@ -5,8 +5,8 @@
 #include <functional>
 #include <numbers>
 #include <cmath>
-#include "Controller/controller_mode.hpp"
-#include "Controller/controller_loop.hpp"
+#include "../controller/controller_mode.hpp"
+#include "../controller/controller_loop.hpp"
 
 void orderServerJob(zmq::context_t *ctx, std::string uav_address, std::function<std::string(std::string)> handleMsg, bool& run)
 {

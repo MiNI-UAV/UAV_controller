@@ -1,5 +1,5 @@
 #include "controller_loop_QPOS.hpp"
-#include "../utils.hpp"
+#include "../../utils.hpp"
 
 ControllerLoopQPOS::ControllerLoopQPOS():
     ControllerLoop(ControllerMode::QPOS)

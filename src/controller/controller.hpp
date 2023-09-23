@@ -4,14 +4,14 @@
 #include <Eigen/Dense>
 #include <functional>
 #include <optional>
-#include "UAV_NS/NS.hpp"
+#include "../navigation/NS.hpp"
+#include "../navigation/environment.hpp"
 #include "mixers.hpp"
-#include "control.hpp"
-#include "Controller/controller_mode.hpp"
-#include "Controller/controller_loop.hpp"
+#include "controller_mode.hpp"
+#include "controller_loop.hpp"
 #include "common.hpp"
-#include "UAV_NS/environment.hpp"
-#include "state.hpp"
+#include "../communication/control.hpp"
+#include "../communication/state.hpp"
 
 class State;
 class ControllerLoop;

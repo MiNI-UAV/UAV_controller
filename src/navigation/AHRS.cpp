@@ -1,8 +1,6 @@
 #include "AHRS.hpp"
 #include <Eigen/Dense>
 #include <random>
-#include "environment.hpp"
-#include "sensors.hpp"
 #include "common.hpp"
 
 AHRS::AHRS(Environment& env):

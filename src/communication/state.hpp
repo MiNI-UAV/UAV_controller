@@ -3,7 +3,7 @@
 #include <thread>
 #include <zmq.hpp>
 #include <functional>
-#include "controller.hpp"
+#include "../controller/controller.hpp"
 
 #define INFO_PERIOD 2
 
