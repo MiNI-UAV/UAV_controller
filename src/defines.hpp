@@ -1,4 +1,7 @@
 #pragma once
 
 #define USE_QUATERIONS 1
-const double step_time = 0.003;
+
+namespace def {
+const double STEP_TIME = 0.003;
+}

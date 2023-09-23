@@ -18,7 +18,7 @@ control(ctx, uav_address)
 {
     const UAVparams* params = UAVparams::getSingleton();
     status = Status::running;
-    loop.emplace(std::round(step_time*1000.0),[this]() {controller_loop->job(
+    loop.emplace(std::round(def::STEP_TIME*1000.0),[this]() {controller_loop->job(
         state,
         pids,
         control,
@@ -27,7 +27,7 @@ control(ctx, uav_address)
     pids = params->pids;
     for(auto& elem : pids)
     {
-        elem.second.set_dt(step_time);
+        elem.second.set_dt(def::STEP_TIME);
     }
     setMode(ControllerModeFromString(params->initialMode.data()));
     syncWithPhysicEngine(ctx,uav_address);
@@ -65,7 +65,7 @@ void Controller::run()
                 run = false;
             break;
             case Status::reload:
-                loop.emplace(std::round(step_time*1000.0),[this] () {controller_loop->job(
+                loop.emplace(std::round(def::STEP_TIME*1000.0),[this] () {controller_loop->job(
                     state,
                     pids,
                     control,

@@ -88,10 +88,10 @@ EKFParams NS::calcParams()
 
     EKFParams p;
     p.Q.setZero();
-    p.Q.block<3,3>(0,0) = ((std::pow(step_time,4)/4.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
-    p.Q.block<3,3>(3,0) = ((std::pow(step_time,3)/2.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
-    p.Q.block<3,3>(0,3) = ((std::pow(step_time,3)/2.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
-    p.Q.block<3,3>(3,3) = ((std::pow(step_time,2)/1.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(0,0) = ((std::pow(def::STEP_TIME,4)/4.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(3,0) = ((std::pow(def::STEP_TIME,3)/2.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(0,3) = ((std::pow(def::STEP_TIME,3)/2.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(3,3) = ((std::pow(def::STEP_TIME,2)/1.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
     p.Q(2,2) *= z_extra_scaler;
     p.Q(2,5) *= z_extra_scaler;
     p.Q(5,2) *= z_extra_scaler;
