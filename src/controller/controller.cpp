@@ -4,10 +4,9 @@
 
 Controller::Controller(
     zmq::context_t *ctx,
-    std::string uav_address,
-    ControllerMode initialMode = ControllerMode::NONE
+    std::string uav_address
     ):
-controller_loop{ControllerLoop::ControllerLoopFactory(initialMode)},
+controller_loop{ControllerLoop::ControllerLoopFactory(ControllerMode::NONE)},
 state{new State(
     ctx,
     uav_address,
@@ -30,6 +29,7 @@ control(ctx, uav_address)
     {
         elem.second.set_dt(step_time);
     }
+    setMode(ControllerModeFromString(params->initialMode.data()));
     syncWithPhysicEngine(ctx,uav_address);
     std::cout << "Constructing controller done" << std::endl;
 }
