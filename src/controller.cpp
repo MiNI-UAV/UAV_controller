@@ -3,8 +3,12 @@
 #include "UAV_NS/NS.hpp"
 #include "defines.hpp"
 
-Controller::Controller(zmq::context_t *ctx, std::string uav_address):
-controller_loop{ControllerLoop::ControllerLoopFactory(ControllerMode::QANGLE)},
+Controller::Controller(
+    zmq::context_t *ctx,
+    std::string uav_address,
+    ControllerMode initialMode = ControllerMode::NONE
+    ):
+controller_loop{ControllerLoop::ControllerLoopFactory(initialMode)},
 state{new State(
     ctx,
     uav_address,

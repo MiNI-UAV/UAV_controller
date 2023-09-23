@@ -47,6 +47,6 @@ int main(int argc, char** argv)
     std::cout << "Looking for folder: " << folder << std::endl;
     while(!std::filesystem::exists(folder)) std::this_thread::sleep_for(std::chrono::milliseconds(100));
     std::cout << "Comunication folder found!" << std::endl;
-	Controller controller(&ctx,uav_address);
+	Controller controller(&ctx,uav_address, ControllerModeFromString(params.initialMode.data()));
 	controller.run();
 }

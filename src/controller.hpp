@@ -21,7 +21,7 @@ class Controller
     friend class State;
 
     public:
-        Controller(zmq::context_t *ctx, std::string uav_address);
+        Controller(zmq::context_t *ctx, std::string uav_address, ControllerMode initialMode);
         ~Controller();
         void run();
         void setMode(ControllerMode new_mode);
