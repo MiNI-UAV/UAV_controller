@@ -29,20 +29,28 @@ public:
     virtual void handleJoystick(
         [[maybe_unused]] State* state,
         [[maybe_unused]] Eigen::Vector4d joystick
-    ) {};
+    ) 
+    {};
 
     /// @brief Prepare info about state and demands.
     virtual std::string demandInfo(
         [[maybe_unused]] State* state
-        ) {return "ok";}
+        ) 
+    {
+        return "ok";
+    }
+
+    virtual const std::vector<std::string>& requiredPIDs()
+    {
+        return required_pids;
+    };
 
     /// @brief Return assigned mode.
     ControllerMode getMode() { return _mode; };
-
-
 
     static ControllerLoop* ControllerLoopFactory(ControllerMode mode);
 
 protected:
     const ControllerMode _mode;
+    std::vector<std::string> required_pids;
 };

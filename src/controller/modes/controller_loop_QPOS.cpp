@@ -3,7 +3,10 @@
 
 ControllerLoopQPOS::ControllerLoopQPOS():
     ControllerLoop(ControllerMode::QPOS)
-{}
+{
+    required_pids.assign({"Roll", "Pitch", "Yaw", "W", "Z", "Fi",
+        "Theta", "Psi", "X", "Y", "V", "U"});
+}
 
 void ControllerLoopQPOS::job(
     State* state,

@@ -3,7 +3,9 @@
 
 ControllerLoopQANGLE::ControllerLoopQANGLE():
     ControllerLoop(ControllerMode::QANGLE)
-{}
+{
+    required_pids.assign({"Roll", "Pitch", "Yaw", "W", "Z", "Fi", "Theta", "Psi"});
+}
 
 void ControllerLoopQANGLE::job(
     State* state,

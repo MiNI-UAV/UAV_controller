@@ -2,7 +2,9 @@
 
 ControllerLoopQACRO::ControllerLoopQACRO():
     ControllerLoop(ControllerMode::QACRO)
-{}
+{
+    required_pids.assign({"Roll", "Pitch", "Yaw"});
+}
 
 void ControllerLoopQACRO::job(
     State* state,

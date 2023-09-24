@@ -20,7 +20,8 @@ void ControllerLoop::job(
     control.sendSpeed(vec);
 }
 
-ControllerLoop *ControllerLoop::ControllerLoopFactory(ControllerMode mode) {
+ControllerLoop *ControllerLoop::ControllerLoopFactory(ControllerMode mode)
+{
     switch (mode)
     {
     case ControllerMode::NONE:
@@ -33,5 +34,5 @@ ControllerLoop *ControllerLoop::ControllerLoopFactory(ControllerMode mode) {
       return new ControllerLoopQACRO();
     default:
       return nullptr;
-    }                                                 
+    }
 }

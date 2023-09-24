@@ -114,6 +114,16 @@ void Controller::setCurrentDemands()
 
 void Controller::setMode(ControllerMode new_mode)
 {
+    auto new_loop = ControllerLoop::ControllerLoopFactory(new_mode);
+    for (auto& pid_name: new_loop->requiredPIDs())
+    {
+        if(!pids.contains(pid_name))
+        {
+            std::cerr << "Missing pid " << pid_name << " to run "
+                << ControllerModeToString(new_mode) << " mode" << std::endl;
+            return;
+        }
+    }
     for(auto pid: UAVparams::getSingleton()->pids)
     {
         pid.second.clear();
