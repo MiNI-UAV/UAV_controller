@@ -25,4 +25,5 @@ protected:
 
     Eigen::Vector4d q();
     Eigen::Vector3d quaterionToRPY(Eigen::Vector4d q);
+    Eigen::Vector4d RPYToQuaterion(Eigen::Vector3d RPY);
 };

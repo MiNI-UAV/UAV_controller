@@ -7,7 +7,8 @@ AHRS::AHRS(Environment& env):
     env{env},
     logger("ahrs.csv")
 {
-    ori_est = Eigen::Vector3d(0.0,0.0,0.0);
+    const UAVparams* params = UAVparams::getSingleton();
+    ori_est = params->initialOrientation;
 }
 
 AHRS::~AHRS() 

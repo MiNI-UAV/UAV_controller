@@ -7,7 +7,8 @@ EKF::EKF(EKFParams params):
     logger("EKF.csv", "Time,PosX,PosY,PosZ,VelX,VelY,VelZ"),
     params{params}
 {
-    x.setZero();
+    const UAVparams* uav_params = UAVparams::getSingleton();
+    x << uav_params->initialPosition, uav_params->initialVelocity;
 
     CBaro << 0.0,0.0,1.0,0.0,0.0,0.0;
     CGPSPos.setZero();

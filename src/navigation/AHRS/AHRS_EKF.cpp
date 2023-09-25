@@ -8,7 +8,7 @@ AHRS_EKF::AHRS_EKF(Environment &env, double Q_scaler, double R_scaler):
 {
     logger.setFmt("Time, Roll, Pitch, Yaw, q1, q2, q3, q4, bx, by, bz");
     x.setZero();
-    x(0) = 1.0;
+    x.head<4>() = RPYToQuaterion(ori_est);
     Q.setIdentity();
     Q *= Q_scaler;
     R.setIdentity();
@@ -115,4 +115,24 @@ Eigen::Vector3d AHRS_EKF::quaterionToRPY(Eigen::Vector4d q)
     double pitch = asin(2*(q(0)*q(2)-q(1)*q(3)));
     double yaw   = atan2(2*(q(1)*q(2) + q(0)*q(3)), 1 - 2*(q(2)*q(2) + q(3)*q(3))); 
     return Eigen::Vector3d(roll,pitch,yaw);
+}
+
+Eigen::Vector4d AHRS_EKF::RPYToQuaterion(Eigen::Vector3d RPY)
+{
+    Eigen::Vector4d quat;
+    double halfRoll = RPY(0) * 0.5;
+    double halfPitch = RPY(1) * 0.5;
+    double halfYaw = RPY(2) * 0.5;
+    double sinHalfRoll = std::sin(halfRoll);
+    double cosHalfRoll = std::cos(halfRoll);
+    double sinHalfPitch = std::sin(halfPitch);
+    double cosHalfPitch = std::cos(halfPitch);
+    double sinHalfYaw = std::sin(halfYaw);
+    double cosHalfYaw = std::cos(halfYaw);
+
+    quat(0) = cosHalfRoll * cosHalfPitch * cosHalfYaw + sinHalfRoll * sinHalfPitch * sinHalfYaw; // w
+    quat(1) = sinHalfRoll * cosHalfPitch * cosHalfYaw - cosHalfRoll * sinHalfPitch * sinHalfYaw; // x
+    quat(2) = cosHalfRoll * sinHalfPitch * cosHalfYaw + sinHalfRoll * cosHalfPitch * sinHalfYaw; // y
+    quat(3) = cosHalfRoll * cosHalfPitch * sinHalfYaw - sinHalfRoll * sinHalfPitch * cosHalfYaw; // z
+    return quat;
 }
