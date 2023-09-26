@@ -25,8 +25,8 @@ void ControllerLoopRMANUAL::job(
 
 void ControllerLoopRMANUAL::handleJoystick([[maybe_unused]] State* state, Eigen::Vector4d joystick) 
 {
-    demandedX = joystick[2]*0.1;
-    demandedY = joystick[3]*0.1;
+    demandedX = joystick[3]*0.1;
+    demandedY = -joystick[2]*0.1;
 }
 
 std::string ControllerLoopRMANUAL::demandInfo([[maybe_unused]] State* state) {
