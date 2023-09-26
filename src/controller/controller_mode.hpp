@@ -11,6 +11,7 @@ enum ControllerMode
     FMANUAL = 4,
     FACRO = 5,
     FANGLE = 6,
+    RMANUAL = 7,
 
 };
 
@@ -32,6 +33,8 @@ constexpr const char* ControllerModeToString(ControllerMode mode) throw()
       return "FACRO";
     case ControllerMode::FANGLE:
       return "FANGLE";
+    case ControllerMode::RMANUAL:
+      return "RMANUAL";
     default:
       return "UNKNOWN";
     }
@@ -53,6 +56,8 @@ constexpr ControllerMode  ControllerModeFromString(const char* mode) throw()
     return ControllerMode::FACRO;
   if (std::string_view(mode) == "FANGLE")
     return ControllerMode::FANGLE;
+  if (std::string_view(mode) == "RMANUAL")
+    return ControllerMode::RMANUAL;
 
   std::cerr << "Unknown mode: " << mode << std::endl;
   return ControllerMode::NONE;

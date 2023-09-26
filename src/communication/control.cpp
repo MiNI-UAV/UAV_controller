@@ -57,7 +57,7 @@ void Control::sendSurface(Eigen::VectorXd angels)
 
 void Control::startJet(int index) 
 {
-    static const char* prefix = "j:";
+    static const char* prefix = "t:";
 
     std::stringstream ss;
     ss << prefix << index;
@@ -69,7 +69,7 @@ void Control::sendHinge(char type, int index, int hinge_index, double value)
     static const char* prefix = "h:";
 
     std::stringstream ss;
-    ss << prefix <<type << index << hinge_index << value;
+    ss << prefix <<type << ',' << index << ',' << hinge_index << ',' << value;
     sendString(ss.str());
 }
 
