@@ -7,14 +7,9 @@ Controller::Controller(
     std::string uav_address
     ):
 controller_loop{ControllerLoop::ControllerLoopFactory(ControllerMode::NONE)},
-state{new State(
-    ctx,
-    uav_address,
-    this
-    )},
+control{new Control(ctx, uav_address)},
 env(ctx, uav_address),
-navisys(env),
-control(ctx, uav_address)
+navisys(env)
 {
     const UAVparams* params = UAVparams::getSingleton();
     status = Status::running;
@@ -32,7 +27,7 @@ control(ctx, uav_address)
 Controller::~Controller()
 {
     delete controller_loop;
-    delete state;
+    delete control;
     std::cout << "Exiting controller!" << std::endl;
 }
 
@@ -49,14 +44,14 @@ void Controller::run()
                 //TODO
             break;
             case Status::running:
-                control.start();
+                control->start();
                 std::cout << "Running in " << ControllerModeToString(controller_loop->getMode()) << " mode" << std::endl;
                 loop->go();
-                control.recv();
+                control->recv();
             break;
             case Status::exiting:
                 std::cout << "Exiting..." << std::endl;
-                control.stop();
+                control->stop();
                 run = false;
             break;
             case Status::reload:
@@ -74,7 +69,7 @@ void Controller::startLoop()
         if(controller_loop == nullptr) return;
         controller_loop->job(
             pids,
-            control,
+            *control,
             navisys
         );
     }
@@ -100,7 +95,7 @@ void Controller::syncWithPhysicEngine(zmq::context_t *ctx, std::string uav_addre
 		if(std::string(static_cast<char*>(msg.data()), msg.size()).compare("idle") == 0) break;
 	}
 	sock.close();
-	control.prepare();
+	control->prepare();
 	std::cout << "Synchronized!" << std::endl;
 }
 

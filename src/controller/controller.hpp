@@ -11,14 +11,14 @@
 #include "controller_loop.hpp"
 #include "common.hpp"
 #include "../communication/control.hpp"
-#include "../communication/state.hpp"
 
-class State;
+
 class ControllerLoop;
+class Control;
 
 class Controller
 {
-    friend class State;
+    friend class Control;
 
     public:
         Controller(zmq::context_t *ctx, std::string uav_address);
@@ -29,11 +29,10 @@ class Controller
 
     private:
         ControllerLoop* controller_loop;
-        State* state;
+        Control* control;
         Status status;
         Environment env;
         NS navisys;
-	    Control control;
         std::optional<TimedLoop> loop;
         std::map<std::string,PID> pids;
 

@@ -7,7 +7,8 @@
 #include "mixers.hpp"
 #include "../communication/control.hpp"
 #include "../navigation/NS.hpp"
-#include "../communication/state.hpp"
+
+class Control;
 
 class ControllerLoop
 {

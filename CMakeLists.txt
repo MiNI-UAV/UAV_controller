@@ -12,10 +12,10 @@ set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build)
 
 set(SOURCES
+    ${SOURCE_DIR}/communication/control_recv.cpp
+    ${SOURCE_DIR}/communication/control_send.cpp
     ${SOURCE_DIR}/communication/control.cpp
     ${SOURCE_DIR}/communication/control.hpp
-    ${SOURCE_DIR}/communication/state.cpp
-    ${SOURCE_DIR}/communication/state.hpp
     ${SOURCE_DIR}/controller/controller.cpp
     ${SOURCE_DIR}/controller/controller.hpp
     ${SOURCE_DIR}/controller/controller_loop.cpp
