@@ -37,10 +37,6 @@ class Controller
         std::optional<TimedLoop> loop;
         std::map<std::string,PID> pids;
 
+        void startLoop();
         void syncWithPhysicEngine(zmq::context_t *ctx,std::string uav_address);
-        void setCurrentDemands();
-        void acroControllLoop();
-        void angleControllLoop();
-        void positionControllLoop();
-
 };

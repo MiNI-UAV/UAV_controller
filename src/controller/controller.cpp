@@ -18,11 +18,6 @@ control(ctx, uav_address)
 {
     const UAVparams* params = UAVparams::getSingleton();
     status = Status::running;
-    loop.emplace(std::round(def::STEP_TIME*1000.0),[this]() {controller_loop->job(
-        pids,
-        control,
-        navisys
-    );},status);
     pids = params->pids;
     for(auto& elem : pids)
     {
@@ -30,6 +25,7 @@ control(ctx, uav_address)
     }
     setMode(ControllerModeFromString(params->initialMode.data()));
     syncWithPhysicEngine(ctx,uav_address);
+    startLoop();
     std::cout << "Constructing controller done" << std::endl;
 }
 
@@ -64,18 +60,29 @@ void Controller::run()
                 run = false;
             break;
             case Status::reload:
-                loop.emplace(std::round(def::STEP_TIME*1000.0),[this] () {controller_loop->job(
-                    pids,
-                    control,
-                    navisys
-                );},status);
+                startLoop();
                 status = Status::running;
             break;
         }
     }
 }
 
-void Controller::syncWithPhysicEngine(zmq::context_t *ctx,std::string uav_address)
+void Controller::startLoop()
+{
+    loop.emplace(std::round(def::STEP_TIME*1000.0),[this] () 
+    {
+        if(controller_loop == nullptr) return;
+        controller_loop->job(
+            pids,
+            control,
+            navisys
+        );
+    }
+    ,status
+    );
+}
+
+void Controller::syncWithPhysicEngine(zmq::context_t *ctx, std::string uav_address)
 {
     std::cout << "Attempting to sync..." << std::endl;
 	zmq::socket_t sock = zmq::socket_t(*ctx, zmq::socket_type::sub);
@@ -97,19 +104,6 @@ void Controller::syncWithPhysicEngine(zmq::context_t *ctx,std::string uav_addres
 	std::cout << "Synchronized!" << std::endl;
 }
 
-void Controller::setCurrentDemands()
-{
-    // auto pos = navisys.getPosition();
-    // state->demandedX = pos(0);
-    // state->demandedY = pos(1);
-    // state->demandedZ = pos(2);
-    // auto ori = navisys.getOrientation();
-    // state->demandedFi = ori(0);
-    // state->demandedTheta = ori(1);
-    // state->demandedPsi = ori(2);
-    
-}
-
 void Controller::setMode(ControllerMode new_mode)
 {
     auto new_loop = ControllerLoop::ControllerLoopFactory(new_mode);
@@ -122,13 +116,14 @@ void Controller::setMode(ControllerMode new_mode)
             return;
         }
     }
+    //TODO: remove below loop after changes
     for(auto pid: UAVparams::getSingleton()->pids)
     {
         pid.second.clear();
     }
-    setCurrentDemands();
-    if(controller_loop != nullptr) delete controller_loop;
-    controller_loop = ControllerLoop::ControllerLoopFactory(new_mode);
+    new_loop->overridePosition(navisys.getPosition(),navisys.getOrientation());
+    std::swap(new_loop,controller_loop);
+    if(new_loop != nullptr) delete new_loop;
     status = Status::reload;
 }
 
