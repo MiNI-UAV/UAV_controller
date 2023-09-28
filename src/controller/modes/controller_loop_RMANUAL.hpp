@@ -7,12 +7,11 @@ public:
     ControllerLoopRMANUAL();
 
     void job(
-        [[maybe_unused]] State* state,
         [[maybe_unused]] std::map<std::string,PID>& pids,
         Control& control,
         [[maybe_unused]] NS& navisys) override;
-    void handleJoystick([[maybe_unused]] State* state, Eigen::Vector4d joystick) override;
-    std::string demandInfo([[maybe_unused]] State* state) override;
+    void handleJoystick(Eigen::Vector4d joystick) override;
+    std::string demandInfo() override;
 
 protected:
     double demandedX;

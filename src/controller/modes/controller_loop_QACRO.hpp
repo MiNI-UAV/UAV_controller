@@ -7,10 +7,17 @@ public:
     ControllerLoopQACRO();
 
     void job(
-        State* state,
         std::map<std::string,PID>& pids,
         Control& control,
         NS& navisys) override;
-    void handleJoystick(State* state, Eigen::Vector4d joystick) override;
-    std::string demandInfo(State* state) override;
+        
+    void handleJoystick(Eigen::Vector4d joystick) override;
+
+    std::string demandInfo() override;
+
+private:
+    std::atomic<double> demandedP = 0.0;
+    std::atomic<double> demandedQ = 0.0;
+    std::atomic<double> demandedR = 0.0;
+    std::atomic<double> throttle = 0.0;
 };

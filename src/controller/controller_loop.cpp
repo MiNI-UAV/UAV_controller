@@ -11,7 +11,6 @@ ControllerLoop::ControllerLoop(ControllerMode mode):
 {}
 
 void ControllerLoop::job(
-  [[maybe_unused]] State* state,
   [[maybe_unused]] std::map<std::string,PID>& pids,
   [[maybe_unused]] Control& control,
   [[maybe_unused]] NS& navisys

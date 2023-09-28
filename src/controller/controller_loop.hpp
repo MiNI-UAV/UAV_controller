@@ -9,8 +9,6 @@
 #include "../navigation/NS.hpp"
 #include "../communication/state.hpp"
 
-class State;
-
 class ControllerLoop
 {
 public:
@@ -19,7 +17,6 @@ public:
 
     /// @brief Controller job that should be called in control loop.
     virtual void job(
-        [[maybe_unused]] State* state,
         [[maybe_unused]] std::map<std::string,PID>& pids,
         [[maybe_unused]] Control& control,
         [[maybe_unused]] NS& navisys
@@ -27,23 +24,28 @@ public:
 
     /// @brief Convert joystick position to demands.
     virtual void handleJoystick(
-        [[maybe_unused]] State* state,
         [[maybe_unused]] Eigen::Vector4d joystick
     ) 
     {};
 
     /// @brief Prepare info about state and demands.
-    virtual std::string demandInfo(
-        [[maybe_unused]] State* state
-        ) 
+    virtual std::string demandInfo() 
     {
-        return "ok";
+        return "ERROR";
     }
 
+    /// @brief Define pids controller required to work
     virtual const std::vector<std::string>& requiredPIDs()
     {
         return required_pids;
     };
+
+    /// @brief Define pids controller required to work
+    virtual void overridePosition(
+        [[maybe_unused]] Eigen::Vector3d position,
+        [[maybe_unused]] Eigen::Vector3d orientation
+    )
+    {};
 
     /// @brief Return assigned mode.
     ControllerMode getMode() { return _mode; };

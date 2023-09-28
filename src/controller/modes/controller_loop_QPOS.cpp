@@ -9,7 +9,6 @@ ControllerLoopQPOS::ControllerLoopQPOS():
 }
 
 void ControllerLoopQPOS::job(
-    State* state,
     std::map<std::string,PID>& pids,
     Control& control,
     NS& navisys
@@ -20,8 +19,8 @@ void ControllerLoopQPOS::job(
     Eigen::Vector3d ori = navisys.getOrientation();
     Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
-    double demandedU = pids.at("X").calc(state->demandedX - pos(0));
-    double demandedV = pids.at("Y").calc(state->demandedY - pos(1));
+    double demandedU = pids.at("X").calc(demandedX - pos(0));
+    double demandedV = pids.at("Y").calc(demandedY - pos(1));
     
     double demandedFi_star = pids.at("V").calc(demandedV - vel(1));
     double demandedTheta_star = pids.at("U").calc(demandedU - vel(0));
@@ -34,8 +33,8 @@ void ControllerLoopQPOS::job(
     double demandedP = pids.at("Fi").calc(demandedFi - ori(0));
     double demandedQ = pids.at("Theta").calc(demandedTheta - ori(1));
 
-    double demandedW = pids.at("Z").calc(state->demandedZ - pos(2));
-    double demandedR = pids.at("Psi").calc(circularError(state->demandedPsi, ori(2)));
+    double demandedW = pids.at("Z").calc(demandedZ - pos(2));
+    double demandedR = pids.at("Psi").calc(circularError(demandedPsi, ori(2)));
 
     double climb_rate = pids.at("W").calc(demandedW-vel(2));
     double roll_rate = pids.at("Roll").calc(demandedP-angVel(0));
@@ -46,20 +45,30 @@ void ControllerLoopQPOS::job(
     control.sendSpeed(vec);
 }
 
-void ControllerLoopQPOS::handleJoystick(State* state, Eigen::Vector4d joystick) 
+void ControllerLoopQPOS::handleJoystick(Eigen::Vector4d joystick) 
 {
     constexpr double angleLimit = std::numbers::pi/5.0;
-    state->demandedZ -= joystick[1]/10.0;
-    state->demandedPsi = clampAngle(state->demandedPsi + joystick[0]/20.0);
-    state->demandedX += ((joystick[3]*angleLimit)*std::cos(state->demandedPsi) - (joystick[2]*angleLimit)*std::sin(state->demandedPsi))/2.0;
-    state->demandedY += ((joystick[3]*angleLimit)*std::sin(state->demandedPsi) + (joystick[2]*angleLimit)*std::cos(state->demandedPsi))/2.0;
+    demandedZ -= joystick[1]/10.0;
+    demandedPsi = clampAngle(demandedPsi + joystick[0]/20.0);
+    demandedX += ((joystick[3]*angleLimit)*std::cos(demandedPsi) - (joystick[2]*angleLimit)*std::sin(demandedPsi))/2.0;
+    demandedY += ((joystick[3]*angleLimit)*std::sin(demandedPsi) + (joystick[2]*angleLimit)*std::cos(demandedPsi))/2.0;
 }
 
-std::string ControllerLoopQPOS::demandInfo(State* state) {
+std::string ControllerLoopQPOS::demandInfo() {
     std::stringstream ss;
     std::string s;
     ss.precision(3);
     ss << std::fixed << ControllerModeToString(_mode) << ",";
-    ss << state->demandedX << "," << state->demandedY << "," << state->demandedZ << "," << state->demandedPsi;
+    ss << demandedX << "," << demandedY << "," << demandedZ << "," << demandedPsi;
     return ss.str();
+}
+
+void ControllerLoopQPOS::overridePosition(
+    Eigen::Vector3d position,
+    Eigen::Vector3d orientation) 
+{
+    demandedX = position.x();
+    demandedY = position.y();
+    demandedZ = position.z();
+    demandedPsi = orientation.z();
 }

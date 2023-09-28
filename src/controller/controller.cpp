@@ -19,7 +19,6 @@ control(ctx, uav_address)
     const UAVparams* params = UAVparams::getSingleton();
     status = Status::running;
     loop.emplace(std::round(def::STEP_TIME*1000.0),[this]() {controller_loop->job(
-        state,
         pids,
         control,
         navisys
@@ -66,7 +65,6 @@ void Controller::run()
             break;
             case Status::reload:
                 loop.emplace(std::round(def::STEP_TIME*1000.0),[this] () {controller_loop->job(
-                    state,
                     pids,
                     control,
                     navisys
@@ -101,14 +99,14 @@ void Controller::syncWithPhysicEngine(zmq::context_t *ctx,std::string uav_addres
 
 void Controller::setCurrentDemands()
 {
-    auto pos = navisys.getPosition();
-    state->demandedX = pos(0);
-    state->demandedY = pos(1);
-    state->demandedZ = pos(2);
-    auto ori = navisys.getOrientation();
-    state->demandedFi = ori(0);
-    state->demandedTheta = ori(1);
-    state->demandedPsi = ori(2);
+    // auto pos = navisys.getPosition();
+    // state->demandedX = pos(0);
+    // state->demandedY = pos(1);
+    // state->demandedZ = pos(2);
+    // auto ori = navisys.getOrientation();
+    // state->demandedFi = ori(0);
+    // state->demandedTheta = ori(1);
+    // state->demandedPsi = ori(2);
     
 }
 

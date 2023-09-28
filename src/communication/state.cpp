@@ -66,23 +66,23 @@ std::string State::handleMsg(std::string msg)
 
 void State::clearAll()
 {
-    demandedX = 0.0;
-    demandedY = 0.0;
-    demandedZ = 0.0;
+    // demandedX = 0.0;
+    // demandedY = 0.0;
+    // demandedZ = 0.0;
 
-    demandedFi = 0.0;
-    demandedTheta = 0.0;
-    demandedPsi = 0.0;
+    // demandedFi = 0.0;
+    // demandedTheta = 0.0;
+    // demandedPsi = 0.0;
 
-    demandedU = 0.0;
-    demandedV = 0.0;
-    demandedW = 0.0;
+    // demandedU = 0.0;
+    // demandedV = 0.0;
+    // demandedW = 0.0;
 
-    demandedP = 0.0;
-    demandedQ = 0.0;
-    demandedR = 0.0;
+    // demandedP = 0.0;
+    // demandedQ = 0.0;
+    // demandedR = 0.0;
 
-    throttle = 0.0;
+    // throttle = 0.0;
 }
 
 std::string State::handleControl(std::string content)
@@ -129,9 +129,9 @@ std::string State::handleJoystick(std::string content)
     {
         return "ok";
     }
-    _controller->controller_loop->handleJoystick(this,values);
+    _controller->controller_loop->handleJoystick(values);
     i++;
     if( i < INFO_PERIOD ) return "ok";
     i = 0;
-    return _controller->controller_loop->demandInfo(this);
+    return _controller->controller_loop->demandInfo();
 }
