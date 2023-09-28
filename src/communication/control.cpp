@@ -26,16 +26,20 @@ void orderServerJob(zmq::context_t *ctx, std::string uav_address, std::function<
     sock.close();
 }
 
-Control::Control(zmq::context_t *ctx, std::string uav_address)
+Control::Control(zmq::context_t *ctx, std::string uav_address, Controller* controller):
+_controller{controller}
 {
     std::string address = uav_address + "/control";
     std::cout << "Starting control socket: " << address << std::endl;
     sock = zmq::socket_t(*ctx, zmq::socket_type::req);
     sock.connect(address);
     run = true;
-    // orderServer = std::thread(
-    //     orderServerJob, ctx, uav_address,
-    //     std::bind_front(&Control::handleMsg, this), std::ref(run));
+    orderServer = std::thread(
+        orderServerJob, ctx, uav_address,
+        [this](std::string msg) {
+             return this->handleMsg(msg); 
+        },
+        std::ref(run));
 }
 
 Control::~Control()

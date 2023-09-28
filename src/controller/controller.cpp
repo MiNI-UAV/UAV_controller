@@ -7,7 +7,7 @@ Controller::Controller(
     std::string uav_address
     ):
 controller_loop{ControllerLoop::ControllerLoopFactory(ControllerMode::NONE)},
-control{new Control(ctx, uav_address)},
+control{new Control(ctx, uav_address,this)},
 env(ctx, uav_address),
 navisys(env)
 {

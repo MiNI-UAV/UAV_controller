@@ -12,7 +12,7 @@ class Controller;
 class Control
 {
     public:
-        Control(zmq::context_t* ctx, std::string uav_address);
+        Control(zmq::context_t *ctx, std::string uav_address, Controller* controller);
         ~Control();
         void prepare();
         void start();
@@ -31,7 +31,7 @@ class Control
         std::string handleMode(std::string content);
         std::string handleJoystick(std::string content);
 
-        std::atomic_bool run;
+        bool run;
         std::thread orderServer;
         zmq::socket_t sock;
         Controller* _controller;
