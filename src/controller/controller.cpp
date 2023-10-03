@@ -111,11 +111,6 @@ void Controller::setMode(ControllerMode new_mode)
             return;
         }
     }
-    //TODO: remove below loop after changes
-    for(auto pid: UAVparams::getSingleton()->pids)
-    {
-        pid.second.clear();
-    }
     new_loop->overridePosition(navisys.getPosition(),navisys.getOrientation());
     std::swap(new_loop,controller_loop);
     if(new_loop != nullptr) delete new_loop;
