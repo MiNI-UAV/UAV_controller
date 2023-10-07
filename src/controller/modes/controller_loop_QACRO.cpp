@@ -22,12 +22,12 @@ void ControllerLoopQACRO::job(
     control.sendSpeed(vec);
 }
 
-void ControllerLoopQACRO::handleJoystick(Eigen::Vector4d joystick) 
+void ControllerLoopQACRO::handleJoystick(Eigen::VectorXd joystick) 
 {
-    throttle = joystick[1];
-    demandedP = joystick[2]*5.0;
-    demandedQ = -joystick[3]*5.0;
-    demandedR = joystick[0]*3.0;
+    throttle = joystick[0];
+    demandedP = joystick[1]*5.0;
+    demandedQ = -joystick[2]*5.0;
+    demandedR = joystick[3]*3.0;
 }
 
 std::string ControllerLoopQACRO::demandInfo() {

@@ -45,13 +45,13 @@ void ControllerLoopQPOS::job(
     control.sendSpeed(vec);
 }
 
-void ControllerLoopQPOS::handleJoystick(Eigen::Vector4d joystick) 
+void ControllerLoopQPOS::handleJoystick(Eigen::VectorXd joystick) 
 {
     constexpr double angleLimit = std::numbers::pi/5.0;
-    demandedZ -= joystick[1]/10.0;
-    demandedPsi = clampAngle(demandedPsi + joystick[0]/20.0);
-    demandedX += ((joystick[3]*angleLimit)*std::cos(demandedPsi) - (joystick[2]*angleLimit)*std::sin(demandedPsi))/2.0;
-    demandedY += ((joystick[3]*angleLimit)*std::sin(demandedPsi) + (joystick[2]*angleLimit)*std::cos(demandedPsi))/2.0;
+    demandedZ -= joystick[0]/10.0;
+    demandedPsi = clampAngle(demandedPsi + joystick[3]/20.0);
+    demandedX += ((joystick[2]*angleLimit)*std::cos(demandedPsi) - (joystick[1]*angleLimit)*std::sin(demandedPsi))/2.0;
+    demandedY += ((joystick[2]*angleLimit)*std::sin(demandedPsi) + (joystick[1]*angleLimit)*std::cos(demandedPsi))/2.0;
 }
 
 std::string ControllerLoopQPOS::demandInfo() {

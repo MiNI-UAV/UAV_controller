@@ -19,19 +19,10 @@ void ControllerLoopFMANUAL::job(
     control.sendSurface(surf);
 }
 
-void ControllerLoopFMANUAL::handleJoystick(Eigen::Vector4d joystick) 
+void ControllerLoopFMANUAL::handleJoystick(Eigen::VectorXd joystick) 
 {
-    throttle = joystick[1];
-    demanded_P_rate = joystick[2];
-    demanded_Q_rate = -joystick[3];
-    demanded_R_rate = joystick[0];
-}
-
-std::string ControllerLoopFMANUAL::demandInfo() {
-    std::stringstream ss;
-    std::string s;
-    ss.precision(3);
-    ss << std::fixed << ControllerModeToString(_mode) << ",";
-    ss << demanded_P_rate << "," << demanded_Q_rate << "," << demanded_R_rate << "," << throttle;
-    return ss.str();
+    throttle = joystick[0];
+    demanded_P_rate = joystick[1];
+    demanded_Q_rate = -joystick[2];
+    demanded_R_rate = joystick[3];
 }

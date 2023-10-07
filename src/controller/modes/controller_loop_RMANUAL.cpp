@@ -22,10 +22,10 @@ void ControllerLoopRMANUAL::job(
     control.sendHinge('j',0,1,demandedY);
 }
 
-void ControllerLoopRMANUAL::handleJoystick(Eigen::Vector4d joystick) 
+void ControllerLoopRMANUAL::handleJoystick(Eigen::VectorXd joystick) 
 {
-    demandedX = joystick[3]*0.1;
-    demandedY = -joystick[2]*0.1;
+    demandedX = joystick[2]*0.1;
+    demandedY = -joystick[1]*0.1;
 }
 
 std::string ControllerLoopRMANUAL::demandInfo() {

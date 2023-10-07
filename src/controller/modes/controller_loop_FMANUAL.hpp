@@ -11,9 +11,7 @@ public:
         Control& control,
         [[maybe_unused]] NS& navisys) override;
         
-    void handleJoystick(Eigen::Vector4d joystick) override;
-
-    std::string demandInfo() override;
+    void handleJoystick(Eigen::VectorXd joystick) override;
 
 private:
     std::atomic<double> demanded_P_rate = 0.0;

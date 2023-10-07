@@ -49,11 +49,12 @@ std::string Control::handleJoystick(std::string content)
 
     std::istringstream f(content);
     std::string value;
-    Eigen::Vector4d values;
-    for(int i = 0; i < 4; i++)
+    Eigen::Vector<double,8> values;
+    values.setZero();
+    for(int i = 0; i < 8; i++)
     {
         if(!getline(f, value, ',')) break;
-        values[i] = (std::stoi(value)-512)/512.0;
+        values[i] = std::stod(value);
     }
 
     if(_controller->controller_loop == nullptr)

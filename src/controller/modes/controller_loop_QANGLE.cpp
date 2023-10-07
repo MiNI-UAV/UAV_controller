@@ -32,13 +32,13 @@ void ControllerLoopQANGLE::job(
     control.sendSpeed(vec);
 }
 
-void ControllerLoopQANGLE::handleJoystick(Eigen::Vector4d joystick) 
+void ControllerLoopQANGLE::handleJoystick(Eigen::VectorXd joystick) 
 {
     constexpr double angleLimit = std::numbers::pi/5.0;
-    demandedZ -= joystick[1]/10.0;
-    demandedFi = joystick[2]*angleLimit;
-    demandedTheta = -joystick[3]*angleLimit;
-    demandedPsi = clampAngle(demandedPsi + joystick[0]/30.0);
+    demandedZ -= joystick[0]/10.0;
+    demandedFi = joystick[1]*angleLimit;
+    demandedTheta = -joystick[2]*angleLimit;
+    demandedPsi = clampAngle(demandedPsi + joystick[3]/30.0);
 }
 
 std::string ControllerLoopQANGLE::demandInfo() 

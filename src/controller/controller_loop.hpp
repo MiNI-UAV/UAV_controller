@@ -25,14 +25,14 @@ public:
 
     /// @brief Convert joystick position to demands.
     virtual void handleJoystick(
-        [[maybe_unused]] Eigen::Vector4d joystick
+        [[maybe_unused]] Eigen::VectorXd joystick
     ) 
     {};
 
     /// @brief Prepare info about state and demands.
     virtual std::string demandInfo() 
     {
-        return "ERROR";
+        return ControllerModeToString(_mode);
     }
 
     /// @brief Define pids controller required to work
