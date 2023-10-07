@@ -23,6 +23,8 @@ set(SOURCES
     ${SOURCE_DIR}/controller/controller_mode.hpp
     ${SOURCE_DIR}/controller/mixers.cpp
     ${SOURCE_DIR}/controller/mixers.hpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_FMANUAL.cpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_FMANUAL.hpp
     ${SOURCE_DIR}/controller/modes/controller_loop_NONE.cpp
     ${SOURCE_DIR}/controller/modes/controller_loop_NONE.hpp
     ${SOURCE_DIR}/controller/modes/controller_loop_QACRO.cpp

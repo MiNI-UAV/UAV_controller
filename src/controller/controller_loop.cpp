@@ -5,6 +5,7 @@
 #include "modes/controller_loop_QANGLE.hpp"
 #include "modes/controller_loop_QPOS.hpp"
 #include "modes/controller_loop_RMANUAL.hpp"
+#include "modes/controller_loop_FMANUAL.hpp"
 
 ControllerLoop::ControllerLoop(ControllerMode mode):
     _mode{mode}
@@ -34,6 +35,8 @@ ControllerLoop *ControllerLoop::ControllerLoopFactory(ControllerMode mode)
       return new ControllerLoopQACRO();
     case ControllerMode::RMANUAL:
       return new ControllerLoopRMANUAL();
+    case ControllerMode::FMANUAL:
+      return new ControllerLoopFMANUAL();
     default:
       return nullptr;
     }
