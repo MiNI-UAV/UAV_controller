@@ -11,7 +11,48 @@ set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build)
 
-file(GLOB_RECURSE SOURCES ${SOURCE_DIR}/*.cpp)
+set(SOURCES
+    ${SOURCE_DIR}/communication/control_recv.cpp
+    ${SOURCE_DIR}/communication/control_send.cpp
+    ${SOURCE_DIR}/communication/control.cpp
+    ${SOURCE_DIR}/communication/control.hpp
+    ${SOURCE_DIR}/controller/controller.cpp
+    ${SOURCE_DIR}/controller/controller.hpp
+    ${SOURCE_DIR}/controller/controller_loop.cpp
+    ${SOURCE_DIR}/controller/controller_loop.hpp
+    ${SOURCE_DIR}/controller/controller_mode.hpp
+    ${SOURCE_DIR}/controller/mixers.cpp
+    ${SOURCE_DIR}/controller/mixers.hpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_FMANUAL.cpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_FMANUAL.hpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_NONE.cpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_NONE.hpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_QACRO.cpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_QACRO.hpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_QANGLE.cpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_QANGLE.hpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_QPOS.cpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_QPOS.hpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_RMANUAL.cpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_RMANUAL.hpp
+    ${SOURCE_DIR}/defines.hpp
+    ${SOURCE_DIR}/main.cpp
+    ${SOURCE_DIR}/navigation/AHRS/AHRS_complementary.cpp
+    ${SOURCE_DIR}/navigation/AHRS/AHRS_complementary.hpp
+    ${SOURCE_DIR}/navigation/AHRS/AHRS_EKF.cpp
+    ${SOURCE_DIR}/navigation/AHRS/AHRS_EKF.hpp
+    ${SOURCE_DIR}/navigation/AHRS.cpp
+    ${SOURCE_DIR}/navigation/AHRS.hpp
+    ${SOURCE_DIR}/navigation/EKF.cpp
+    ${SOURCE_DIR}/navigation/EKF.hpp
+    ${SOURCE_DIR}/navigation/environment.cpp
+    ${SOURCE_DIR}/navigation/environment.hpp
+    ${SOURCE_DIR}/navigation/NS.cpp
+    ${SOURCE_DIR}/navigation/NS.hpp
+    ${SOURCE_DIR}/navigation/sensors.cpp
+    ${SOURCE_DIR}/navigation/sensors.hpp
+    ${SOURCE_DIR}/utils.hpp
+)
 
 include_directories(${INCLUDE_DIR})
 link_directories(${LIB_DIR})

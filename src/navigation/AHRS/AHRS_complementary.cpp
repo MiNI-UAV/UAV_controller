@@ -2,8 +2,6 @@
 #include <Eigen/Dense>
 #include <random>
 #include <iostream>
-#include "environment.hpp"
-#include "sensors.hpp"
 #include "common.hpp"
 
 AHRS_complementary::AHRS_complementary(Environment& env, double alpha):
@@ -82,7 +80,7 @@ void clampOrientation(Eigen::Vector3d& vec)
 void AHRS_complementary::update(Eigen::Vector3d gyro, Eigen::Vector3d acc, Eigen::Vector3d mag)
 {
     static double last_time = 0.0;
-    static Eigen::Vector3d ori_gyro = Eigen::Vector3d(0.0,0.0,0.0);
+    static Eigen::Vector3d ori_gyro = ori_est;
     double time = env.getTime();
     if(time == 0.0) return;
 

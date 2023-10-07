@@ -1,9 +1,9 @@
 #pragma once
 #include <Eigen/Dense>
-#include "environment.hpp"
-#include "sensors.hpp"
+#include "../environment.hpp"
+#include "../sensors.hpp"
 #include "common.hpp"
-#include "AHRS.hpp"
+#include "../AHRS.hpp"
 
 
 class AHRS_EKF : public AHRS
@@ -25,4 +25,5 @@ protected:
 
     Eigen::Vector4d q();
     Eigen::Vector3d quaterionToRPY(Eigen::Vector4d q);
+    Eigen::Vector4d RPYToQuaterion(Eigen::Vector3d RPY);
 };
