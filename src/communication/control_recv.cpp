@@ -1,5 +1,6 @@
 #include "control.hpp"
 #include <iostream>
+#include "../defines.hpp"
 
 std::string Control::handleMsg(std::string msg)
 {
@@ -45,25 +46,21 @@ std::string Control::handleMode(std::string content)
 std::string Control::handleJoystick(std::string content)
 {
     static int i = 0;
-    const int INFO_PERIOD = 2;
 
     std::istringstream f(content);
     std::string value;
-    Eigen::Vector<double,8> values;
-    values.setZero();
-    for(int i = 0; i < 8; i++)
-    {
-        if(!getline(f, value, ',')) break;
-        values[i] = std::stod(value);
-    }
+    std::vector<double> values;
 
     if(_controller->controller_loop == nullptr)
     {
         return "ok";
     }
-    _controller->controller_loop->handleJoystick(values);
-    i++;
-    if( i < INFO_PERIOD ) return "ok";
+    while (std::getline(f, value, ',')) {
+        values.push_back(std::stod(value));
+    }
+    Eigen::Map<Eigen::VectorXd> joystick_values(values.data(), values.size());
+    _controller->controller_loop->handleJoystick(joystick_values);
+    if( i++ < def::INFO_PERIOD ) return "ok";
     i = 0;
     return _controller->controller_loop->demandInfo();
 }

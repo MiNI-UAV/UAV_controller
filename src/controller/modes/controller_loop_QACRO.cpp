@@ -24,6 +24,7 @@ void ControllerLoopQACRO::job(
 
 void ControllerLoopQACRO::handleJoystick(Eigen::VectorXd joystick) 
 {
+    if(!checkJoystickLength(joystick,4)) return;
     throttle = joystick[0];
     demandedP = joystick[1]*5.0;
     demandedQ = -joystick[2]*5.0;

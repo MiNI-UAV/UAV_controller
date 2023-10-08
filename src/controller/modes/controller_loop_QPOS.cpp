@@ -48,6 +48,7 @@ void ControllerLoopQPOS::job(
 void ControllerLoopQPOS::handleJoystick(Eigen::VectorXd joystick) 
 {
     constexpr double angleLimit = std::numbers::pi/5.0;
+    if(!checkJoystickLength(joystick,4)) return;
     demandedZ -= joystick[0]/10.0;
     demandedPsi = clampAngle(demandedPsi + joystick[3]/20.0);
     demandedX += ((joystick[2]*angleLimit)*std::cos(demandedPsi) - (joystick[1]*angleLimit)*std::sin(demandedPsi))/2.0;

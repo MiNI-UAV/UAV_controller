@@ -21,6 +21,7 @@ void ControllerLoopFMANUAL::job(
 
 void ControllerLoopFMANUAL::handleJoystick(Eigen::VectorXd joystick) 
 {
+    if(!checkJoystickLength(joystick,4)) return;
     throttle = joystick[0];
     demanded_P_rate = joystick[1];
     demanded_Q_rate = -joystick[2];

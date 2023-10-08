@@ -41,3 +41,13 @@ ControllerLoop *ControllerLoop::ControllerLoopFactory(ControllerMode mode)
       return nullptr;
     }
 }
+
+bool ControllerLoop::checkJoystickLength(const Eigen::VectorXd& joystick, const int minimalSize)
+{
+    if(joystick.size() < minimalSize)
+    {
+        std::cerr << "Mode " << _mode << " requires at least " << minimalSize << "input axis!";
+        return false;
+    }
+    return true;
+}

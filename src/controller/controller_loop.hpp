@@ -56,4 +56,8 @@ public:
 protected:
     const ControllerMode _mode;
     std::vector<std::string> required_pids;
+
+    /// @brief Check if joystick input vector is correct
+    /// @return return true if joystick input vector is long enough
+    bool checkJoystickLength(const Eigen::VectorXd& joystick, const int minimalSize);
 };

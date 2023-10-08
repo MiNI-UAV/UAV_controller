@@ -24,6 +24,7 @@ void ControllerLoopRMANUAL::job(
 
 void ControllerLoopRMANUAL::handleJoystick(Eigen::VectorXd joystick) 
 {
+    if(!checkJoystickLength(joystick,4)) return;
     demandedX = joystick[2]*0.1;
     demandedY = -joystick[1]*0.1;
 }
