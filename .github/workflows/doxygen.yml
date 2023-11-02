@@ -1,0 +1,41 @@
+name: Build and Publish Doxygen Documentation
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-publish-doxygen:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Doxygen
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y doxygen
+        shell: bash
+
+      - name: Build Doxygen documentation
+        run: |
+          doxygen
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+        shell: bash
+
+      - name: Deploy to GitHub Pages
+        run: |
+          git checkout --orphan gh-pages
+          git reset --hard
+          mv docs/html/* ./
+          git add -A
+          git commit -m "Update Doxygen documentation"
+          git push -f origin gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
