@@ -12,6 +12,10 @@
 
 std::string log_path = "logs/";
 
+/// @brief Parse CL arguments
+/// @param argc number of argument
+/// @param argv argument array
+/// @param params pointer to UAVparams instant that should be filled
 void parseArgs(int argc, char** argv, UAVparams* params)
 {
     cxxopts::Options options("controller", "Process representing PID controller of one UAV");

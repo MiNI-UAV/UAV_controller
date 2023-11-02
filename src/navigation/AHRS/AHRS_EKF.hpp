@@ -5,7 +5,7 @@
 #include "common.hpp"
 #include "../AHRS.hpp"
 
-
+/// @brief Implementation of AHRS based on Extended Kalman Filter
 class AHRS_EKF : public AHRS
 {
 public:

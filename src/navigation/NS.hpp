@@ -5,20 +5,32 @@
 #include "AHRS.hpp"
 #include "EKF.hpp"
 
-
-#define BASE_TIME_MS 3
-
+/// @brief Navigation system
 class NS
 {
 public:
 
+    /// @brief Consturctor
+    /// @param env reference to environment, that NS navigate through 
     NS(Environment& env);
+
+    /// @brief Deconstructor
     ~NS();
-    //In world frame
+    
+    /// @brief Returns position estimated by NS
+    /// @return position vector in world frame
     Eigen::Vector3d getPosition();
+
+    /// @brief Returns linear velocity estimated by NS
+    /// @return linear velocity vector in world frame
     Eigen::Vector3d getLinearVelocity();
+
+    /// @brief Returns orientation estimated by NS
+    /// @return orientation vector (RPY) in world frame
     Eigen::Vector3d getOrientation();
-    //In body frame
+
+    /// @brief Returns rates estimated by NS
+    /// @return angular velocity vector (roll rate, pitch rate, yaw rate) in body frame
     Eigen::Vector3d getAngularVelocity();
 
 private:

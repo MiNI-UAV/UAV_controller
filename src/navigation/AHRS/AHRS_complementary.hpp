@@ -6,7 +6,7 @@
 #include "common.hpp"
 #include "../AHRS.hpp"
 
-
+/// @brief Implementation of AHRS based on Complementary Filter
 class AHRS_complementary : public AHRS
 {
 public:

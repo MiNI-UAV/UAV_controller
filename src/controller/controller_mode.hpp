@@ -2,6 +2,7 @@
 #include <string_view>
 #include <iostream>
 
+/// @brief Controller modes
 enum ControllerMode
 {
     NONE = 0,
@@ -15,6 +16,9 @@ enum ControllerMode
 
 };
 
+/// @brief Serializes controller mode to string
+/// @param mode controller mode
+/// @return serialized mode
 constexpr const char* ControllerModeToString(ControllerMode mode) throw()
 {
     switch (mode)
@@ -40,6 +44,9 @@ constexpr const char* ControllerModeToString(ControllerMode mode) throw()
     }
 }
 
+/// @brief Parse string to controller mode
+/// @param mode string to parse
+/// @return parsing result, NONE if parse failed
 constexpr ControllerMode  ControllerModeFromString(const char* mode) throw()
 {
   if (std::string_view(mode) == "NONE")

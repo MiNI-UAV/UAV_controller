@@ -14,30 +14,68 @@
 class Environment
 {
 public:
+    /// @brief Constructor
+    /// @param ctx zero mq context
+    /// @param uav_address address to state PUB socket that enviroment should listen
     Environment(zmq::context_t* ctx, std::string uav_address);
+
+    /// @brief Deconstructor
     ~Environment();
 
+    /// @brief Returns time of simulation
+    /// @return simulation time
     double getTime();
-    //In world frame
+
+
+    /// @brief Returns exact postion vector
+    /// @return position vector in world frame
     Eigen::Vector3d getPosition();
+
 #if USE_QUATERIONS
+    /// @brief Returns exact orientation vector
+    /// @return orientation vector in world frame
     Eigen::Vector4d getOrientation();
 #else
+    /// @brief Returns exact orientation vector
+    /// @return orientation vector in world frame
     Eigen::Vector3d getOrientation();
 #endif
+
+    /// @brief Returns exact linear velocity vector
+    /// @return linear velocity vector in world frame
     Eigen::Vector3d getWorldLinearVelocity();
+
+    /// @brief Returns exact angular velocity vector
+    /// @return linear angular vector in world frame
     Eigen::Vector3d getWorldAngularVelocity();
-    //In body frame
+
+    /// @brief Returns exact linear velocity vector
+    /// @return linear velocity vector in body frame
     Eigen::Vector3d getLinearVelocity();
+
+    /// @brief Returns exact angular velocity vector
+    /// @return angular velocities vector in body frame
     Eigen::Vector3d getAngularVelocity();
+
+    /// @brief Returns exact linear acceleration vector
+    /// @return linear acceleration vector in body frame
     Eigen::Vector3d getLinearAcceleration();
+
+    /// @brief Returns exact angular acceleration vector
+    /// @return angular acceleration vector in body frame
     Eigen::Vector3d getAngularAcceleraton();
 
+    /// @brief Get rotation matrix from world to body frame
+    /// @return rotation matrix
     Eigen::Matrix3d getRnb();
 
-    //Sensors
+    /// @brief update all sensors
     void updateSensors();
+
+    /// @brief map of sensors that measure values which is 3 element vector
     std::map<std::string,std::unique_ptr<Sensor<Eigen::Vector3d>>> sensorsVec3d;
+
+    /// @brief map of sensors that measure single value
     std::map<std::string,std::unique_ptr<Sensor<double>>> sensors;
 
 private:

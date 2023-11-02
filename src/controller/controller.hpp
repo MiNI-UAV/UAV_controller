@@ -16,15 +16,28 @@
 class ControllerLoop;
 class Control;
 
+/// @brief Central controller class
 class Controller
 {
     friend class Control;
 
     public:
+        /// @brief Constructor
+        /// @param ctx zero mq context
+        /// @param uav_address address of simulation sockets
         Controller(zmq::context_t *ctx, std::string uav_address);
+
+        // @brief Deconstructor
         ~Controller();
+
+        /// @brief Run controller
         void run();
+
+        /// @brief Change controller mode
+        /// @param new_mode new contoller mode
         void setMode(ControllerMode new_mode);
+
+        /// @brief Stop controller loop
         void exitController();
 
     private:
@@ -36,6 +49,12 @@ class Controller
         std::optional<TimedLoop> loop;
         std::map<std::string,PID> pids;
 
+        /// @brief Starts controller loop
         void startLoop();
+
+
+        /// @brief Synchronize start with physic engine
+        /// @param ctx zero mq context
+        /// @param uav_address address of simulation sockets
         void syncWithPhysicEngine(zmq::context_t *ctx,std::string uav_address);
 };

@@ -8,7 +8,7 @@
 
 NS::NS(Environment &env):
     env{env},
-    loop(BASE_TIME_MS,[this](){job();},status)
+    loop(std::round(def::STEP_TIME*1000.0),[this](){job();},status)
 {
     std::cout << "NS initializing..." << std::endl;
     const UAVparams* params = UAVparams::getSingleton();
