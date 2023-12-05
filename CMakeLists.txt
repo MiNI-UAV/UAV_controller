@@ -25,6 +25,10 @@ set(SOURCES
     ${SOURCE_DIR}/controller/mixers.hpp
     ${SOURCE_DIR}/controller/modes/controller_loop_FMANUAL.cpp
     ${SOURCE_DIR}/controller/modes/controller_loop_FMANUAL.hpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_FACRO.cpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_FACRO.hpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_FANGLE.cpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_FANGLE.hpp
     ${SOURCE_DIR}/controller/modes/controller_loop_NONE.cpp
     ${SOURCE_DIR}/controller/modes/controller_loop_NONE.hpp
     ${SOURCE_DIR}/controller/modes/controller_loop_QACRO.cpp
@@ -35,6 +39,8 @@ set(SOURCES
     ${SOURCE_DIR}/controller/modes/controller_loop_QPOS.hpp
     ${SOURCE_DIR}/controller/modes/controller_loop_RMANUAL.cpp
     ${SOURCE_DIR}/controller/modes/controller_loop_RMANUAL.hpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_RAUTOLAUNCH.cpp
+    ${SOURCE_DIR}/controller/modes/controller_loop_RAUTOLAUNCH.hpp
     ${SOURCE_DIR}/defines.hpp
     ${SOURCE_DIR}/main.cpp
     ${SOURCE_DIR}/navigation/AHRS/AHRS_complementary.cpp
