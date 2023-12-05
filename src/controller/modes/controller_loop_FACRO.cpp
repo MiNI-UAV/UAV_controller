@@ -40,6 +40,6 @@ std::string ControllerLoopFACRO::demandInfo() {
     std::string s;
     ss.precision(3);
     ss << std::fixed << ControllerModeToString(_mode) << ",";
-    ss << demanded_P << "," << demanded_Q << "," << demanded_R << "," << throttle;
+    ss << demanded_P << "," << demanded_Q << "," << demanded_R;
     return ss.str();
 }
