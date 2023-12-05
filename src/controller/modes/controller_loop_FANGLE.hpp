@@ -20,6 +20,8 @@ public:
         Eigen::Vector3d orientation
     ) override;
 
+    static constexpr double angleLimit = std::numbers::pi/5.0;
+
 private:
     std::atomic<double> demandedVx = 0.0;
     std::atomic<double> demandedFi = 0.0;

@@ -27,6 +27,13 @@ void ControllerLoopFANGLE::job(
     double pitch_rate = pids.at("Pitch").calc(demandedQ-angVel(1));
     double yaw_rate = pids.at("Yaw").calc(demandedR-angVel(2));
 
+    // Disable rudder when plane tilted
+    if(std::abs(ori(0)) > angleLimit/2 )
+    {
+        yaw_rate = 0;
+        demandedPsi = ori(2);
+    }
+
     Eigen::VectorXd vec = applyMixerRotorsHover(throttle,roll_rate,pitch_rate,yaw_rate);
     control.sendSpeed(vec);
     Eigen::VectorXd surf = applyMixerSurfaces(throttle,roll_rate,pitch_rate,yaw_rate);
@@ -35,7 +42,6 @@ void ControllerLoopFANGLE::job(
 
 void ControllerLoopFANGLE::handleJoystick(Eigen::VectorXd joystick) 
 {
-    constexpr double angleLimit = std::numbers::pi/5.0;
     if(!checkJoystickLength(joystick,4)) return;
     demandedVx -= joystick[0]/20.0;
     demandedFi = joystick[1]*angleLimit;
