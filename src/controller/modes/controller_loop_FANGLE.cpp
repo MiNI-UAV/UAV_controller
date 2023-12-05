@@ -13,25 +13,28 @@ void ControllerLoopFANGLE::job(
     NS& navisys
 ) 
 {
-    Eigen::Vector3d vel = navisys.getLinearVelocity();
+    Eigen::Vector3d vel = navisys.getRotationMatrixBodyToWorld().transpose() *  navisys.getLinearVelocity();
     Eigen::Vector3d ori = navisys.getOrientation();
     Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
     double demandedP = pids.at("Fi").calc(circularError(demandedFi, ori(0)));
     double demandedQ = pids.at("Theta").calc(circularError(demandedTheta, ori(1)));
-    double demandedR = pids.at("Psi").calc(circularError(demandedPsi, ori(2)));
-
 
     double throttle = pids.at("U").calc(demandedVx-vel(0));
     double roll_rate = pids.at("Roll").calc(demandedP-angVel(0));
     double pitch_rate = pids.at("Pitch").calc(demandedQ-angVel(1));
-    double yaw_rate = pids.at("Yaw").calc(demandedR-angVel(2));
+    double yaw_rate = 0.0;
 
     // Disable rudder when plane tilted
     if(std::abs(ori(0)) > angleLimit/2 )
     {
-        yaw_rate = 0;
         demandedPsi = ori(2);
+        yaw_rate = pids.at("Yaw").calc(demanded_R-angVel(2));
+    }
+    else
+    {
+        double demandedR = pids.at("Psi").calc(circularError(demandedPsi, ori(2)));
+        yaw_rate = pids.at("Yaw").calc(demandedR-angVel(2));
     }
 
     Eigen::VectorXd vec = applyMixerRotorsHover(throttle,roll_rate,pitch_rate,yaw_rate);
@@ -43,10 +46,12 @@ void ControllerLoopFANGLE::job(
 void ControllerLoopFANGLE::handleJoystick(Eigen::VectorXd joystick) 
 {
     if(!checkJoystickLength(joystick,4)) return;
-    demandedVx -= joystick[0]/20.0;
+    demandedVx += joystick[0]/2.0;
+    if(demandedVx < 0.0) demandedVx = 0.0;
     demandedFi = joystick[1]*angleLimit;
     demandedTheta = -joystick[2]*angleLimit;
     demandedPsi = clampAngle(demandedPsi + joystick[3]/50.0);
+    demanded_R = joystick[3]*3.0;
 }
 
 std::string ControllerLoopFANGLE::demandInfo() 

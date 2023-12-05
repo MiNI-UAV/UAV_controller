@@ -33,6 +33,10 @@ public:
     /// @return angular velocity vector (roll rate, pitch rate, yaw rate) in body frame
     Eigen::Vector3d getAngularVelocity();
 
+    /// @brief Returns rotation matrix from body to world frame
+    /// @return rotation matrix
+    Eigen::Matrix3d getRotationMatrixBodyToWorld();
+
 private:
     Environment& env;
     std::unique_ptr<AHRS> ahrs;

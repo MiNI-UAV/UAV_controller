@@ -54,6 +54,11 @@ Eigen::Vector3d NS::getAngularVelocity()
     return env.sensorsVec3d.at("gyroscope")->getReading() - ahrs->getGyroBias();
 }
 
+Eigen::Matrix3d NS::getRotationMatrixBodyToWorld()
+{
+    return ahrs->rot_bw();
+}
+
 void NS::job() 
 {
     env.updateSensors();

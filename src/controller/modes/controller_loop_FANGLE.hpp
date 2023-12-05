@@ -27,4 +27,5 @@ private:
     std::atomic<double> demandedFi = 0.0;
     std::atomic<double> demandedTheta = 0.0;
     std::atomic<double> demandedPsi = 0.0;
+    std::atomic<double> demanded_R = 0.0;
 };
