@@ -2,7 +2,7 @@
 #include <iostream>
 #include "../defines.hpp"
 
-Controller::Controller(
+ControlSystem::ControlSystem(
     zmq::context_t *ctx,
     std::string uav_address
     ):
@@ -13,10 +13,13 @@ navisys(env)
 {
     const UAVparams* params = UAVparams::getSingleton();
     status = Status::running;
-    pids = params->pids;
-    for(auto& elem : pids)
+    for(const auto& [key, value]: params->controllers)
     {
-        elem.second.set_dt(def::STEP_TIME);
+        controllers.insert(std::make_pair(key, std::move(value->clone())));
+    }
+    for(auto& [key, value]: controllers)
+    {
+        value->set_dt(def::STEP_TIME);
     }
     setMode(ControllerModeFromString(params->initialMode.data()));
     syncWithPhysicEngine(ctx,uav_address);
@@ -24,14 +27,14 @@ navisys(env)
     std::cout << "Constructing controller done" << std::endl;
 }
 
-Controller::~Controller()
+ControlSystem::~ControlSystem()
 {
     delete controller_loop;
     delete control;
     std::cout << "Exiting controller!" << std::endl;
 }
 
-void Controller::run()
+void ControlSystem::run()
 {
     std::cout << "Initializing controller" << std::endl;
     bool run = true;
@@ -62,13 +65,13 @@ void Controller::run()
     }
 }
 
-void Controller::startLoop()
+void ControlSystem::startLoop()
 {
     loop.emplace(std::round(def::STEP_TIME*1000.0),[this] () 
     {
         if(controller_loop == nullptr) return;
         controller_loop->job(
-            pids,
+            controllers,
             *control,
             navisys
         );
@@ -77,7 +80,7 @@ void Controller::startLoop()
     );
 }
 
-void Controller::syncWithPhysicEngine(zmq::context_t *ctx, std::string uav_address)
+void ControlSystem::syncWithPhysicEngine(zmq::context_t *ctx, std::string uav_address)
 {
     std::cout << "Attempting to sync..." << std::endl;
 	zmq::socket_t sock = zmq::socket_t(*ctx, zmq::socket_type::sub);
@@ -99,14 +102,14 @@ void Controller::syncWithPhysicEngine(zmq::context_t *ctx, std::string uav_addre
 	std::cout << "Synchronized!" << std::endl;
 }
 
-void Controller::setMode(ControllerMode new_mode)
+void ControlSystem::setMode(ControllerMode new_mode)
 {
     auto new_loop = ControllerLoop::ControllerLoopFactory(new_mode);
-    for (auto& pid_name: new_loop->requiredPIDs())
+    for (auto& Controller_name: new_loop->requiredcontrollers())
     {
-        if(!pids.contains(pid_name))
+        if(!controllers.contains(Controller_name))
         {
-            std::cerr << "Missing pid " << pid_name << " to run "
+            std::cerr << "Missing Controller " << Controller_name << " to run "
                 << ControllerModeToString(new_mode) << " mode" << std::endl;
             return;
         }
@@ -117,7 +120,7 @@ void Controller::setMode(ControllerMode new_mode)
     status = Status::reload;
 }
 
-void Controller::exitController()
+void ControlSystem::exitController()
 {
     status = Status::exiting;
 }

@@ -26,7 +26,7 @@ void orderServerJob(zmq::context_t *ctx, std::string uav_address, std::function<
     sock.close();
 }
 
-Control::Control(zmq::context_t *ctx, std::string uav_address, Controller* controller):
+Control::Control(zmq::context_t *ctx, std::string uav_address, ControlSystem* controller):
 _controller{controller}
 {
     std::string address = uav_address + "/control";

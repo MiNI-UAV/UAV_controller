@@ -4,12 +4,12 @@
 ControllerLoopQPOS::ControllerLoopQPOS():
     ControllerLoop(ControllerMode::QPOS)
 {
-    required_pids.assign({"Roll", "Pitch", "Yaw", "W", "Z", "Fi",
+    required_controllers.assign({"Roll", "Pitch", "Yaw", "W", "Z", "Fi",
         "Theta", "Psi", "X", "Y", "V", "U"});
 }
 
 void ControllerLoopQPOS::job(
-    std::map<std::string,PID>& pids,
+    std::map<std::string,std::unique_ptr<Controller>>& controllers,
     Control& control,
     NS& navisys
 ) 
@@ -19,27 +19,27 @@ void ControllerLoopQPOS::job(
     Eigen::Vector3d ori = navisys.getOrientation();
     Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
-    double demandedU = pids.at("X").calc(demandedX - pos(0));
-    double demandedV = pids.at("Y").calc(demandedY - pos(1));
+    double demandedU = controllers.at("X")->calc(demandedX, pos(0));
+    double demandedV = controllers.at("Y")->calc(demandedY, pos(1));
     
-    double demandedFi_star = pids.at("V").calc(demandedV - vel(1));
-    double demandedTheta_star = pids.at("U").calc(demandedU - vel(0));
+    double demandedFi_star = controllers.at("V")->calc(demandedV, vel(1));
+    double demandedTheta_star = controllers.at("U")->calc(demandedU, vel(0));
 
     double PsiCos = std::cos(ori(2));
     double PsiSin = std::sin(ori(2));
     double demandedFi = demandedFi_star*PsiCos + demandedTheta_star*PsiSin;
     double demandedTheta = - demandedFi_star*PsiSin + demandedTheta_star*PsiCos;
 
-    double demandedP = pids.at("Fi").calc(demandedFi - ori(0));
-    double demandedQ = pids.at("Theta").calc(demandedTheta - ori(1));
+    double demandedP = controllers.at("Fi")->calc(demandedFi, ori(0));
+    double demandedQ = controllers.at("Theta")->calc(demandedTheta, ori(1));
 
-    double demandedW = pids.at("Z").calc(demandedZ - pos(2));
-    double demandedR = pids.at("Psi").calc(circularError(demandedPsi, ori(2)));
+    double demandedW = controllers.at("Z")->calc(demandedZ, pos(2));
+    double demandedR = controllers.at("Psi")->calc(circularError(demandedPsi, ori(2)), 0.0);
 
-    double climb_rate = pids.at("W").calc(demandedW-vel(2));
-    double roll_rate = pids.at("Roll").calc(demandedP-angVel(0));
-    double pitch_rate = pids.at("Pitch").calc(demandedQ-angVel(1));
-    double yaw_rate = pids.at("Yaw").calc(demandedR-angVel(2));
+    double climb_rate = controllers.at("W")->calc(demandedW, vel(2));
+    double roll_rate = controllers.at("Roll")->calc(demandedP, angVel(0));
+    double pitch_rate = controllers.at("Pitch")->calc(demandedQ, angVel(1));
+    double yaw_rate = controllers.at("Yaw")->calc(demandedR, angVel(2));
 
     Eigen::VectorXd vec = applyMixerRotors(climb_rate,roll_rate,pitch_rate,yaw_rate);
     control.sendSpeed(vec);

@@ -18,7 +18,7 @@ std::string log_path = "logs/";
 /// @param params pointer to UAVparams instant that should be filled
 void parseArgs(int argc, char** argv, UAVparams* params)
 {
-    cxxopts::Options options("controller", "Process representing PID controller of one UAV");
+    cxxopts::Options options("controller", "Process representing control system of one UAV");
     options.add_options()
 		("c,config", "Path of config file", cxxopts::value<std::string>()->default_value("config.xml"))
         ("n,name", "Override name from config", cxxopts::value<std::string>()->default_value(""))
@@ -48,6 +48,6 @@ int main(int argc, char** argv)
     std::cout << "Looking for folder: " << folder << std::endl;
     while(!std::filesystem::exists(folder)) std::this_thread::sleep_for(std::chrono::milliseconds(100));
     std::cout << "Comunication folder found!" << std::endl;
-	Controller controller(&ctx,uav_address);
+	ControlSystem controller(&ctx,uav_address);
 	controller.run();
 }

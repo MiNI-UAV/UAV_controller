@@ -7,7 +7,7 @@
 #include <functional>
 #include "../controller/controller.hpp"
 
-class Controller;
+class ControlSystem;
 
 /// @brief Control command listener & sender
 class Control
@@ -17,7 +17,7 @@ class Control
         /// @param ctx zero mq context
         /// @param uav_address address to REP socket in simulation of controller uav 
         /// @param controller pointer to controller instance
-        Control(zmq::context_t *ctx, std::string uav_address, Controller* controller);
+        Control(zmq::context_t *ctx, std::string uav_address, ControlSystem* controller);
 
         /// @brief Deconstructor
         ~Control();
@@ -70,5 +70,5 @@ class Control
         bool run;
         std::thread orderServer;
         zmq::socket_t sock;
-        Controller* _controller;
+        ControlSystem* _controller;
 };

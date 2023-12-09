@@ -23,11 +23,11 @@ public:
 
 
     /// @brief Controller job that will be called in control loop.
-    /// @param pids map of aviliable pid controllers
+    /// @param controllers map of aviliable controllers
     /// @param control reference to control instatce that is used to send control commands
     /// @param navisys navigation system reference
     virtual void job(
-        [[maybe_unused]] std::map<std::string,PID>& pids,
+        [[maybe_unused]] std::map<std::string,std::unique_ptr<Controller>>& controllers,
         [[maybe_unused]] Control& control,
         [[maybe_unused]] NS& navisys
         );
@@ -46,11 +46,11 @@ public:
         return ControllerModeToString(_mode);
     }
 
-    /// @brief Defines pids controller required by mode
-    /// @return vector of names of required pids
-    virtual const std::vector<std::string>& requiredPIDs()
+    /// @brief Defines controllers controller required by mode
+    /// @return vector of names of required controllers
+    virtual const std::vector<std::string>& requiredcontrollers()
     {
-        return required_pids;
+        return required_controllers;
     };
 
     /// @brief Overrides demands to apply to given postion and orientation
@@ -73,7 +73,7 @@ public:
 
 protected:
     const ControllerMode _mode;
-    std::vector<std::string> required_pids;
+    std::vector<std::string> required_controllers;
 
     /// @brief Check if joystick input vector is correct
     /// @param joystick joystick axes deflaction
