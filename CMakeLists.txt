@@ -42,6 +42,7 @@ set(SOURCES
     ${SOURCE_DIR}/controller/modes/controller_loop_RAUTOLAUNCH.cpp
     ${SOURCE_DIR}/controller/modes/controller_loop_RAUTOLAUNCH.hpp
     ${SOURCE_DIR}/defines.hpp
+    ${SOURCE_DIR}/params.cpp
     ${SOURCE_DIR}/main.cpp
     ${SOURCE_DIR}/navigation/AHRS/AHRS_complementary.cpp
     ${SOURCE_DIR}/navigation/AHRS/AHRS_complementary.hpp

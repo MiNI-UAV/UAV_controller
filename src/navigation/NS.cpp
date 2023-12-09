@@ -4,11 +4,12 @@
 #include "AHRS/AHRS_EKF.hpp"
 #include "AHRS/AHRS_complementary.hpp"
 #include "../defines.hpp"
+#include "../params.hpp"
 
 
 NS::NS(Environment &env):
     env{env},
-    loop(std::round(def::STEP_TIME*1000.0),[this](){job();},status)
+    loop(std::round(Params::getSingleton()->STEP_TIME*1000.0),[this](){job();},status)
 {
     std::cout << "NS initializing..." << std::endl;
     const UAVparams* params = UAVparams::getSingleton();
@@ -90,13 +91,14 @@ EKFParams NS::calcParams()
     const double update_scaler = params->ekf.updateScaler;
     const double baro_scaler = params->ekf.baroScaler;
     const double z_extra_scaler = params->ekf.zScaler;
+    const double step_time = Params::getSingleton()->STEP_TIME;
 
     EKFParams p;
     p.Q.setZero();
-    p.Q.block<3,3>(0,0) = ((std::pow(def::STEP_TIME,4)/4.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
-    p.Q.block<3,3>(3,0) = ((std::pow(def::STEP_TIME,3)/2.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
-    p.Q.block<3,3>(0,3) = ((std::pow(def::STEP_TIME,3)/2.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
-    p.Q.block<3,3>(3,3) = ((std::pow(def::STEP_TIME,2)/1.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(0,0) = ((std::pow(step_time,4)/4.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(3,0) = ((std::pow(step_time,3)/2.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(0,3) = ((std::pow(step_time,3)/2.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
+    p.Q.block<3,3>(3,3) = ((std::pow(step_time,2)/1.0)* std::pow(env.sensorsVec3d.at("gyroscope")->getSd(),2)) * predict_scaler * Eigen::Matrix3d::Identity();
     p.Q(2,2) *= z_extra_scaler;
     p.Q(2,5) *= z_extra_scaler;
     p.Q(5,2) *= z_extra_scaler;

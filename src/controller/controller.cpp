@@ -1,6 +1,7 @@
 #include "controller.hpp"
 #include <iostream>
 #include "../defines.hpp"
+#include "../params.hpp"
 
 ControlSystem::ControlSystem(
     zmq::context_t *ctx,
@@ -19,7 +20,7 @@ navisys(env)
     }
     for(auto& [key, value]: controllers)
     {
-        value->set_dt(def::STEP_TIME);
+        value->set_dt(Params::getSingleton()->STEP_TIME);
     }
     setMode(ControllerModeFromString(params->initialMode.data()));
     syncWithPhysicEngine(ctx,uav_address);
@@ -67,7 +68,7 @@ void ControlSystem::run()
 
 void ControlSystem::startLoop()
 {
-    loop.emplace(std::round(def::STEP_TIME*1000.0),[this] () 
+    loop.emplace(std::round(Params::getSingleton()->STEP_TIME*1000.0),[this] () 
     {
         if(controller_loop == nullptr) return;
         controller_loop->job(
