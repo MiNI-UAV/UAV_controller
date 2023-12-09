@@ -13,10 +13,13 @@ navisys(env)
 {
     const UAVparams* params = UAVparams::getSingleton();
     status = Status::running;
-    pids = params->pids;
-    for(auto& elem : pids)
+    for(const auto& [key, value]: params->controllers)
     {
-        elem.second.set_dt(def::STEP_TIME);
+        controllers.insert(std::make_pair(key, std::move(value->clone())));
+    }
+    for(auto& [key, value]: controllers)
+    {
+        value->set_dt(def::STEP_TIME);
     }
     setMode(ControllerModeFromString(params->initialMode.data()));
     syncWithPhysicEngine(ctx,uav_address);
@@ -68,7 +71,7 @@ void ControlSystem::startLoop()
     {
         if(controller_loop == nullptr) return;
         controller_loop->job(
-            pids,
+            controllers,
             *control,
             navisys
         );
@@ -102,11 +105,11 @@ void ControlSystem::syncWithPhysicEngine(zmq::context_t *ctx, std::string uav_ad
 void ControlSystem::setMode(ControllerMode new_mode)
 {
     auto new_loop = ControllerLoop::ControllerLoopFactory(new_mode);
-    for (auto& pid_name: new_loop->requiredPIDs())
+    for (auto& Controller_name: new_loop->requiredcontrollers())
     {
-        if(!pids.contains(pid_name))
+        if(!controllers.contains(Controller_name))
         {
-            std::cerr << "Missing pid " << pid_name << " to run "
+            std::cerr << "Missing Controller " << Controller_name << " to run "
                 << ControllerModeToString(new_mode) << " mode" << std::endl;
             return;
         }

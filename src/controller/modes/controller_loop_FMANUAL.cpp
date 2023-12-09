@@ -3,11 +3,11 @@
 ControllerLoopFMANUAL::ControllerLoopFMANUAL():
     ControllerLoop(ControllerMode::FMANUAL)
 {
-    required_pids.clear();
+    required_controllers.clear();
 }
 
 void ControllerLoopFMANUAL::job(
-    [[maybe_unused]] std::map<std::string,PID>& pids,
+    [[maybe_unused]] std::map<std::string,std::unique_ptr<Controller>>& controllers,
     Control& control,
     [[maybe_unused]] NS& navisys
 ) 

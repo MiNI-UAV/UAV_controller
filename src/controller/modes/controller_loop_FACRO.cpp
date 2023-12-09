@@ -4,11 +4,11 @@
 ControllerLoopFACRO::ControllerLoopFACRO():
     ControllerLoop(ControllerMode::FACRO)
 {
-    required_pids.assign({"Roll", "Pitch", "Yaw"});
+    required_controllers.assign({"Roll", "Pitch", "Yaw"});
 }
 
 void ControllerLoopFACRO::job(
-    [[maybe_unused]] std::map<std::string,PID>& pids,
+    [[maybe_unused]] std::map<std::string,std::unique_ptr<Controller>>& controllers,
     Control& control,
     [[maybe_unused]] NS& navisys
 ) 
@@ -16,9 +16,9 @@ void ControllerLoopFACRO::job(
 
     Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
-    double roll_rate = pids.at("Roll").calc(demanded_P-angVel(0));
-    double pitch_rate = pids.at("Pitch").calc(demanded_Q-angVel(1));
-    double yaw_rate = pids.at("Yaw").calc(demanded_R-angVel(2));
+    double roll_rate = controllers.at("Roll")->calc(demanded_P, angVel(0));
+    double pitch_rate = controllers.at("Pitch")->calc(demanded_Q,angVel(1));
+    double yaw_rate = controllers.at("Yaw")->calc(demanded_R,angVel(2));
 
     Eigen::VectorXd vec = applyMixerRotorsHover(throttle,roll_rate,pitch_rate,yaw_rate);
     control.sendSpeed(vec);

@@ -7,7 +7,7 @@ public:
     ControllerLoopQANGLE();
 
     void job(
-        std::map<std::string,PID>& pids,
+        std::map<std::string,std::unique_ptr<Controller>>& controllers,
         Control& control,
         NS& navisys) override;
         

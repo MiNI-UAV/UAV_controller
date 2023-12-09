@@ -6,7 +6,7 @@ ControllerLoopRAUTOLAUNCH::ControllerLoopRAUTOLAUNCH():
 }
 
 void ControllerLoopRAUTOLAUNCH::job(
-    [[maybe_unused]] std::map<std::string,PID>& pids,
+    [[maybe_unused]] std::map<std::string,std::unique_ptr<Controller>>& controllers,
     Control& control,
     [[maybe_unused]] NS& navisys
 ) 

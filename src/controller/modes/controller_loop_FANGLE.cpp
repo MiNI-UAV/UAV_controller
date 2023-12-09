@@ -4,11 +4,11 @@
 ControllerLoopFANGLE::ControllerLoopFANGLE():
     ControllerLoop(ControllerMode::FANGLE)
 {
-    required_pids.assign({"Roll", "Pitch", "Yaw", "U", "Fi", "Theta", "Psi"});
+    required_controllers.assign({"Roll", "Pitch", "Yaw", "U", "Fi", "Theta", "Psi"});
 }
 
 void ControllerLoopFANGLE::job(
-    std::map<std::string,PID>& pids,
+    std::map<std::string,std::unique_ptr<Controller>>& controllers,
     Control& control,
     NS& navisys
 ) 
@@ -17,24 +17,24 @@ void ControllerLoopFANGLE::job(
     Eigen::Vector3d ori = navisys.getOrientation();
     Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
-    double demandedP = pids.at("Fi").calc(circularError(demandedFi, ori(0)));
-    double demandedQ = pids.at("Theta").calc(circularError(demandedTheta, ori(1)));
+    double demandedP = controllers.at("Fi")->calc(circularError(demandedFi, ori(0)), 0.0);
+    double demandedQ = controllers.at("Theta")->calc(circularError(demandedTheta, ori(1)), 0.0);
 
-    double throttle = pids.at("U").calc(demandedVx-vel(0));
-    double roll_rate = pids.at("Roll").calc(demandedP-angVel(0));
-    double pitch_rate = pids.at("Pitch").calc(demandedQ-angVel(1));
+    double throttle = controllers.at("U")->calc(demandedVx, vel(0));
+    double roll_rate = controllers.at("Roll")->calc(demandedP, angVel(0));
+    double pitch_rate = controllers.at("Pitch")->calc(demandedQ ,angVel(1));
     double yaw_rate = 0.0;
 
     // Disable rudder when plane tilted
     if(std::abs(ori(0)) > angleLimit/2 )
     {
         demandedPsi = ori(2);
-        yaw_rate = pids.at("Yaw").calc(demanded_R-angVel(2));
+        yaw_rate = controllers.at("Yaw")->calc(demanded_R, angVel(2));
     }
     else
     {
-        double demandedR = pids.at("Psi").calc(circularError(demandedPsi, ori(2)));
-        yaw_rate = pids.at("Yaw").calc(demandedR-angVel(2));
+        double demandedR = controllers.at("Psi")->calc(circularError(demandedPsi, ori(2)), 0.0);
+        yaw_rate = controllers.at("Yaw")->calc(demandedR, angVel(2));
     }
 
     Eigen::VectorXd vec = applyMixerRotorsHover(throttle,roll_rate,pitch_rate,yaw_rate);

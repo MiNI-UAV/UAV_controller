@@ -47,7 +47,7 @@ class ControlSystem
         Environment env;
         NS navisys;
         std::optional<TimedLoop> loop;
-        std::map<std::string,PID> pids;
+        std::map<std::string,std::unique_ptr<Controller>> controllers;
 
         /// @brief Starts controller loop
         void startLoop();

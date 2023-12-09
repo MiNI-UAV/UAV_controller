@@ -5,7 +5,7 @@
 /// @brief Controller constants
 namespace def {
 
-/// @brief Step time of controller. Step of PID and EKF calculations
+/// @brief Step time of controller. Step of controller and EKF calculations
 const double STEP_TIME = 0.003;
 
 /// @brief How often send demands in response to stick command
