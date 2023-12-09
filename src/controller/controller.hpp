@@ -17,7 +17,7 @@ class ControllerLoop;
 class Control;
 
 /// @brief Central controller class
-class Controller
+class ControlSystem
 {
     friend class Control;
 
@@ -25,10 +25,10 @@ class Controller
         /// @brief Constructor
         /// @param ctx zero mq context
         /// @param uav_address address of simulation sockets
-        Controller(zmq::context_t *ctx, std::string uav_address);
+        ControlSystem(zmq::context_t *ctx, std::string uav_address);
 
         // @brief Deconstructor
-        ~Controller();
+        ~ControlSystem();
 
         /// @brief Run controller
         void run();

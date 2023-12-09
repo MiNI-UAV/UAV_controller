@@ -2,7 +2,7 @@
 #include <iostream>
 #include "../defines.hpp"
 
-Controller::Controller(
+ControlSystem::ControlSystem(
     zmq::context_t *ctx,
     std::string uav_address
     ):
@@ -24,14 +24,14 @@ navisys(env)
     std::cout << "Constructing controller done" << std::endl;
 }
 
-Controller::~Controller()
+ControlSystem::~ControlSystem()
 {
     delete controller_loop;
     delete control;
     std::cout << "Exiting controller!" << std::endl;
 }
 
-void Controller::run()
+void ControlSystem::run()
 {
     std::cout << "Initializing controller" << std::endl;
     bool run = true;
@@ -62,7 +62,7 @@ void Controller::run()
     }
 }
 
-void Controller::startLoop()
+void ControlSystem::startLoop()
 {
     loop.emplace(std::round(def::STEP_TIME*1000.0),[this] () 
     {
@@ -77,7 +77,7 @@ void Controller::startLoop()
     );
 }
 
-void Controller::syncWithPhysicEngine(zmq::context_t *ctx, std::string uav_address)
+void ControlSystem::syncWithPhysicEngine(zmq::context_t *ctx, std::string uav_address)
 {
     std::cout << "Attempting to sync..." << std::endl;
 	zmq::socket_t sock = zmq::socket_t(*ctx, zmq::socket_type::sub);
@@ -99,7 +99,7 @@ void Controller::syncWithPhysicEngine(zmq::context_t *ctx, std::string uav_addre
 	std::cout << "Synchronized!" << std::endl;
 }
 
-void Controller::setMode(ControllerMode new_mode)
+void ControlSystem::setMode(ControllerMode new_mode)
 {
     auto new_loop = ControllerLoop::ControllerLoopFactory(new_mode);
     for (auto& pid_name: new_loop->requiredPIDs())
@@ -117,7 +117,7 @@ void Controller::setMode(ControllerMode new_mode)
     status = Status::reload;
 }
 
-void Controller::exitController()
+void ControlSystem::exitController()
 {
     status = Status::exiting;
 }
