@@ -13,7 +13,6 @@ void ControllerLoopFACRO::job(
     [[maybe_unused]] NS& navisys
 ) 
 {
-
     Eigen::Vector3d angVel = navisys.getAngularVelocity();
 
     double roll_rate = controllers.at("Roll")->calc(demanded_P, angVel(0));

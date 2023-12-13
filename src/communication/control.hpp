@@ -60,6 +60,8 @@ class Control
         /// @return reply to message
         std::string handleMsg(std::string msg);
 
+        void setMode(ControllerMode mode);
+
     private:
         void sendVectorXd(std::string prefix, Eigen::VectorXd vec);
         void sendString(std::string msg);

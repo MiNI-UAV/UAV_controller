@@ -17,6 +17,11 @@ std::string Control::handleMsg(std::string msg)
     return "unknown";
 }
 
+void Control::setMode(ControllerMode mode) 
+{
+    _controller->setMode(mode);
+}
+
 std::string Control::handleControl(std::string content)
 {
     if(content.compare("exit") == 0)
@@ -32,7 +37,7 @@ std::string Control::handleMode(std::string content)
     try
     {
         auto mode = ControllerModeFromString(content.data());
-        _controller->setMode(mode);
+        setMode(mode);
         return "ok";
     }
     catch(const std::exception& e)

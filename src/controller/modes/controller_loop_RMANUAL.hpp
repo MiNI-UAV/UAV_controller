@@ -14,6 +14,6 @@ public:
     std::string demandInfo() override;
 
 protected:
-    double demandedX;
-    double demandedY;
+    std::atomic<double> demanded_H = 0.0;
+    std::atomic<double> demanded_V = 0.0;
 };

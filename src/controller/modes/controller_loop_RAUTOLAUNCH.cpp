@@ -17,5 +17,9 @@ void ControllerLoopRAUTOLAUNCH::job(
         control.startJet(0);
         running = true;
     }
+    else
+    {
+        control.setMode(ControllerMode::RMANUAL);
+    }
 }
 
