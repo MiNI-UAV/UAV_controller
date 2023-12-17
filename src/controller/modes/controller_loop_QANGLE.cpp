@@ -52,9 +52,10 @@ std::string ControllerLoopQANGLE::demandInfo()
     return ss.str();
 }
 
-void ControllerLoopQANGLE::overridePosition(
-    Eigen::Vector3d position,
-    Eigen::Vector3d orientation
+void ControllerLoopQANGLE::overridePositionAndSpeed(
+    [[maybe_unused]] Eigen::Vector3d position,
+    [[maybe_unused]] Eigen::Vector3d orientation,
+    [[maybe_unused]] Eigen::Vector3d velocity
 ) 
 {
     demandedZ = position.z();

@@ -64,10 +64,12 @@ std::string ControllerLoopFANGLE::demandInfo()
     return ss.str();
 }
 
-void ControllerLoopFANGLE::overridePosition(
+void ControllerLoopFANGLE::overridePositionAndSpeed(
     [[maybe_unused]] Eigen::Vector3d position,
-    Eigen::Vector3d orientation
+    [[maybe_unused]] Eigen::Vector3d orientation,
+    [[maybe_unused]] Eigen::Vector3d velocity
 ) 
 {
+    demandedVx = velocity.x();
     demandedPsi = orientation.z();
 }

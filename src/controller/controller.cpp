@@ -115,7 +115,8 @@ void ControlSystem::setMode(ControllerMode new_mode)
             return;
         }
     }
-    new_loop->overridePosition(navisys.getPosition(),navisys.getOrientation());
+    new_loop->overridePositionAndSpeed(navisys.getPosition(),navisys.getOrientation(),
+        navisys.getRotationMatrixBodyToWorld().colPivHouseholderQr().solve(navisys.getLinearVelocity()));
     std::swap(new_loop,controller_loop);
     if(new_loop != nullptr) delete new_loop;
     status = Status::reload;

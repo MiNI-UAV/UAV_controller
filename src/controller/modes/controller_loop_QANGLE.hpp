@@ -15,9 +15,10 @@ public:
 
     std::string demandInfo() override;
 
-    void overridePosition(
-        Eigen::Vector3d position,
-        Eigen::Vector3d orientation
+    void overridePositionAndSpeed(
+        [[maybe_unused]] Eigen::Vector3d position,
+        [[maybe_unused]] Eigen::Vector3d orientation,
+        [[maybe_unused]] Eigen::Vector3d velocity
     ) override;
 
 private:

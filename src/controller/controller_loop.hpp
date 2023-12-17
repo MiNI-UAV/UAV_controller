@@ -53,12 +53,14 @@ public:
         return required_controllers;
     };
 
-    /// @brief Overrides demands to apply to given postion and orientation
+    /// @brief Overrides demands to apply to given postion, orientation and speed
     /// @param position position vector in world frame
     /// @param orientation orientation vector in world frame
-    virtual void overridePosition(
+    /// @param orientation linear velocity vector in world frame
+    virtual void overridePositionAndSpeed(
         [[maybe_unused]] Eigen::Vector3d position,
-        [[maybe_unused]] Eigen::Vector3d orientation
+        [[maybe_unused]] Eigen::Vector3d orientation,
+        [[maybe_unused]] Eigen::Vector3d velocity
     )
     {};
 

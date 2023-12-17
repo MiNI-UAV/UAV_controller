@@ -15,12 +15,13 @@ public:
 
     std::string demandInfo() override;
 
-    void overridePosition(
+    void overridePositionAndSpeed(
         [[maybe_unused]] Eigen::Vector3d position,
-        Eigen::Vector3d orientation
+        [[maybe_unused]] Eigen::Vector3d orientation,
+        [[maybe_unused]] Eigen::Vector3d velocity
     ) override;
 
-    static constexpr double angleLimit = std::numbers::pi/5.0;
+    static constexpr double angleLimit = std::numbers::pi/2.0;
 
 private:
     std::atomic<double> demandedVx = 0.0;

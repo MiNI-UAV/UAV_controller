@@ -64,9 +64,11 @@ std::string ControllerLoopQPOS::demandInfo() {
     return ss.str();
 }
 
-void ControllerLoopQPOS::overridePosition(
-    Eigen::Vector3d position,
-    Eigen::Vector3d orientation) 
+void ControllerLoopQPOS::overridePositionAndSpeed(
+    [[maybe_unused]] Eigen::Vector3d position,
+    [[maybe_unused]] Eigen::Vector3d orientation,
+    [[maybe_unused]] Eigen::Vector3d velocity
+) 
 {
     demandedX = position.x();
     demandedY = position.y();
