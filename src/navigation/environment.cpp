@@ -27,10 +27,10 @@ Environment::Environment(zmq::context_t *ctx, std::string uav_address):
     vel_world_sock(*ctx,zmq::socket_type::sub),
     accel_sock(*ctx,zmq::socket_type::sub),
     logger("env.csv", 
-    "time,PosX,PosY,PosZ,Roll,Pitch,Yaw,"
-    "VelX,VelY,VelZ,OmX,OmY,OmZ,"
+    "time,PosX,PosY,PosZ,Roll,q0,qx,"
+    "qy,qz,VelX,VelY,VelZ,OmX,OmY,OmZ,"
     "VelBX,VelBY,VelBZ,OmBX,OmBY,OmBZ,"
-    "AccX,AccY,AccZ,EpsX,EpsY,EpsZ")
+    "AccBX,AccBY,AccBZ,EpsBX,EpsBY,EpsBZ")
 {
     for(auto& sensor: UAVparams::getSingleton()->sensors)
     {   
