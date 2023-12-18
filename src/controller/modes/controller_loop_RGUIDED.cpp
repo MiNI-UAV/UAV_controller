@@ -59,8 +59,26 @@ void ControllerLoopRGUIDED::job(
     }
 
     double vel_norm_2d = std::sqrt(std::pow(vel.x(),2.0) + std::pow(vel.y(),2.0));
-    double vel_theta = std::atan2(-vel.z(), vel_norm_2d);
-    double vel_psi = std::atan2(vel.y(), vel.x());
+    double vel_theta, vel_psi;
+    if(vel_norm_2d > 0.1)
+    {
+        vel_theta = std::atan2(-vel.z(), vel_norm_2d);
+        vel_psi = std::atan2(vel.y(), vel.x());
+    }
+    else
+    {
+        if(vel.z() > 0.0)
+        {
+            vel_theta = std::numbers::pi/2.0;
+            vel_psi = ori.z();
+        }
+        else
+        {
+            vel_theta = -std::numbers::pi/2.0;
+            vel_psi = ori.z();
+        }
+    }
+
 
     double demanded_V = controllers.at("Theta")->calc(circularError(demandedTheta, vel_theta), 0.0);
     double demanded_H = controllers.at("Psi")->calc(circularError(demandedPsi, vel_psi), 0.0);
