@@ -3,7 +3,7 @@
 #include <iostream>
 
 /// @brief Controller modes
-enum ControllerMode
+enum ControllerMode 
 {
     NONE = 0,
     QPOS = 1,
@@ -14,7 +14,8 @@ enum ControllerMode
     FANGLE = 6,
     RMANUAL = 7,
     RAUTOLAUNCH = 8,
-
+    RANGLE = 9,
+    RGUIDED = 10
 };
 
 /// @brief Serializes controller mode to string
@@ -40,6 +41,10 @@ constexpr const char* ControllerModeToString(ControllerMode mode) throw()
       return "FANGLE";
     case ControllerMode::RMANUAL:
       return "RMANUAL";
+    case ControllerMode::RANGLE:
+      return "RANGLE";
+    case ControllerMode::RGUIDED:
+      return "RGUIDED";
     case ControllerMode::RAUTOLAUNCH:
       return "RAUTOLAUNCH";
     default:
@@ -70,6 +75,10 @@ constexpr ControllerMode  ControllerModeFromString(const char* mode) throw()
     return ControllerMode::RMANUAL;
   if (std::string_view(mode) == "RAUTOLAUNCH")
     return ControllerMode::RAUTOLAUNCH;
+  if (std::string_view(mode) == "RANGLE")
+    return ControllerMode::RANGLE;
+  if (std::string_view(mode) == "RGUIDED")
+    return ControllerMode::RGUIDED;
 
   std::cerr << "Unknown mode: " << mode << std::endl;
   return ControllerMode::NONE;

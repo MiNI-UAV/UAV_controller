@@ -9,6 +9,8 @@
 #include "modes/controller_loop_FANGLE.hpp"
 #include "modes/controller_loop_RMANUAL.hpp"
 #include "modes/controller_loop_RAUTOLAUNCH.hpp"
+#include "modes/controller_loop_RANGLE.hpp"
+#include "modes/controller_loop_RGUIDED.hpp"
 
 ControllerLoop::ControllerLoop(ControllerMode mode):
     _mode{mode}
@@ -36,8 +38,6 @@ ControllerLoop *ControllerLoop::ControllerLoopFactory(ControllerMode mode)
       return new ControllerLoopQANGLE();
     case ControllerMode::QACRO:
       return new ControllerLoopQACRO();
-    case ControllerMode::RMANUAL:
-      return new ControllerLoopRMANUAL();
     case ControllerMode::FMANUAL:
       return new ControllerLoopFMANUAL();
     case ControllerMode::FACRO:
@@ -46,6 +46,12 @@ ControllerLoop *ControllerLoop::ControllerLoopFactory(ControllerMode mode)
       return new ControllerLoopFANGLE();
     case ControllerMode::RAUTOLAUNCH:
       return new ControllerLoopRAUTOLAUNCH();
+    case ControllerMode::RMANUAL:
+      return new ControllerLoopRMANUAL();
+    case ControllerMode::RANGLE:
+      return new ControllerLoopRANGLE();
+    case ControllerMode::RGUIDED:
+      return new ControllerLoopRGUIDED();
     default:
       return nullptr;
     }

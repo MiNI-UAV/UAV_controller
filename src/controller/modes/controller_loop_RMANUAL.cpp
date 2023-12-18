@@ -21,7 +21,7 @@ void ControllerLoopRMANUAL::job(
     double V_rate = controllers.at("V")->calc(demanded_V,angVel(1));
     double H_rate = controllers.at("H")->calc(demanded_H,angVel(2));
 
-    if(std::abs(angVel(0)) < 5.0)
+    if(std::abs(angVel(0)) < 3.0)
     {
         Eigen::VectorXd surf = applyMixerSurfaces(0.0, 0.0, 0.0, 0.0);
         control.sendSurface(surf);
