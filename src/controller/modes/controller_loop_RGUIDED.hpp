@@ -14,8 +14,7 @@ public:
     std::string demandInfo() override;
 
 protected:
-    //Position of uptown tower on the city map.
-    const Eigen::Vector3d target{1530.0,-330.0,-300.0};
-
+    const Eigen::Vector3d target;
+    
     static constexpr double detection_limit = std::numbers::pi/3.0;
 };

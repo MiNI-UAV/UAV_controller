@@ -1,8 +1,9 @@
 #include "controller_loop_RGUIDED.hpp"
 #include "../../utils.hpp"
+#include "common.hpp"
 
 ControllerLoopRGUIDED::ControllerLoopRGUIDED():
-    ControllerLoop(ControllerMode::RGUIDED)
+    ControllerLoop(ControllerMode::RGUIDED), target{UAVparams::getSingleton()->target}
 {
     required_controllers.assign({"H", "V", "Theta", "Psi"});
 }
