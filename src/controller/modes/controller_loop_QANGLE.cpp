@@ -34,9 +34,9 @@ void ControllerLoopQANGLE::job(
 
 void ControllerLoopQANGLE::handleJoystick(Eigen::VectorXd joystick) 
 {
-    constexpr double angleLimit = std::numbers::pi/5.0;
+    constexpr double angleLimit = std::numbers::pi/9.0;
     if(!checkJoystickLength(joystick,4)) return;
-    demandedZ -= joystick[0]/10.0;
+    demandedZ -= joystick[0]/8.0;
     demandedFi = joystick[1]*angleLimit;
     demandedTheta = -joystick[2]*angleLimit;
     demandedPsi = clampAngle(demandedPsi + joystick[3]/30.0);

@@ -30,10 +30,9 @@ void ControllerLoopQPOS::job(
     double demandedFi = demandedFi_star*PsiCos + demandedTheta_star*PsiSin;
     double demandedTheta = - demandedFi_star*PsiSin + demandedTheta_star*PsiCos;
 
-    double demandedP = controllers.at("Fi")->calc(demandedFi, ori(0));
-    double demandedQ = controllers.at("Theta")->calc(demandedTheta, ori(1));
-
     double demandedW = controllers.at("Z")->calc(demandedZ, pos(2));
+    double demandedP = controllers.at("Fi")->calc(circularError(demandedFi, ori(0)), 0.0);
+    double demandedQ = controllers.at("Theta")->calc(circularError(demandedTheta, ori(1)), 0.0);
     double demandedR = controllers.at("Psi")->calc(circularError(demandedPsi, ori(2)), 0.0);
 
     double climb_rate = controllers.at("W")->calc(demandedW, vel(2));
@@ -49,7 +48,7 @@ void ControllerLoopQPOS::handleJoystick(Eigen::VectorXd joystick)
 {
     constexpr double angleLimit = std::numbers::pi/5.0;
     if(!checkJoystickLength(joystick,4)) return;
-    demandedZ -= joystick[0]/10.0;
+    demandedZ -= joystick[0]/8.0;
     demandedPsi = clampAngle(demandedPsi + joystick[3]/20.0);
     demandedX += ((joystick[2]*angleLimit)*std::cos(demandedPsi) - (joystick[1]*angleLimit)*std::sin(demandedPsi))/2.0;
     demandedY += ((joystick[2]*angleLimit)*std::sin(demandedPsi) + (joystick[1]*angleLimit)*std::cos(demandedPsi))/2.0;

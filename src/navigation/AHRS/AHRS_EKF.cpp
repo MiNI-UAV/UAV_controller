@@ -91,15 +91,15 @@ void AHRS_EKF::update(Eigen::Vector3d gyro, Eigen::Vector3d acc, Eigen::Vector3d
     Eigen::Matrix<double,7,7> PDash = A*P*A.transpose() + Q;
 
     //Update
-    // Eigen::Matrix<double,6,7> C_val = C(xDash.head<4>());
-    // Eigen::Matrix<double,6,6> inv_den = (C_val*PDash*C_val.transpose() + R).inverse();
-    // Eigen::Matrix<double,7,6> K = (PDash*C_val.transpose())*inv_den;
-    // x = xDash + K*(y-C_val*xDash);
-    // Eigen::Matrix<double,7,7> I;
-    // I.setIdentity();
-    // P = (I - K*C_val)*PDash;
-    x = xDash;
-    P = PDash;
+    Eigen::Matrix<double,6,7> C_val = C(xDash.head<4>());
+    Eigen::Matrix<double,6,6> inv_den = (C_val*PDash*C_val.transpose() + R).inverse();
+    Eigen::Matrix<double,7,6> K = (PDash*C_val.transpose())*inv_den;
+    x = xDash + K*(y-C_val*xDash);
+    Eigen::Matrix<double,7,7> I;
+    I.setIdentity();
+    P = (I - K*C_val)*PDash;
+    // x = xDash;
+    // P = PDash;
 
     Eigen::Vector3d ori = quaterionToRPY(q());
     mtxOri.lock();
