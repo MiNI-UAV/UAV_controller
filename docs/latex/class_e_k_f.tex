@@ -1,0 +1,169 @@
+\hypertarget{class_e_k_f}{}\doxysection{EKF Class Reference}
+\label{class_e_k_f}\index{EKF@{EKF}}
+
+
+Extended Kalman Filter.  
+
+
+
+
+{\ttfamily \#include $<$EKF.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_e_k_f_ada584dd14d972a803fed30193148d9d7}{EKF}} (\mbox{\hyperlink{struct_e_k_f_params}{EKFParams}} params)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_e_k_f_ad8f9b753202a911ba477441f58b9ea70}{get\+Pos}} ()
+\begin{DoxyCompactList}\small\item\em Returns estimated position vector. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_e_k_f_a7c51a4b1d91be74d278a39dcbdcf4c64}{get\+Vel}} ()
+\begin{DoxyCompactList}\small\item\em Returns estimated velocity vector. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_e_k_f_a473cefcc1410a4c8f1027103a6c9c1a6}{predict}} (double time, Eigen\+::\+Vector3d acc)
+\begin{DoxyCompactList}\small\item\em Predict phase. Integration of accelerometer measures. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_e_k_f_ad9aa80b617f6815324595dc03b803054}{update\+Baro}} (double time, double baro)
+\begin{DoxyCompactList}\small\item\em Update phase. Height correction. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_e_k_f_a238d7ddf2b9d7d466cc866b34c50f282}{update\+GPS}} (double time, Eigen\+::\+Vector3d pos)
+\begin{DoxyCompactList}\small\item\em Update phase. Position correction. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_e_k_f_a3cae59df7fa07c94944f118d850f92a7}{update\+GPSVel}} (double time, Eigen\+::\+Vector3d vel)
+\begin{DoxyCompactList}\small\item\em Update phase. Velocity correction. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_e_k_f_ab3d099c0f5c2366a9e02bd89ca457180}{log}} (double time)
+\begin{DoxyCompactList}\small\item\em Log filter state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Extended Kalman Filter. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_e_k_f_ada584dd14d972a803fed30193148d9d7}\label{class_e_k_f_ada584dd14d972a803fed30193148d9d7}} 
+\index{EKF@{EKF}!EKF@{EKF}}
+\index{EKF@{EKF}!EKF@{EKF}}
+\doxysubsubsection{\texorpdfstring{EKF()}{EKF()}}
+{\footnotesize\ttfamily EKF\+::\+EKF (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_e_k_f_params}{EKFParams}}}]{params }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & filter parameters \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_e_k_f_ad8f9b753202a911ba477441f58b9ea70}\label{class_e_k_f_ad8f9b753202a911ba477441f58b9ea70}} 
+\index{EKF@{EKF}!getPos@{getPos}}
+\index{getPos@{getPos}!EKF@{EKF}}
+\doxysubsubsection{\texorpdfstring{getPos()}{getPos()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d EKF\+::get\+Pos (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns estimated position vector. 
+
+\begin{DoxyReturn}{Returns}
+position vector in world frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_e_k_f_a7c51a4b1d91be74d278a39dcbdcf4c64}\label{class_e_k_f_a7c51a4b1d91be74d278a39dcbdcf4c64}} 
+\index{EKF@{EKF}!getVel@{getVel}}
+\index{getVel@{getVel}!EKF@{EKF}}
+\doxysubsubsection{\texorpdfstring{getVel()}{getVel()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d EKF\+::get\+Vel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns estimated velocity vector. 
+
+\begin{DoxyReturn}{Returns}
+velocity vector in world frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_e_k_f_ab3d099c0f5c2366a9e02bd89ca457180}\label{class_e_k_f_ab3d099c0f5c2366a9e02bd89ca457180}} 
+\index{EKF@{EKF}!log@{log}}
+\index{log@{log}!EKF@{EKF}}
+\doxysubsubsection{\texorpdfstring{log()}{log()}}
+{\footnotesize\ttfamily void EKF\+::log (\begin{DoxyParamCaption}\item[{double}]{time }\end{DoxyParamCaption})}
+
+
+
+Log filter state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & simulation time \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_e_k_f_a473cefcc1410a4c8f1027103a6c9c1a6}\label{class_e_k_f_a473cefcc1410a4c8f1027103a6c9c1a6}} 
+\index{EKF@{EKF}!predict@{predict}}
+\index{predict@{predict}!EKF@{EKF}}
+\doxysubsubsection{\texorpdfstring{predict()}{predict()}}
+{\footnotesize\ttfamily void EKF\+::predict (\begin{DoxyParamCaption}\item[{double}]{time,  }\item[{Eigen\+::\+Vector3d}]{acc }\end{DoxyParamCaption})}
+
+
+
+Predict phase. Integration of accelerometer measures. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & simulation time \\
+\hline
+{\em acc} & accelerometer measure \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_e_k_f_ad9aa80b617f6815324595dc03b803054}\label{class_e_k_f_ad9aa80b617f6815324595dc03b803054}} 
+\index{EKF@{EKF}!updateBaro@{updateBaro}}
+\index{updateBaro@{updateBaro}!EKF@{EKF}}
+\doxysubsubsection{\texorpdfstring{updateBaro()}{updateBaro()}}
+{\footnotesize\ttfamily void EKF\+::update\+Baro (\begin{DoxyParamCaption}\item[{double}]{time,  }\item[{double}]{baro }\end{DoxyParamCaption})}
+
+
+
+Update phase. Height correction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & simulation time \\
+\hline
+{\em baro} & barometer measure \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_e_k_f_a238d7ddf2b9d7d466cc866b34c50f282}\label{class_e_k_f_a238d7ddf2b9d7d466cc866b34c50f282}} 
+\index{EKF@{EKF}!updateGPS@{updateGPS}}
+\index{updateGPS@{updateGPS}!EKF@{EKF}}
+\doxysubsubsection{\texorpdfstring{updateGPS()}{updateGPS()}}
+{\footnotesize\ttfamily void EKF\+::update\+GPS (\begin{DoxyParamCaption}\item[{double}]{time,  }\item[{Eigen\+::\+Vector3d}]{pos }\end{DoxyParamCaption})}
+
+
+
+Update phase. Position correction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & simulation time \\
+\hline
+{\em baro} & \mbox{\hyperlink{class_g_p_s}{GPS}} location measure \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_e_k_f_a3cae59df7fa07c94944f118d850f92a7}\label{class_e_k_f_a3cae59df7fa07c94944f118d850f92a7}} 
+\index{EKF@{EKF}!updateGPSVel@{updateGPSVel}}
+\index{updateGPSVel@{updateGPSVel}!EKF@{EKF}}
+\doxysubsubsection{\texorpdfstring{updateGPSVel()}{updateGPSVel()}}
+{\footnotesize\ttfamily void EKF\+::update\+GPSVel (\begin{DoxyParamCaption}\item[{double}]{time,  }\item[{Eigen\+::\+Vector3d}]{vel }\end{DoxyParamCaption})}
+
+
+
+Update phase. Velocity correction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & simulation time \\
+\hline
+{\em baro} & \mbox{\hyperlink{class_g_p_s}{GPS}} velocity measure \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/navigation/\mbox{\hyperlink{_e_k_f_8hpp}{EKF.\+hpp}}\item 
+src/navigation/\mbox{\hyperlink{_e_k_f_8cpp}{EKF.\+cpp}}\end{DoxyCompactItemize}

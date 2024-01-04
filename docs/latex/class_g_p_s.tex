@@ -1,0 +1,62 @@
+\hypertarget{class_g_p_s}{}\doxysection{GPS Class Reference}
+\label{class_g_p_s}\index{GPS@{GPS}}
+
+
+Representation of \mbox{\hyperlink{class_g_p_s}{GPS}} position measure.  
+
+
+
+
+{\ttfamily \#include $<$sensors.\+hpp$>$}
+
+
+
+Inheritance diagram for GPS\+:
+% FIG 0
+
+
+Collaboration diagram for GPS\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g_p_s_a9aeac677da0fd1f2d9d97357c393ed35}{GPS}} (\mbox{\hyperlink{class_environment}{Environment}} \&\mbox{\hyperlink{class_sensor_a2719dcf7802389fca96f6cf13dcfa00a}{env}}, double sd, Eigen\+::\+Vector3d \mbox{\hyperlink{class_sensor_a548201e3a01c9b881912f63d83763472}{bias}}, double \mbox{\hyperlink{class_sensor_a9639cd6679bfd35dbe4b3ef762a688ea}{refresh\+Time}})
+\item 
+void \mbox{\hyperlink{class_g_p_s_a5f3e2a4e925216e9d9cf1c07cf7b2dbd}{update}} () override
+\begin{DoxyCompactList}\small\item\em Update sensor state. Measured value is updated if sensor is ready for next read. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Representation of \mbox{\hyperlink{class_g_p_s}{GPS}} position measure. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_g_p_s_a9aeac677da0fd1f2d9d97357c393ed35}\label{class_g_p_s_a9aeac677da0fd1f2d9d97357c393ed35}} 
+\index{GPS@{GPS}!GPS@{GPS}}
+\index{GPS@{GPS}!GPS@{GPS}}
+\doxysubsubsection{\texorpdfstring{GPS()}{GPS()}}
+{\footnotesize\ttfamily GPS\+::\+GPS (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_environment}{Environment}} \&}]{env,  }\item[{double}]{sd,  }\item[{Eigen\+::\+Vector3d}]{bias,  }\item[{double}]{refresh\+Time }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_g_p_s_a5f3e2a4e925216e9d9cf1c07cf7b2dbd}\label{class_g_p_s_a5f3e2a4e925216e9d9cf1c07cf7b2dbd}} 
+\index{GPS@{GPS}!update@{update}}
+\index{update@{update}!GPS@{GPS}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void GPS\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Update sensor state. Measured value is updated if sensor is ready for next read. 
+
+
+
+Implements \mbox{\hyperlink{class_sensor_a1766329f3c9918fa886ead46b141a6a8}{Sensor$<$ Eigen\+::\+Vector3d $>$}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/navigation/\mbox{\hyperlink{sensors_8hpp}{sensors.\+hpp}}\item 
+src/navigation/\mbox{\hyperlink{sensors_8cpp}{sensors.\+cpp}}\end{DoxyCompactItemize}

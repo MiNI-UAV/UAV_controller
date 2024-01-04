@@ -1,0 +1,244 @@
+\hypertarget{class_controller_loop}{}\doxysection{Controller\+Loop Class Reference}
+\label{class_controller_loop}\index{ControllerLoop@{ControllerLoop}}
+
+
+This class is interface of controller modes. All modes should keep this strucure and implements all true virtual methods.  
+
+
+
+
+{\ttfamily \#include $<$controller\+\_\+loop.\+hpp$>$}
+
+
+
+Inheritance diagram for Controller\+Loop\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_controller_loop_a0038f37089dee9ef41ae83fe73b4ed3b}{Controller\+Loop}} (\mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}} mode)
+\begin{DoxyCompactList}\small\item\em Base class constructor. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_controller_loop_ac3310d1ed893724140b8dcc727c9cc43}{$\sim$\+Controller\+Loop}} ()
+\begin{DoxyCompactList}\small\item\em Virtual deconstructor for defined behavior. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_controller_loop_ab07ee5ca4b4488d8957cbc989babc9a2}{job}} (\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Controller $>$$>$ \&controllers, \mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} \mbox{\hyperlink{class_control}{Control}} \&control, \mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} \mbox{\hyperlink{class_n_s}{NS}} \&navisys)
+\begin{DoxyCompactList}\small\item\em Controller job that will be called in control loop. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_controller_loop_a73cd212928b9619b26f6b315921a7764}{handle\+Joystick}} (\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} Eigen\+::\+Vector\+Xd joystick)
+\begin{DoxyCompactList}\small\item\em Handle incomming joystick deflaction. \end{DoxyCompactList}\item 
+virtual std\+::string \mbox{\hyperlink{class_controller_loop_ad10249a12868c7f1c1a0e1bf919a1b51}{demand\+Info}} ()
+\begin{DoxyCompactList}\small\item\em Prepare info about state and demands. \end{DoxyCompactList}\item 
+virtual const std\+::vector$<$ std\+::string $>$ \& \mbox{\hyperlink{class_controller_loop_aa94194663dc6a81de8a49038eff72870}{requiredcontrollers}} ()
+\begin{DoxyCompactList}\small\item\em Defines controllers controller required by mode. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_controller_loop_a93d75b91c6f2b11862346ccfd7388c8b}{override\+Position\+And\+Speed}} (\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} Eigen\+::\+Vector3d position, \mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} Eigen\+::\+Vector3d orientation, \mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} Eigen\+::\+Vector3d velocity)
+\begin{DoxyCompactList}\small\item\em Overrides demands to apply to given postion, orientation and speed. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}} \mbox{\hyperlink{class_controller_loop_afde6b22b3a74eb8a08d60316070d838a}{get\+Mode}} ()
+\begin{DoxyCompactList}\small\item\em Returns assigned mode enum value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_controller_loop}{Controller\+Loop}} $\ast$ \mbox{\hyperlink{class_controller_loop_a3f36b06f22c22445f8f1722a221195de}{Controller\+Loop\+Factory}} (\mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}} mode)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_controller_loop}{Controller\+Loop}} factor. Returns instace of \mbox{\hyperlink{class_controller_loop}{Controller\+Loop}} that implements specified mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_controller_loop_a05d9ee97f9cb5f7008ebf8a864dd0f30}{check\+Joystick\+Length}} (const Eigen\+::\+Vector\+Xd \&joystick, const int minimal\+Size)
+\begin{DoxyCompactList}\small\item\em Check if joystick input vector is correct. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}} \mbox{\hyperlink{class_controller_loop_a0a7d876a6950f2c16cb78bee8aa527f2}{\+\_\+mode}}
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_controller_loop_ac3a72c0bf7ef20644ade14ea4e6adc05}{required\+\_\+controllers}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class is interface of controller modes. All modes should keep this strucure and implements all true virtual methods. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_controller_loop_a0038f37089dee9ef41ae83fe73b4ed3b}\label{class_controller_loop_a0038f37089dee9ef41ae83fe73b4ed3b}} 
+\index{ControllerLoop@{ControllerLoop}!ControllerLoop@{ControllerLoop}}
+\index{ControllerLoop@{ControllerLoop}!ControllerLoop@{ControllerLoop}}
+\doxysubsubsection{\texorpdfstring{ControllerLoop()}{ControllerLoop()}}
+{\footnotesize\ttfamily Controller\+Loop\+::\+Controller\+Loop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}}}]{mode }\end{DoxyParamCaption})}
+
+
+
+Base class constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & mode enum value \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_controller_loop_ac3310d1ed893724140b8dcc727c9cc43}\label{class_controller_loop_ac3310d1ed893724140b8dcc727c9cc43}} 
+\index{ControllerLoop@{ControllerLoop}!````~ControllerLoop@{$\sim$ControllerLoop}}
+\index{````~ControllerLoop@{$\sim$ControllerLoop}!ControllerLoop@{ControllerLoop}}
+\doxysubsubsection{\texorpdfstring{$\sim$ControllerLoop()}{~ControllerLoop()}}
+{\footnotesize\ttfamily virtual Controller\+Loop\+::$\sim$\+Controller\+Loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Virtual deconstructor for defined behavior. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_controller_loop_a05d9ee97f9cb5f7008ebf8a864dd0f30}\label{class_controller_loop_a05d9ee97f9cb5f7008ebf8a864dd0f30}} 
+\index{ControllerLoop@{ControllerLoop}!checkJoystickLength@{checkJoystickLength}}
+\index{checkJoystickLength@{checkJoystickLength}!ControllerLoop@{ControllerLoop}}
+\doxysubsubsection{\texorpdfstring{checkJoystickLength()}{checkJoystickLength()}}
+{\footnotesize\ttfamily bool Controller\+Loop\+::check\+Joystick\+Length (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector\+Xd \&}]{joystick,  }\item[{const int}]{minimal\+Size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Check if joystick input vector is correct. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick} & joystick axes deflaction \\
+\hline
+{\em minimal\+Size} & minimal length of deflation vector that can be interpreted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return true if joystick input vector is long enough 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_controller_loop_a3f36b06f22c22445f8f1722a221195de}\label{class_controller_loop_a3f36b06f22c22445f8f1722a221195de}} 
+\index{ControllerLoop@{ControllerLoop}!ControllerLoopFactory@{ControllerLoopFactory}}
+\index{ControllerLoopFactory@{ControllerLoopFactory}!ControllerLoop@{ControllerLoop}}
+\doxysubsubsection{\texorpdfstring{ControllerLoopFactory()}{ControllerLoopFactory()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_controller_loop}{Controller\+Loop}} $\ast$ Controller\+Loop\+::\+Controller\+Loop\+Factory (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}}}]{mode }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\mbox{\hyperlink{class_controller_loop}{Controller\+Loop}} factor. Returns instace of \mbox{\hyperlink{class_controller_loop}{Controller\+Loop}} that implements specified mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & demanded mode \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to dynamically alocated \mbox{\hyperlink{class_controller_loop}{Controller\+Loop}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_controller_loop_ad10249a12868c7f1c1a0e1bf919a1b51}\label{class_controller_loop_ad10249a12868c7f1c1a0e1bf919a1b51}} 
+\index{ControllerLoop@{ControllerLoop}!demandInfo@{demandInfo}}
+\index{demandInfo@{demandInfo}!ControllerLoop@{ControllerLoop}}
+\doxysubsubsection{\texorpdfstring{demandInfo()}{demandInfo()}}
+{\footnotesize\ttfamily virtual std\+::string Controller\+Loop\+::demand\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Prepare info about state and demands. 
+
+\begin{DoxyReturn}{Returns}
+information about mode and actually set demands 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{class_controller_loop_r_m_a_n_u_a_l_aef9dd9d1cb471405c57d385cc61de8a6}{Controller\+Loop\+RMANUAL}}, \mbox{\hyperlink{class_controller_loop_r_g_u_i_d_e_d_a9b029a44e778faa8b37d9cfa6c562728}{Controller\+Loop\+RGUIDED}}, \mbox{\hyperlink{class_controller_loop_r_a_n_g_l_e_abf0714f0d06bc675728ccad43c6d81b4}{Controller\+Loop\+RANGLE}}, \mbox{\hyperlink{class_controller_loop_q_p_o_s_af1007a36222e23ea117184cd8e2df24e}{Controller\+Loop\+QPOS}}, \mbox{\hyperlink{class_controller_loop_q_a_n_g_l_e_a31786e70df135bb514da0752ab678967}{Controller\+Loop\+QANGLE}}, \mbox{\hyperlink{class_controller_loop_q_a_c_r_o_a44b9282d9661deaadbfc4925dc56788b}{Controller\+Loop\+QACRO}}, \mbox{\hyperlink{class_controller_loop_f_a_n_g_l_e_a4d2e1bf0c87fe963e2984a6fcb944cf5}{Controller\+Loop\+FANGLE}}, and \mbox{\hyperlink{class_controller_loop_f_a_c_r_o_a88aa60e12216c544340c30a1e7a5dad3}{Controller\+Loop\+FACRO}}.
+
+\mbox{\Hypertarget{class_controller_loop_afde6b22b3a74eb8a08d60316070d838a}\label{class_controller_loop_afde6b22b3a74eb8a08d60316070d838a}} 
+\index{ControllerLoop@{ControllerLoop}!getMode@{getMode}}
+\index{getMode@{getMode}!ControllerLoop@{ControllerLoop}}
+\doxysubsubsection{\texorpdfstring{getMode()}{getMode()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}} Controller\+Loop\+::get\+Mode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns assigned mode enum value. 
+
+\begin{DoxyReturn}{Returns}
+mode enum value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_controller_loop_a73cd212928b9619b26f6b315921a7764}\label{class_controller_loop_a73cd212928b9619b26f6b315921a7764}} 
+\index{ControllerLoop@{ControllerLoop}!handleJoystick@{handleJoystick}}
+\index{handleJoystick@{handleJoystick}!ControllerLoop@{ControllerLoop}}
+\doxysubsubsection{\texorpdfstring{handleJoystick()}{handleJoystick()}}
+{\footnotesize\ttfamily virtual void Controller\+Loop\+::handle\+Joystick (\begin{DoxyParamCaption}\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} Eigen\+::\+Vector\+Xd}]{joystick }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Handle incomming joystick deflaction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick} & joystick axes deflaction \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_controller_loop_ab07ee5ca4b4488d8957cbc989babc9a2}\label{class_controller_loop_ab07ee5ca4b4488d8957cbc989babc9a2}} 
+\index{ControllerLoop@{ControllerLoop}!job@{job}}
+\index{job@{job}!ControllerLoop@{ControllerLoop}}
+\doxysubsubsection{\texorpdfstring{job()}{job()}}
+{\footnotesize\ttfamily void Controller\+Loop\+::job (\begin{DoxyParamCaption}\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Controller $>$$>$ \&}]{controllers,  }\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} \mbox{\hyperlink{class_control}{Control}} \&}]{control,  }\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} \mbox{\hyperlink{class_n_s}{NS}} \&}]{navisys }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Controller job that will be called in control loop. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em controllers} & map of aviliable controllers \\
+\hline
+{\em control} & reference to control instatce that is used to send control commands \\
+\hline
+{\em navisys} & navigation system reference \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_controller_loop_a93d75b91c6f2b11862346ccfd7388c8b}\label{class_controller_loop_a93d75b91c6f2b11862346ccfd7388c8b}} 
+\index{ControllerLoop@{ControllerLoop}!overridePositionAndSpeed@{overridePositionAndSpeed}}
+\index{overridePositionAndSpeed@{overridePositionAndSpeed}!ControllerLoop@{ControllerLoop}}
+\doxysubsubsection{\texorpdfstring{overridePositionAndSpeed()}{overridePositionAndSpeed()}}
+{\footnotesize\ttfamily virtual void Controller\+Loop\+::override\+Position\+And\+Speed (\begin{DoxyParamCaption}\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} Eigen\+::\+Vector3d}]{position,  }\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} Eigen\+::\+Vector3d}]{orientation,  }\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} Eigen\+::\+Vector3d}]{velocity }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Overrides demands to apply to given postion, orientation and speed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & position vector in world frame \\
+\hline
+{\em orientation} & orientation vector in world frame \\
+\hline
+{\em orientation} & linear velocity vector in world frame \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{class_controller_loop_r_a_n_g_l_e_a48d5dabc24de58c111cfdcdea70dd7a4}{Controller\+Loop\+RANGLE}}, \mbox{\hyperlink{class_controller_loop_q_p_o_s_a666a98a883893a583f3b008d0b454f80}{Controller\+Loop\+QPOS}}, \mbox{\hyperlink{class_controller_loop_q_a_n_g_l_e_a989d65a3680de368130326913b928ae0}{Controller\+Loop\+QANGLE}}, and \mbox{\hyperlink{class_controller_loop_f_a_n_g_l_e_add9a4b46180af4386c522541dace63d0}{Controller\+Loop\+FANGLE}}.
+
+\mbox{\Hypertarget{class_controller_loop_aa94194663dc6a81de8a49038eff72870}\label{class_controller_loop_aa94194663dc6a81de8a49038eff72870}} 
+\index{ControllerLoop@{ControllerLoop}!requiredcontrollers@{requiredcontrollers}}
+\index{requiredcontrollers@{requiredcontrollers}!ControllerLoop@{ControllerLoop}}
+\doxysubsubsection{\texorpdfstring{requiredcontrollers()}{requiredcontrollers()}}
+{\footnotesize\ttfamily virtual const std\+::vector$<$std\+::string$>$\& Controller\+Loop\+::requiredcontrollers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Defines controllers controller required by mode. 
+
+\begin{DoxyReturn}{Returns}
+vector of names of required controllers 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_controller_loop_a0a7d876a6950f2c16cb78bee8aa527f2}\label{class_controller_loop_a0a7d876a6950f2c16cb78bee8aa527f2}} 
+\index{ControllerLoop@{ControllerLoop}!\_mode@{\_mode}}
+\index{\_mode@{\_mode}!ControllerLoop@{ControllerLoop}}
+\doxysubsubsection{\texorpdfstring{\_mode}{\_mode}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}} Controller\+Loop\+::\+\_\+mode\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_controller_loop_ac3a72c0bf7ef20644ade14ea4e6adc05}\label{class_controller_loop_ac3a72c0bf7ef20644ade14ea4e6adc05}} 
+\index{ControllerLoop@{ControllerLoop}!required\_controllers@{required\_controllers}}
+\index{required\_controllers@{required\_controllers}!ControllerLoop@{ControllerLoop}}
+\doxysubsubsection{\texorpdfstring{required\_controllers}{required\_controllers}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::string$>$ Controller\+Loop\+::required\+\_\+controllers\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/controller/\mbox{\hyperlink{controller__loop_8hpp}{controller\+\_\+loop.\+hpp}}\item 
+src/controller/\mbox{\hyperlink{controller__loop_8cpp}{controller\+\_\+loop.\+cpp}}\end{DoxyCompactItemize}

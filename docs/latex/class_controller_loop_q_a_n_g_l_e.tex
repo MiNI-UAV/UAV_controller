@@ -1,0 +1,98 @@
+\hypertarget{class_controller_loop_q_a_n_g_l_e}{}\doxysection{Controller\+Loop\+QANGLE Class Reference}
+\label{class_controller_loop_q_a_n_g_l_e}\index{ControllerLoopQANGLE@{ControllerLoopQANGLE}}
+
+
+{\ttfamily \#include $<$controller\+\_\+loop\+\_\+\+QANGLE.\+hpp$>$}
+
+
+
+Inheritance diagram for Controller\+Loop\+QANGLE\+:
+% FIG 0
+
+
+Collaboration diagram for Controller\+Loop\+QANGLE\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_controller_loop_q_a_n_g_l_e_a0d7d7c456ee1082cd05c135864273325}{Controller\+Loop\+QANGLE}} ()
+\item 
+void \mbox{\hyperlink{class_controller_loop_q_a_n_g_l_e_a96d95e27d95cc5de77c72268cb545f4e}{job}} (std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Controller $>$$>$ \&controllers, \mbox{\hyperlink{class_control}{Control}} \&control, \mbox{\hyperlink{class_n_s}{NS}} \&navisys) override
+\item 
+void \mbox{\hyperlink{class_controller_loop_q_a_n_g_l_e_a521f7fe00e029fe9f86965fb75ed8825}{handle\+Joystick}} (Eigen\+::\+Vector\+Xd joystick) override
+\item 
+std\+::string \mbox{\hyperlink{class_controller_loop_q_a_n_g_l_e_a31786e70df135bb514da0752ab678967}{demand\+Info}} () override
+\begin{DoxyCompactList}\small\item\em Prepare info about state and demands. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_controller_loop_q_a_n_g_l_e_a989d65a3680de368130326913b928ae0}{override\+Position\+And\+Speed}} (\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} Eigen\+::\+Vector3d position, \mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} Eigen\+::\+Vector3d orientation, \mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} Eigen\+::\+Vector3d velocity) override
+\begin{DoxyCompactList}\small\item\em Overrides demands to apply to given postion, orientation and speed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_controller_loop_q_a_n_g_l_e_a0d7d7c456ee1082cd05c135864273325}\label{class_controller_loop_q_a_n_g_l_e_a0d7d7c456ee1082cd05c135864273325}} 
+\index{ControllerLoopQANGLE@{ControllerLoopQANGLE}!ControllerLoopQANGLE@{ControllerLoopQANGLE}}
+\index{ControllerLoopQANGLE@{ControllerLoopQANGLE}!ControllerLoopQANGLE@{ControllerLoopQANGLE}}
+\doxysubsubsection{\texorpdfstring{ControllerLoopQANGLE()}{ControllerLoopQANGLE()}}
+{\footnotesize\ttfamily Controller\+Loop\+QANGLE\+::\+Controller\+Loop\+QANGLE (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_controller_loop_q_a_n_g_l_e_a31786e70df135bb514da0752ab678967}\label{class_controller_loop_q_a_n_g_l_e_a31786e70df135bb514da0752ab678967}} 
+\index{ControllerLoopQANGLE@{ControllerLoopQANGLE}!demandInfo@{demandInfo}}
+\index{demandInfo@{demandInfo}!ControllerLoopQANGLE@{ControllerLoopQANGLE}}
+\doxysubsubsection{\texorpdfstring{demandInfo()}{demandInfo()}}
+{\footnotesize\ttfamily std\+::string Controller\+Loop\+QANGLE\+::demand\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prepare info about state and demands. 
+
+\begin{DoxyReturn}{Returns}
+information about mode and actually set demands 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_controller_loop_ad10249a12868c7f1c1a0e1bf919a1b51}{Controller\+Loop}}.
+
+\mbox{\Hypertarget{class_controller_loop_q_a_n_g_l_e_a521f7fe00e029fe9f86965fb75ed8825}\label{class_controller_loop_q_a_n_g_l_e_a521f7fe00e029fe9f86965fb75ed8825}} 
+\index{ControllerLoopQANGLE@{ControllerLoopQANGLE}!handleJoystick@{handleJoystick}}
+\index{handleJoystick@{handleJoystick}!ControllerLoopQANGLE@{ControllerLoopQANGLE}}
+\doxysubsubsection{\texorpdfstring{handleJoystick()}{handleJoystick()}}
+{\footnotesize\ttfamily void Controller\+Loop\+QANGLE\+::handle\+Joystick (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector\+Xd}]{joystick }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+\mbox{\Hypertarget{class_controller_loop_q_a_n_g_l_e_a96d95e27d95cc5de77c72268cb545f4e}\label{class_controller_loop_q_a_n_g_l_e_a96d95e27d95cc5de77c72268cb545f4e}} 
+\index{ControllerLoopQANGLE@{ControllerLoopQANGLE}!job@{job}}
+\index{job@{job}!ControllerLoopQANGLE@{ControllerLoopQANGLE}}
+\doxysubsubsection{\texorpdfstring{job()}{job()}}
+{\footnotesize\ttfamily void Controller\+Loop\+QANGLE\+::job (\begin{DoxyParamCaption}\item[{std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Controller $>$$>$ \&}]{controllers,  }\item[{\mbox{\hyperlink{class_control}{Control}} \&}]{control,  }\item[{\mbox{\hyperlink{class_n_s}{NS}} \&}]{navisys }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+\mbox{\Hypertarget{class_controller_loop_q_a_n_g_l_e_a989d65a3680de368130326913b928ae0}\label{class_controller_loop_q_a_n_g_l_e_a989d65a3680de368130326913b928ae0}} 
+\index{ControllerLoopQANGLE@{ControllerLoopQANGLE}!overridePositionAndSpeed@{overridePositionAndSpeed}}
+\index{overridePositionAndSpeed@{overridePositionAndSpeed}!ControllerLoopQANGLE@{ControllerLoopQANGLE}}
+\doxysubsubsection{\texorpdfstring{overridePositionAndSpeed()}{overridePositionAndSpeed()}}
+{\footnotesize\ttfamily void Controller\+Loop\+QANGLE\+::override\+Position\+And\+Speed (\begin{DoxyParamCaption}\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} Eigen\+::\+Vector3d}]{position,  }\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} Eigen\+::\+Vector3d}]{orientation,  }\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} Eigen\+::\+Vector3d}]{velocity }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Overrides demands to apply to given postion, orientation and speed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & position vector in world frame \\
+\hline
+{\em orientation} & orientation vector in world frame \\
+\hline
+{\em orientation} & linear velocity vector in world frame \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_controller_loop_a93d75b91c6f2b11862346ccfd7388c8b}{Controller\+Loop}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/controller/modes/\mbox{\hyperlink{controller__loop___q_a_n_g_l_e_8hpp}{controller\+\_\+loop\+\_\+\+QANGLE.\+hpp}}\item 
+src/controller/modes/\mbox{\hyperlink{controller__loop___q_a_n_g_l_e_8cpp}{controller\+\_\+loop\+\_\+\+QANGLE.\+cpp}}\end{DoxyCompactItemize}

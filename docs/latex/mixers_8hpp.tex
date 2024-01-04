@@ -1,0 +1,91 @@
+\hypertarget{mixers_8hpp}{}\doxysection{src/controller/mixers.hpp File Reference}
+\label{mixers_8hpp}\index{src/controller/mixers.hpp@{src/controller/mixers.hpp}}
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
+Include dependency graph for mixers.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{mixers_8hpp_a0e3fec66a74e9b9f87ab8fd4436d2736}{apply\+Mixer\+Rotors}} (double climb\+\_\+rate, double roll\+\_\+rate, double pitch\+\_\+rate, double yaw\+\_\+rate)
+\begin{DoxyCompactList}\small\item\em Calculates rotor demanded speed as result of multiplication mixer matrix and rates. Average speed is proportional to climb rate. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{mixers_8hpp_a1b1896b969d6d4ef3aab5750aaad79d9}{apply\+Mixer\+Rotors\+Hover}} (double throttle, double roll\+\_\+rate, double pitch\+\_\+rate, double yaw\+\_\+rate)
+\begin{DoxyCompactList}\small\item\em Calculates rotor demanded speed as result of multiplication mixer matrix and rates. Average speed is proportional to throttle. It\textquotesingle{}s scaled to achieve hover at centered throttle. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{mixers_8hpp_a67a2e3a85e138b217b6efcc1010fdb61}{apply\+Mixer\+Surfaces}} (double throttle, double roll\+\_\+rate, double pitch\+\_\+rate, double yaw\+\_\+rate)
+\begin{DoxyCompactList}\small\item\em Calculated demanded surfaces deflection result of multiplication mixer matrix and rates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{mixers_8hpp_a0e3fec66a74e9b9f87ab8fd4436d2736}\label{mixers_8hpp_a0e3fec66a74e9b9f87ab8fd4436d2736}} 
+\index{mixers.hpp@{mixers.hpp}!applyMixerRotors@{applyMixerRotors}}
+\index{applyMixerRotors@{applyMixerRotors}!mixers.hpp@{mixers.hpp}}
+\doxysubsubsection{\texorpdfstring{applyMixerRotors()}{applyMixerRotors()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector\+Xd apply\+Mixer\+Rotors (\begin{DoxyParamCaption}\item[{double}]{climb\+\_\+rate,  }\item[{double}]{roll\+\_\+rate,  }\item[{double}]{pitch\+\_\+rate,  }\item[{double}]{yaw\+\_\+rate }\end{DoxyParamCaption})}
+
+
+
+Calculates rotor demanded speed as result of multiplication mixer matrix and rates. Average speed is proportional to climb rate. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em climb\+\_\+rate} & \\
+\hline
+{\em roll\+\_\+rate} & \\
+\hline
+{\em pitch\+\_\+rate} & \\
+\hline
+{\em yaw\+\_\+rate} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Rotors demanded speed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{mixers_8hpp_a1b1896b969d6d4ef3aab5750aaad79d9}\label{mixers_8hpp_a1b1896b969d6d4ef3aab5750aaad79d9}} 
+\index{mixers.hpp@{mixers.hpp}!applyMixerRotorsHover@{applyMixerRotorsHover}}
+\index{applyMixerRotorsHover@{applyMixerRotorsHover}!mixers.hpp@{mixers.hpp}}
+\doxysubsubsection{\texorpdfstring{applyMixerRotorsHover()}{applyMixerRotorsHover()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector\+Xd apply\+Mixer\+Rotors\+Hover (\begin{DoxyParamCaption}\item[{double}]{throttle,  }\item[{double}]{roll\+\_\+rate,  }\item[{double}]{pitch\+\_\+rate,  }\item[{double}]{yaw\+\_\+rate }\end{DoxyParamCaption})}
+
+
+
+Calculates rotor demanded speed as result of multiplication mixer matrix and rates. Average speed is proportional to throttle. It\textquotesingle{}s scaled to achieve hover at centered throttle. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em throttle} & \\
+\hline
+{\em roll\+\_\+rate} & \\
+\hline
+{\em pitch\+\_\+rate} & \\
+\hline
+{\em yaw\+\_\+rate} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Rotors demanded speed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{mixers_8hpp_a67a2e3a85e138b217b6efcc1010fdb61}\label{mixers_8hpp_a67a2e3a85e138b217b6efcc1010fdb61}} 
+\index{mixers.hpp@{mixers.hpp}!applyMixerSurfaces@{applyMixerSurfaces}}
+\index{applyMixerSurfaces@{applyMixerSurfaces}!mixers.hpp@{mixers.hpp}}
+\doxysubsubsection{\texorpdfstring{applyMixerSurfaces()}{applyMixerSurfaces()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector\+Xd apply\+Mixer\+Surfaces (\begin{DoxyParamCaption}\item[{double}]{throttle,  }\item[{double}]{roll\+\_\+rate,  }\item[{double}]{pitch\+\_\+rate,  }\item[{double}]{yaw\+\_\+rate }\end{DoxyParamCaption})}
+
+
+
+Calculated demanded surfaces deflection result of multiplication mixer matrix and rates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em throttle} & \\
+\hline
+{\em roll\+\_\+rate} & \\
+\hline
+{\em pitch\+\_\+rate} & \\
+\hline
+{\em yaw\+\_\+rate} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+demanded surfaces deflection 
+\end{DoxyReturn}

@@ -1,0 +1,73 @@
+\hypertarget{class_controller_loop_q_a_c_r_o}{}\doxysection{Controller\+Loop\+QACRO Class Reference}
+\label{class_controller_loop_q_a_c_r_o}\index{ControllerLoopQACRO@{ControllerLoopQACRO}}
+
+
+{\ttfamily \#include $<$controller\+\_\+loop\+\_\+\+QACRO.\+hpp$>$}
+
+
+
+Inheritance diagram for Controller\+Loop\+QACRO\+:
+% FIG 0
+
+
+Collaboration diagram for Controller\+Loop\+QACRO\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_controller_loop_q_a_c_r_o_a48585cd4bb915b59b8519d8da43cd04a}{Controller\+Loop\+QACRO}} ()
+\item 
+void \mbox{\hyperlink{class_controller_loop_q_a_c_r_o_a8cf4ac96122b9cc866bfd47b89837d7f}{job}} (std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Controller $>$$>$ \&controllers, \mbox{\hyperlink{class_control}{Control}} \&control, \mbox{\hyperlink{class_n_s}{NS}} \&navisys) override
+\item 
+void \mbox{\hyperlink{class_controller_loop_q_a_c_r_o_a3f70d0936b3d4f3b8bb44b2ccf99dad6}{handle\+Joystick}} (Eigen\+::\+Vector\+Xd joystick) override
+\item 
+std\+::string \mbox{\hyperlink{class_controller_loop_q_a_c_r_o_a44b9282d9661deaadbfc4925dc56788b}{demand\+Info}} () override
+\begin{DoxyCompactList}\small\item\em Prepare info about state and demands. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_controller_loop_q_a_c_r_o_a48585cd4bb915b59b8519d8da43cd04a}\label{class_controller_loop_q_a_c_r_o_a48585cd4bb915b59b8519d8da43cd04a}} 
+\index{ControllerLoopQACRO@{ControllerLoopQACRO}!ControllerLoopQACRO@{ControllerLoopQACRO}}
+\index{ControllerLoopQACRO@{ControllerLoopQACRO}!ControllerLoopQACRO@{ControllerLoopQACRO}}
+\doxysubsubsection{\texorpdfstring{ControllerLoopQACRO()}{ControllerLoopQACRO()}}
+{\footnotesize\ttfamily Controller\+Loop\+QACRO\+::\+Controller\+Loop\+QACRO (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_controller_loop_q_a_c_r_o_a44b9282d9661deaadbfc4925dc56788b}\label{class_controller_loop_q_a_c_r_o_a44b9282d9661deaadbfc4925dc56788b}} 
+\index{ControllerLoopQACRO@{ControllerLoopQACRO}!demandInfo@{demandInfo}}
+\index{demandInfo@{demandInfo}!ControllerLoopQACRO@{ControllerLoopQACRO}}
+\doxysubsubsection{\texorpdfstring{demandInfo()}{demandInfo()}}
+{\footnotesize\ttfamily std\+::string Controller\+Loop\+QACRO\+::demand\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prepare info about state and demands. 
+
+\begin{DoxyReturn}{Returns}
+information about mode and actually set demands 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_controller_loop_ad10249a12868c7f1c1a0e1bf919a1b51}{Controller\+Loop}}.
+
+\mbox{\Hypertarget{class_controller_loop_q_a_c_r_o_a3f70d0936b3d4f3b8bb44b2ccf99dad6}\label{class_controller_loop_q_a_c_r_o_a3f70d0936b3d4f3b8bb44b2ccf99dad6}} 
+\index{ControllerLoopQACRO@{ControllerLoopQACRO}!handleJoystick@{handleJoystick}}
+\index{handleJoystick@{handleJoystick}!ControllerLoopQACRO@{ControllerLoopQACRO}}
+\doxysubsubsection{\texorpdfstring{handleJoystick()}{handleJoystick()}}
+{\footnotesize\ttfamily void Controller\+Loop\+QACRO\+::handle\+Joystick (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector\+Xd}]{joystick }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+\mbox{\Hypertarget{class_controller_loop_q_a_c_r_o_a8cf4ac96122b9cc866bfd47b89837d7f}\label{class_controller_loop_q_a_c_r_o_a8cf4ac96122b9cc866bfd47b89837d7f}} 
+\index{ControllerLoopQACRO@{ControllerLoopQACRO}!job@{job}}
+\index{job@{job}!ControllerLoopQACRO@{ControllerLoopQACRO}}
+\doxysubsubsection{\texorpdfstring{job()}{job()}}
+{\footnotesize\ttfamily void Controller\+Loop\+QACRO\+::job (\begin{DoxyParamCaption}\item[{std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Controller $>$$>$ \&}]{controllers,  }\item[{\mbox{\hyperlink{class_control}{Control}} \&}]{control,  }\item[{\mbox{\hyperlink{class_n_s}{NS}} \&}]{navisys }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/controller/modes/\mbox{\hyperlink{controller__loop___q_a_c_r_o_8hpp}{controller\+\_\+loop\+\_\+\+QACRO.\+hpp}}\item 
+src/controller/modes/\mbox{\hyperlink{controller__loop___q_a_c_r_o_8cpp}{controller\+\_\+loop\+\_\+\+QACRO.\+cpp}}\end{DoxyCompactItemize}

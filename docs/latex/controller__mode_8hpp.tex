@@ -1,0 +1,132 @@
+\hypertarget{controller__mode_8hpp}{}\doxysection{src/controller/controller\+\_\+mode.hpp File Reference}
+\label{controller__mode_8hpp}\index{src/controller/controller\_mode.hpp@{src/controller/controller\_mode.hpp}}
+{\ttfamily \#include $<$string\+\_\+view$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+Include dependency graph for controller\+\_\+mode.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}} \{ \newline
+\mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31eac157bdf0b85a40d2619cbc8bc1ae5fe2}{NONE}} = 0
+, \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea64b3fcb665b6cc7eb1926841943a7d22}{QPOS}} = 1
+, \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea0f240e1cd5f55d929ddbe1cc66b9b804}{QANGLE}} = 2
+, \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea74c5aac40f5d5f53c88e820b0c0c8c99}{QACRO}} = 3
+, \newline
+\mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31eab36a8a814aef7b4ad4af4cfe1e39aec6}{FMANUAL}} = 4
+, \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31eaed19826706f460184cc303aadbb966b2}{FACRO}} = 5
+, \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea190d2aedfae7422ff4472592a321474c}{FANGLE}} = 6
+, \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ead378b88472543e2cb7e84c405cf21066}{RMANUAL}} = 7
+, \newline
+\mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea300ba1dad3477208699f996d884fb8ad}{RAUTOLAUNCH}} = 8
+, \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea9db4075332f3a955ffb22aa6d462ad74}{RANGLE}} = 9
+, \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea2ae475eb5fb94dfe32f3a3d99c0d62c1}{RGUIDED}} = 10
+ \}
+\begin{DoxyCompactList}\small\item\em Controller modes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+constexpr const char $\ast$ \mbox{\hyperlink{controller__mode_8hpp_af2deb2a59d50b4c30eaa53fe172a2744}{Controller\+Mode\+To\+String}} (\mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}} mode)  throw ()
+\begin{DoxyCompactList}\small\item\em Serializes controller mode to string. \end{DoxyCompactList}\item 
+constexpr \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}} \mbox{\hyperlink{controller__mode_8hpp_a8b7adbdc2639d6fc62934fd3b4fa0ca3}{Controller\+Mode\+From\+String}} (const char $\ast$mode)  throw ()
+\begin{DoxyCompactList}\small\item\em Parse string to controller mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}\label{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}} 
+\index{controller\_mode.hpp@{controller\_mode.hpp}!ControllerMode@{ControllerMode}}
+\index{ControllerMode@{ControllerMode}!controller\_mode.hpp@{controller\_mode.hpp}}
+\doxysubsubsection{\texorpdfstring{ControllerMode}{ControllerMode}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}}}
+
+
+
+Controller modes. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NONE@{NONE}!controller\_mode.hpp@{controller\_mode.hpp}}\index{controller\_mode.hpp@{controller\_mode.hpp}!NONE@{NONE}}}\mbox{\Hypertarget{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31eac157bdf0b85a40d2619cbc8bc1ae5fe2}\label{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31eac157bdf0b85a40d2619cbc8bc1ae5fe2}} 
+NONE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{QPOS@{QPOS}!controller\_mode.hpp@{controller\_mode.hpp}}\index{controller\_mode.hpp@{controller\_mode.hpp}!QPOS@{QPOS}}}\mbox{\Hypertarget{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea64b3fcb665b6cc7eb1926841943a7d22}\label{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea64b3fcb665b6cc7eb1926841943a7d22}} 
+QPOS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{QANGLE@{QANGLE}!controller\_mode.hpp@{controller\_mode.hpp}}\index{controller\_mode.hpp@{controller\_mode.hpp}!QANGLE@{QANGLE}}}\mbox{\Hypertarget{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea0f240e1cd5f55d929ddbe1cc66b9b804}\label{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea0f240e1cd5f55d929ddbe1cc66b9b804}} 
+QANGLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{QACRO@{QACRO}!controller\_mode.hpp@{controller\_mode.hpp}}\index{controller\_mode.hpp@{controller\_mode.hpp}!QACRO@{QACRO}}}\mbox{\Hypertarget{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea74c5aac40f5d5f53c88e820b0c0c8c99}\label{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea74c5aac40f5d5f53c88e820b0c0c8c99}} 
+QACRO&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FMANUAL@{FMANUAL}!controller\_mode.hpp@{controller\_mode.hpp}}\index{controller\_mode.hpp@{controller\_mode.hpp}!FMANUAL@{FMANUAL}}}\mbox{\Hypertarget{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31eab36a8a814aef7b4ad4af4cfe1e39aec6}\label{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31eab36a8a814aef7b4ad4af4cfe1e39aec6}} 
+FMANUAL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FACRO@{FACRO}!controller\_mode.hpp@{controller\_mode.hpp}}\index{controller\_mode.hpp@{controller\_mode.hpp}!FACRO@{FACRO}}}\mbox{\Hypertarget{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31eaed19826706f460184cc303aadbb966b2}\label{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31eaed19826706f460184cc303aadbb966b2}} 
+FACRO&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FANGLE@{FANGLE}!controller\_mode.hpp@{controller\_mode.hpp}}\index{controller\_mode.hpp@{controller\_mode.hpp}!FANGLE@{FANGLE}}}\mbox{\Hypertarget{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea190d2aedfae7422ff4472592a321474c}\label{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea190d2aedfae7422ff4472592a321474c}} 
+FANGLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RMANUAL@{RMANUAL}!controller\_mode.hpp@{controller\_mode.hpp}}\index{controller\_mode.hpp@{controller\_mode.hpp}!RMANUAL@{RMANUAL}}}\mbox{\Hypertarget{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ead378b88472543e2cb7e84c405cf21066}\label{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ead378b88472543e2cb7e84c405cf21066}} 
+RMANUAL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RAUTOLAUNCH@{RAUTOLAUNCH}!controller\_mode.hpp@{controller\_mode.hpp}}\index{controller\_mode.hpp@{controller\_mode.hpp}!RAUTOLAUNCH@{RAUTOLAUNCH}}}\mbox{\Hypertarget{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea300ba1dad3477208699f996d884fb8ad}\label{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea300ba1dad3477208699f996d884fb8ad}} 
+RAUTOLAUNCH&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RANGLE@{RANGLE}!controller\_mode.hpp@{controller\_mode.hpp}}\index{controller\_mode.hpp@{controller\_mode.hpp}!RANGLE@{RANGLE}}}\mbox{\Hypertarget{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea9db4075332f3a955ffb22aa6d462ad74}\label{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea9db4075332f3a955ffb22aa6d462ad74}} 
+RANGLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RGUIDED@{RGUIDED}!controller\_mode.hpp@{controller\_mode.hpp}}\index{controller\_mode.hpp@{controller\_mode.hpp}!RGUIDED@{RGUIDED}}}\mbox{\Hypertarget{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea2ae475eb5fb94dfe32f3a3d99c0d62c1}\label{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31ea2ae475eb5fb94dfe32f3a3d99c0d62c1}} 
+RGUIDED&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{controller__mode_8hpp_a8b7adbdc2639d6fc62934fd3b4fa0ca3}\label{controller__mode_8hpp_a8b7adbdc2639d6fc62934fd3b4fa0ca3}} 
+\index{controller\_mode.hpp@{controller\_mode.hpp}!ControllerModeFromString@{ControllerModeFromString}}
+\index{ControllerModeFromString@{ControllerModeFromString}!controller\_mode.hpp@{controller\_mode.hpp}}
+\doxysubsubsection{\texorpdfstring{ControllerModeFromString()}{ControllerModeFromString()}}
+{\footnotesize\ttfamily constexpr \mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}} Controller\+Mode\+From\+String (\begin{DoxyParamCaption}\item[{const char $\ast$}]{mode }\end{DoxyParamCaption}) throw ( ) \hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Parse string to controller mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & string to parse \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+parsing result, NONE if parse failed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{controller__mode_8hpp_af2deb2a59d50b4c30eaa53fe172a2744}\label{controller__mode_8hpp_af2deb2a59d50b4c30eaa53fe172a2744}} 
+\index{controller\_mode.hpp@{controller\_mode.hpp}!ControllerModeToString@{ControllerModeToString}}
+\index{ControllerModeToString@{ControllerModeToString}!controller\_mode.hpp@{controller\_mode.hpp}}
+\doxysubsubsection{\texorpdfstring{ControllerModeToString()}{ControllerModeToString()}}
+{\footnotesize\ttfamily constexpr const char$\ast$ Controller\+Mode\+To\+String (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}}}]{mode }\end{DoxyParamCaption}) throw ( ) \hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Serializes controller mode to string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & controller mode \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+serialized mode 
+\end{DoxyReturn}

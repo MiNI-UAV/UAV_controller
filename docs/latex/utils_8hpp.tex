@@ -1,0 +1,111 @@
+\hypertarget{utils_8hpp}{}\doxysection{src/utils.hpp File Reference}
+\label{utils_8hpp}\index{src/utils.hpp@{src/utils.hpp}}
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+Include dependency graph for utils.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{utils_8hpp_aaf4d977383540b02b2ae66ccb1fb9ad7}{safe\+Set}} (T \&vec, T \&new\+\_\+val, std\+::mutex \&mtx)
+\begin{DoxyCompactList}\small\item\em Safe setter for T type value protected by mutex. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\T \mbox{\hyperlink{utils_8hpp_a1114da9b7101ae45438bac3436b52cff}{safe\+Get}} (T \&vec, std\+::mutex \&mtx)
+\begin{DoxyCompactList}\small\item\em Safe getter for T type value protected by mutex. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{utils_8hpp_a7a26c8eac6897f49699ffe608274346f}{circular\+Error}} (double demanded, double val)
+\begin{DoxyCompactList}\small\item\em Calculates error between demanded and actual angle. Finds shorter path. For example if actual value is -\/0.\+9pi and demanded is 0.\+9pi error is equal -\/0.\+2pi. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{utils_8hpp_aeb6ac3babed822317fef0916ba074424}{clamp\+Angle}} (double angle)
+\begin{DoxyCompactList}\small\item\em Clamps angle given in radians to range $<$-\/pi,pi$>$ \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{utils_8hpp_a7a26c8eac6897f49699ffe608274346f}\label{utils_8hpp_a7a26c8eac6897f49699ffe608274346f}} 
+\index{utils.hpp@{utils.hpp}!circularError@{circularError}}
+\index{circularError@{circularError}!utils.hpp@{utils.hpp}}
+\doxysubsubsection{\texorpdfstring{circularError()}{circularError()}}
+{\footnotesize\ttfamily double circular\+Error (\begin{DoxyParamCaption}\item[{double}]{demanded,  }\item[{double}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Calculates error between demanded and actual angle. Finds shorter path. For example if actual value is -\/0.\+9pi and demanded is 0.\+9pi error is equal -\/0.\+2pi. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em demanded} & demanded angle in radian \\
+\hline
+{\em val} & actual angle in radian \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+angle error 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8hpp_aeb6ac3babed822317fef0916ba074424}\label{utils_8hpp_aeb6ac3babed822317fef0916ba074424}} 
+\index{utils.hpp@{utils.hpp}!clampAngle@{clampAngle}}
+\index{clampAngle@{clampAngle}!utils.hpp@{utils.hpp}}
+\doxysubsubsection{\texorpdfstring{clampAngle()}{clampAngle()}}
+{\footnotesize\ttfamily double clamp\+Angle (\begin{DoxyParamCaption}\item[{double}]{angle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Clamps angle given in radians to range $<$-\/pi,pi$>$ 
+
+
+\begin{DoxyParams}{Parameters}
+{\em angle} & angle in radian \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+angle converted to range $<$-\/pi,pi$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8hpp_a1114da9b7101ae45438bac3436b52cff}\label{utils_8hpp_a1114da9b7101ae45438bac3436b52cff}} 
+\index{utils.hpp@{utils.hpp}!safeGet@{safeGet}}
+\index{safeGet@{safeGet}!utils.hpp@{utils.hpp}}
+\doxysubsubsection{\texorpdfstring{safeGet()}{safeGet()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T safe\+Get (\begin{DoxyParamCaption}\item[{T \&}]{vec,  }\item[{std\+::mutex \&}]{mtx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Safe getter for T type value protected by mutex. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & Type of variable \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em vec} & value to be get \\
+\hline
+{\em mtx} & mutex \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+value of vec 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8hpp_aaf4d977383540b02b2ae66ccb1fb9ad7}\label{utils_8hpp_aaf4d977383540b02b2ae66ccb1fb9ad7}} 
+\index{utils.hpp@{utils.hpp}!safeSet@{safeSet}}
+\index{safeSet@{safeSet}!utils.hpp@{utils.hpp}}
+\doxysubsubsection{\texorpdfstring{safeSet()}{safeSet()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void safe\+Set (\begin{DoxyParamCaption}\item[{T \&}]{vec,  }\item[{T \&}]{new\+\_\+val,  }\item[{std\+::mutex \&}]{mtx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Safe setter for T type value protected by mutex. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & Type of variable \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em vec} & value to be set \\
+\hline
+{\em new\+\_\+val} & new value \\
+\hline
+{\em mtx} & mutex \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,79 @@
+\hypertarget{main_8cpp}{}\doxysection{src/main.cpp File Reference}
+\label{main_8cpp}\index{src/main.cpp@{src/main.cpp}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$cxxopts.\+hpp$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$filesystem$>$}\newline
+{\ttfamily \#include \char`\"{}zmq.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}controller/controller.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}common.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}params.\+hpp\char`\"{}}\newline
+Include dependency graph for main.\+cpp\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{main_8cpp_a0666f9ce758268f73f96988bd786050d}{LOGGER\+\_\+\+MASK}}~5
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8cpp_a271894399de20dc884491cb78b3c04b6}{parse\+Args}} (int argc, char $\ast$$\ast$argv, UAVparams $\ast$params, \mbox{\hyperlink{class_params}{Params}} \&p)
+\begin{DoxyCompactList}\small\item\em Parse CL arguments. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{main_8cpp_ab9a5e2965a8a7be88b0a1e296d4cc0be}{log\+\_\+path}} = \char`\"{}logs/\char`\"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{main_8cpp_a0666f9ce758268f73f96988bd786050d}\label{main_8cpp_a0666f9ce758268f73f96988bd786050d}} 
+\index{main.cpp@{main.cpp}!LOGGER\_MASK@{LOGGER\_MASK}}
+\index{LOGGER\_MASK@{LOGGER\_MASK}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{LOGGER\_MASK}{LOGGER\_MASK}}
+{\footnotesize\ttfamily \#define LOGGER\+\_\+\+MASK~5}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{main.cpp@{main.cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8cpp_a271894399de20dc884491cb78b3c04b6}\label{main_8cpp_a271894399de20dc884491cb78b3c04b6}} 
+\index{main.cpp@{main.cpp}!parseArgs@{parseArgs}}
+\index{parseArgs@{parseArgs}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{parseArgs()}{parseArgs()}}
+{\footnotesize\ttfamily void parse\+Args (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv,  }\item[{UAVparams $\ast$}]{params,  }\item[{\mbox{\hyperlink{class_params}{Params}} \&}]{p }\end{DoxyParamCaption})}
+
+
+
+Parse CL arguments. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & number of argument \\
+\hline
+{\em argv} & argument array \\
+\hline
+{\em params} & pointer to UAVparams instant that should be filled \\
+\hline
+{\em p} & internal params reference \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{main_8cpp_ab9a5e2965a8a7be88b0a1e296d4cc0be}\label{main_8cpp_ab9a5e2965a8a7be88b0a1e296d4cc0be}} 
+\index{main.cpp@{main.cpp}!log\_path@{log\_path}}
+\index{log\_path@{log\_path}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{log\_path}{log\_path}}
+{\footnotesize\ttfamily std\+::string log\+\_\+path = \char`\"{}logs/\char`\"{}}
+

@@ -1,0 +1,76 @@
+\hypertarget{class_magnetometer}{}\doxysection{Magnetometer Class Reference}
+\label{class_magnetometer}\index{Magnetometer@{Magnetometer}}
+
+
+Representation of magnetometer.  
+
+
+
+
+{\ttfamily \#include $<$sensors.\+hpp$>$}
+
+
+
+Inheritance diagram for Magnetometer\+:
+% FIG 0
+
+
+Collaboration diagram for Magnetometer\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_magnetometer_a7f7eba0dc671a706609e1386d49f3741}{Magnetometer}} (\mbox{\hyperlink{class_environment}{Environment}} \&\mbox{\hyperlink{class_sensor_a2719dcf7802389fca96f6cf13dcfa00a}{env}}, double sd, Eigen\+::\+Vector3d \mbox{\hyperlink{class_sensor_a548201e3a01c9b881912f63d83763472}{bias}}, double \mbox{\hyperlink{class_sensor_a9639cd6679bfd35dbe4b3ef762a688ea}{refresh\+Time}})
+\item 
+void \mbox{\hyperlink{class_magnetometer_a3fa70f01a67c18c1de8232aaa085a5b4}{update}} () override
+\begin{DoxyCompactList}\small\item\em Update sensor state. Measured value is updated if sensor is ready for next read. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const Eigen\+::\+Vector3d \mbox{\hyperlink{class_magnetometer_a99e3c4d37851c1fabb2954a2656ae92a}{mag}} = Eigen\+::\+Vector3d(60.\+0,0.\+0,0.\+0)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Representation of magnetometer. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_magnetometer_a7f7eba0dc671a706609e1386d49f3741}\label{class_magnetometer_a7f7eba0dc671a706609e1386d49f3741}} 
+\index{Magnetometer@{Magnetometer}!Magnetometer@{Magnetometer}}
+\index{Magnetometer@{Magnetometer}!Magnetometer@{Magnetometer}}
+\doxysubsubsection{\texorpdfstring{Magnetometer()}{Magnetometer()}}
+{\footnotesize\ttfamily Magnetometer\+::\+Magnetometer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_environment}{Environment}} \&}]{env,  }\item[{double}]{sd,  }\item[{Eigen\+::\+Vector3d}]{bias,  }\item[{double}]{refresh\+Time }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_magnetometer_a3fa70f01a67c18c1de8232aaa085a5b4}\label{class_magnetometer_a3fa70f01a67c18c1de8232aaa085a5b4}} 
+\index{Magnetometer@{Magnetometer}!update@{update}}
+\index{update@{update}!Magnetometer@{Magnetometer}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Magnetometer\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Update sensor state. Measured value is updated if sensor is ready for next read. 
+
+
+
+Implements \mbox{\hyperlink{class_sensor_a1766329f3c9918fa886ead46b141a6a8}{Sensor$<$ Eigen\+::\+Vector3d $>$}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_magnetometer_a99e3c4d37851c1fabb2954a2656ae92a}\label{class_magnetometer_a99e3c4d37851c1fabb2954a2656ae92a}} 
+\index{Magnetometer@{Magnetometer}!mag@{mag}}
+\index{mag@{mag}!Magnetometer@{Magnetometer}}
+\doxysubsubsection{\texorpdfstring{mag}{mag}}
+{\footnotesize\ttfamily const Eigen\+::\+Vector3d Magnetometer\+::mag = Eigen\+::\+Vector3d(60.\+0,0.\+0,0.\+0)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/navigation/\mbox{\hyperlink{sensors_8hpp}{sensors.\+hpp}}\item 
+src/navigation/\mbox{\hyperlink{sensors_8cpp}{sensors.\+cpp}}\end{DoxyCompactItemize}

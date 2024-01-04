@@ -1,0 +1,131 @@
+\hypertarget{class_controller_loop_r_a_n_g_l_e}{}\doxysection{Controller\+Loop\+RANGLE Class Reference}
+\label{class_controller_loop_r_a_n_g_l_e}\index{ControllerLoopRANGLE@{ControllerLoopRANGLE}}
+
+
+{\ttfamily \#include $<$controller\+\_\+loop\+\_\+\+RANGLE.\+hpp$>$}
+
+
+
+Inheritance diagram for Controller\+Loop\+RANGLE\+:
+% FIG 0
+
+
+Collaboration diagram for Controller\+Loop\+RANGLE\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_controller_loop_r_a_n_g_l_e_a45da84f7cccbd5b16881b5ab2f8aa7d7}{Controller\+Loop\+RANGLE}} ()
+\item 
+void \mbox{\hyperlink{class_controller_loop_r_a_n_g_l_e_a63c83526700c1d192a316037112d03f9}{job}} (\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Controller $>$$>$ \&controllers, \mbox{\hyperlink{class_control}{Control}} \&control, \mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} \mbox{\hyperlink{class_n_s}{NS}} \&navisys) override
+\item 
+void \mbox{\hyperlink{class_controller_loop_r_a_n_g_l_e_a2c2fd6cdf890bc4dd6a75f1209087f90}{handle\+Joystick}} (Eigen\+::\+Vector\+Xd joystick) override
+\item 
+std\+::string \mbox{\hyperlink{class_controller_loop_r_a_n_g_l_e_abf0714f0d06bc675728ccad43c6d81b4}{demand\+Info}} () override
+\begin{DoxyCompactList}\small\item\em Prepare info about state and demands. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_controller_loop_r_a_n_g_l_e_a48d5dabc24de58c111cfdcdea70dd7a4}{override\+Position\+And\+Speed}} (\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} Eigen\+::\+Vector3d position, \mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} Eigen\+::\+Vector3d orientation, \mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} Eigen\+::\+Vector3d velocity) override
+\begin{DoxyCompactList}\small\item\em Overrides demands to apply to given postion, orientation and speed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::atomic$<$ double $>$ \mbox{\hyperlink{class_controller_loop_r_a_n_g_l_e_ae8bc0b5804358e2a58e9d10a87999f12}{demanded\+Theta}} = 0.\+0
+\item 
+std\+::atomic$<$ double $>$ \mbox{\hyperlink{class_controller_loop_r_a_n_g_l_e_ab6c107242deb36f8ae4546724779970b}{demanded\+Psi}} = 0.\+0
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr double \mbox{\hyperlink{class_controller_loop_r_a_n_g_l_e_aa0ac843695491860f11c35ff42450ca3}{angle\+Limit}} = std\+::numbers\+::pi/2.\+0
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_controller_loop_r_a_n_g_l_e_a45da84f7cccbd5b16881b5ab2f8aa7d7}\label{class_controller_loop_r_a_n_g_l_e_a45da84f7cccbd5b16881b5ab2f8aa7d7}} 
+\index{ControllerLoopRANGLE@{ControllerLoopRANGLE}!ControllerLoopRANGLE@{ControllerLoopRANGLE}}
+\index{ControllerLoopRANGLE@{ControllerLoopRANGLE}!ControllerLoopRANGLE@{ControllerLoopRANGLE}}
+\doxysubsubsection{\texorpdfstring{ControllerLoopRANGLE()}{ControllerLoopRANGLE()}}
+{\footnotesize\ttfamily Controller\+Loop\+RANGLE\+::\+Controller\+Loop\+RANGLE (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_controller_loop_r_a_n_g_l_e_abf0714f0d06bc675728ccad43c6d81b4}\label{class_controller_loop_r_a_n_g_l_e_abf0714f0d06bc675728ccad43c6d81b4}} 
+\index{ControllerLoopRANGLE@{ControllerLoopRANGLE}!demandInfo@{demandInfo}}
+\index{demandInfo@{demandInfo}!ControllerLoopRANGLE@{ControllerLoopRANGLE}}
+\doxysubsubsection{\texorpdfstring{demandInfo()}{demandInfo()}}
+{\footnotesize\ttfamily std\+::string Controller\+Loop\+RANGLE\+::demand\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prepare info about state and demands. 
+
+\begin{DoxyReturn}{Returns}
+information about mode and actually set demands 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_controller_loop_ad10249a12868c7f1c1a0e1bf919a1b51}{Controller\+Loop}}.
+
+\mbox{\Hypertarget{class_controller_loop_r_a_n_g_l_e_a2c2fd6cdf890bc4dd6a75f1209087f90}\label{class_controller_loop_r_a_n_g_l_e_a2c2fd6cdf890bc4dd6a75f1209087f90}} 
+\index{ControllerLoopRANGLE@{ControllerLoopRANGLE}!handleJoystick@{handleJoystick}}
+\index{handleJoystick@{handleJoystick}!ControllerLoopRANGLE@{ControllerLoopRANGLE}}
+\doxysubsubsection{\texorpdfstring{handleJoystick()}{handleJoystick()}}
+{\footnotesize\ttfamily void Controller\+Loop\+RANGLE\+::handle\+Joystick (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector\+Xd}]{joystick }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+\mbox{\Hypertarget{class_controller_loop_r_a_n_g_l_e_a63c83526700c1d192a316037112d03f9}\label{class_controller_loop_r_a_n_g_l_e_a63c83526700c1d192a316037112d03f9}} 
+\index{ControllerLoopRANGLE@{ControllerLoopRANGLE}!job@{job}}
+\index{job@{job}!ControllerLoopRANGLE@{ControllerLoopRANGLE}}
+\doxysubsubsection{\texorpdfstring{job()}{job()}}
+{\footnotesize\ttfamily void Controller\+Loop\+RANGLE\+::job (\begin{DoxyParamCaption}\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Controller $>$$>$ \&}]{controllers,  }\item[{\mbox{\hyperlink{class_control}{Control}} \&}]{control,  }\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} \mbox{\hyperlink{class_n_s}{NS}} \&}]{navisys }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+\mbox{\Hypertarget{class_controller_loop_r_a_n_g_l_e_a48d5dabc24de58c111cfdcdea70dd7a4}\label{class_controller_loop_r_a_n_g_l_e_a48d5dabc24de58c111cfdcdea70dd7a4}} 
+\index{ControllerLoopRANGLE@{ControllerLoopRANGLE}!overridePositionAndSpeed@{overridePositionAndSpeed}}
+\index{overridePositionAndSpeed@{overridePositionAndSpeed}!ControllerLoopRANGLE@{ControllerLoopRANGLE}}
+\doxysubsubsection{\texorpdfstring{overridePositionAndSpeed()}{overridePositionAndSpeed()}}
+{\footnotesize\ttfamily void Controller\+Loop\+RANGLE\+::override\+Position\+And\+Speed (\begin{DoxyParamCaption}\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} Eigen\+::\+Vector3d}]{position,  }\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} Eigen\+::\+Vector3d}]{orientation,  }\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} Eigen\+::\+Vector3d}]{velocity }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Overrides demands to apply to given postion, orientation and speed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & position vector in world frame \\
+\hline
+{\em orientation} & orientation vector in world frame \\
+\hline
+{\em orientation} & linear velocity vector in world frame \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_controller_loop_a93d75b91c6f2b11862346ccfd7388c8b}{Controller\+Loop}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_controller_loop_r_a_n_g_l_e_aa0ac843695491860f11c35ff42450ca3}\label{class_controller_loop_r_a_n_g_l_e_aa0ac843695491860f11c35ff42450ca3}} 
+\index{ControllerLoopRANGLE@{ControllerLoopRANGLE}!angleLimit@{angleLimit}}
+\index{angleLimit@{angleLimit}!ControllerLoopRANGLE@{ControllerLoopRANGLE}}
+\doxysubsubsection{\texorpdfstring{angleLimit}{angleLimit}}
+{\footnotesize\ttfamily constexpr double Controller\+Loop\+RANGLE\+::angle\+Limit = std\+::numbers\+::pi/2.\+0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_controller_loop_r_a_n_g_l_e_ab6c107242deb36f8ae4546724779970b}\label{class_controller_loop_r_a_n_g_l_e_ab6c107242deb36f8ae4546724779970b}} 
+\index{ControllerLoopRANGLE@{ControllerLoopRANGLE}!demandedPsi@{demandedPsi}}
+\index{demandedPsi@{demandedPsi}!ControllerLoopRANGLE@{ControllerLoopRANGLE}}
+\doxysubsubsection{\texorpdfstring{demandedPsi}{demandedPsi}}
+{\footnotesize\ttfamily std\+::atomic$<$double$>$ Controller\+Loop\+RANGLE\+::demanded\+Psi = 0.\+0\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_controller_loop_r_a_n_g_l_e_ae8bc0b5804358e2a58e9d10a87999f12}\label{class_controller_loop_r_a_n_g_l_e_ae8bc0b5804358e2a58e9d10a87999f12}} 
+\index{ControllerLoopRANGLE@{ControllerLoopRANGLE}!demandedTheta@{demandedTheta}}
+\index{demandedTheta@{demandedTheta}!ControllerLoopRANGLE@{ControllerLoopRANGLE}}
+\doxysubsubsection{\texorpdfstring{demandedTheta}{demandedTheta}}
+{\footnotesize\ttfamily std\+::atomic$<$double$>$ Controller\+Loop\+RANGLE\+::demanded\+Theta = 0.\+0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/controller/modes/\mbox{\hyperlink{controller__loop___r_a_n_g_l_e_8hpp}{controller\+\_\+loop\+\_\+\+RANGLE.\+hpp}}\item 
+src/controller/modes/\mbox{\hyperlink{controller__loop___r_a_n_g_l_e_8cpp}{controller\+\_\+loop\+\_\+\+RANGLE.\+cpp}}\end{DoxyCompactItemize}

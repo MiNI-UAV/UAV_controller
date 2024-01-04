@@ -1,0 +1,62 @@
+\hypertarget{class_barometer}{}\doxysection{Barometer Class Reference}
+\label{class_barometer}\index{Barometer@{Barometer}}
+
+
+Representation of barometer.  
+
+
+
+
+{\ttfamily \#include $<$sensors.\+hpp$>$}
+
+
+
+Inheritance diagram for Barometer\+:
+% FIG 0
+
+
+Collaboration diagram for Barometer\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_barometer_a86f12a9505b5eb20e04b5cc64f9da5c6}{Barometer}} (\mbox{\hyperlink{class_environment}{Environment}} \&\mbox{\hyperlink{class_sensor_a2719dcf7802389fca96f6cf13dcfa00a}{env}}, double sd, Eigen\+::\+Vector3d \mbox{\hyperlink{class_sensor_a548201e3a01c9b881912f63d83763472}{bias}}, double \mbox{\hyperlink{class_sensor_a9639cd6679bfd35dbe4b3ef762a688ea}{refresh\+Time}})
+\item 
+void \mbox{\hyperlink{class_barometer_a1d228cc221636b06999ad9e66fa955a4}{update}} () override
+\begin{DoxyCompactList}\small\item\em Update sensor state. Measured value is updated if sensor is ready for next read. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Representation of barometer. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_barometer_a86f12a9505b5eb20e04b5cc64f9da5c6}\label{class_barometer_a86f12a9505b5eb20e04b5cc64f9da5c6}} 
+\index{Barometer@{Barometer}!Barometer@{Barometer}}
+\index{Barometer@{Barometer}!Barometer@{Barometer}}
+\doxysubsubsection{\texorpdfstring{Barometer()}{Barometer()}}
+{\footnotesize\ttfamily Barometer\+::\+Barometer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_environment}{Environment}} \&}]{env,  }\item[{double}]{sd,  }\item[{Eigen\+::\+Vector3d}]{bias,  }\item[{double}]{refresh\+Time }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_barometer_a1d228cc221636b06999ad9e66fa955a4}\label{class_barometer_a1d228cc221636b06999ad9e66fa955a4}} 
+\index{Barometer@{Barometer}!update@{update}}
+\index{update@{update}!Barometer@{Barometer}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Barometer\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Update sensor state. Measured value is updated if sensor is ready for next read. 
+
+
+
+Implements \mbox{\hyperlink{class_sensor_a1766329f3c9918fa886ead46b141a6a8}{Sensor$<$ double $>$}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/navigation/\mbox{\hyperlink{sensors_8hpp}{sensors.\+hpp}}\item 
+src/navigation/\mbox{\hyperlink{sensors_8cpp}{sensors.\+cpp}}\end{DoxyCompactItemize}

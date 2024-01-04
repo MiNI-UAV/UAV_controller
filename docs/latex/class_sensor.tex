@@ -1,0 +1,254 @@
+\hypertarget{class_sensor}{}\doxysection{Sensor$<$ T $>$ Class Template Reference}
+\label{class_sensor}\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+
+
+Sensors base class.  
+
+
+
+
+{\ttfamily \#include $<$sensors.\+hpp$>$}
+
+
+
+Collaboration diagram for Sensor$<$ T $>$\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sensor_a26e8bb38872d56eb5f5b60adc1a03773}{Sensor}} (\mbox{\hyperlink{class_environment}{Environment}} \&\mbox{\hyperlink{class_sensor_a2719dcf7802389fca96f6cf13dcfa00a}{env}}, double sd, T \mbox{\hyperlink{class_sensor_a548201e3a01c9b881912f63d83763472}{bias}}, std\+::string path, std\+::string fmt, double \mbox{\hyperlink{class_sensor_a9639cd6679bfd35dbe4b3ef762a688ea}{refresh\+Time}})
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_sensor_a1766329f3c9918fa886ead46b141a6a8}{update}} ()=0
+\begin{DoxyCompactList}\small\item\em Update sensor state. Measured value is updated if sensor is ready for next read. \end{DoxyCompactList}\item 
+T \mbox{\hyperlink{class_sensor_a9402e0f820bcc9e18b14c9c96ad978b9}{get\+Reading}} ()
+\begin{DoxyCompactList}\small\item\em Returns recent measure. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_sensor_abbc47d4d49f8f2abe32fed71c31bf989}{get\+Sd}} ()
+\begin{DoxyCompactList}\small\item\em Returns standard deviation. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_sensor_ad3405b033bacd559093c5882332bcc1b}{is\+Ready}} ()
+\begin{DoxyCompactList}\small\item\em Checks if sensor is ready. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_sensor_a1186ae1cf405894155321b7c4660775e}{should\+Update}} ()
+\begin{DoxyCompactList}\small\item\em Checks if sensor should measure next value. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_sensor_a42726e1f0e08cc8a0f97ffed48c1c1b5}{error}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_environment}{Environment}} \& \mbox{\hyperlink{class_sensor_a2719dcf7802389fca96f6cf13dcfa00a}{env}}
+\item 
+T \mbox{\hyperlink{class_sensor_aef8e7327a3d2e66260169f5990eb1dc6}{value}}
+\item 
+double \mbox{\hyperlink{class_sensor_a9639cd6679bfd35dbe4b3ef762a688ea}{refresh\+Time}}
+\item 
+double \mbox{\hyperlink{class_sensor_a1c39330600157f2e1781bb941ded0473}{last\+Update}}
+\item 
+std\+::atomic\+\_\+bool \mbox{\hyperlink{class_sensor_a6eaafc72504349a25e3d4f1804674bc2}{ready}}
+\item 
+std\+::normal\+\_\+distribution$<$ double $>$ \mbox{\hyperlink{class_sensor_a3a6fbd577eb66f36eab5bf1ed1f150ed}{dist}}
+\item 
+T \mbox{\hyperlink{class_sensor_a548201e3a01c9b881912f63d83763472}{bias}}
+\item 
+Logger \mbox{\hyperlink{class_sensor_add7cef2ebb963b5d5b00304f0e708ac5}{logger}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::mt19937 \mbox{\hyperlink{class_sensor_a199ea33574b5fbcbb8217cec6922096f}{gen}} = std\+::mt19937(std\+::random\+\_\+device()())
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+class Sensor$<$ T $>$}
+
+Sensors base class. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & type of data read by sensor \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_sensor_a26e8bb38872d56eb5f5b60adc1a03773}\label{class_sensor_a26e8bb38872d56eb5f5b60adc1a03773}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!Sensor@{Sensor}}
+\index{Sensor@{Sensor}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Sensor()}{Sensor()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::\mbox{\hyperlink{class_sensor}{Sensor}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_environment}{Environment}} \&}]{env,  }\item[{double}]{sd,  }\item[{T}]{bias,  }\item[{std\+::string}]{path,  }\item[{std\+::string}]{fmt,  }\item[{double}]{refresh\+Time }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em env} & reference to environment sensor measures \\
+\hline
+{\em sd} & standard deviation of reading \\
+\hline
+{\em bias} & reading bias \\
+\hline
+{\em path} & path where sensor logs are saved \\
+\hline
+{\em fmt} & header of log file \\
+\hline
+{\em refresh\+Time} & sample period \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_sensor_a42726e1f0e08cc8a0f97ffed48c1c1b5}\label{class_sensor_a42726e1f0e08cc8a0f97ffed48c1c1b5}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!error@{error}}
+\index{error@{error}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{error()}{error()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::error\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_sensor_a9402e0f820bcc9e18b14c9c96ad978b9}\label{class_sensor_a9402e0f820bcc9e18b14c9c96ad978b9}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!getReading@{getReading}}
+\index{getReading@{getReading}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getReading()}{getReading()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+T \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::get\+Reading (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns recent measure. 
+
+\begin{DoxyReturn}{Returns}
+sensor measure 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_sensor_abbc47d4d49f8f2abe32fed71c31bf989}\label{class_sensor_abbc47d4d49f8f2abe32fed71c31bf989}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!getSd@{getSd}}
+\index{getSd@{getSd}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getSd()}{getSd()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::get\+Sd (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns standard deviation. 
+
+\begin{DoxyReturn}{Returns}
+standard deviation 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_sensor_ad3405b033bacd559093c5882332bcc1b}\label{class_sensor_ad3405b033bacd559093c5882332bcc1b}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!isReady@{isReady}}
+\index{isReady@{isReady}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{isReady()}{isReady()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+bool \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::is\+Ready (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Checks if sensor is ready. 
+
+\begin{DoxyReturn}{Returns}
+true if sensor is ready 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_sensor_a1186ae1cf405894155321b7c4660775e}\label{class_sensor_a1186ae1cf405894155321b7c4660775e}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!shouldUpdate@{shouldUpdate}}
+\index{shouldUpdate@{shouldUpdate}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{shouldUpdate()}{shouldUpdate()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+bool \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::should\+Update\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Checks if sensor should measure next value. 
+
+\begin{DoxyReturn}{Returns}
+true if sensor is ready for next measure 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_sensor_a1766329f3c9918fa886ead46b141a6a8}\label{class_sensor_a1766329f3c9918fa886ead46b141a6a8}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!update@{update}}
+\index{update@{update}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+virtual void \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Update sensor state. Measured value is updated if sensor is ready for next read. 
+
+
+
+Implemented in \mbox{\hyperlink{class_g_p_s_vel_a1147f7a6ee4ba76e1a93ccc51a5c66da}{GPSVel}}, \mbox{\hyperlink{class_g_p_s_a5f3e2a4e925216e9d9cf1c07cf7b2dbd}{GPS}}, \mbox{\hyperlink{class_barometer_a1d228cc221636b06999ad9e66fa955a4}{Barometer}}, \mbox{\hyperlink{class_magnetometer_a3fa70f01a67c18c1de8232aaa085a5b4}{Magnetometer}}, \mbox{\hyperlink{class_gyroscope_a9a94ededf2ae52c08e7778fe23283f9e}{Gyroscope}}, and \mbox{\hyperlink{class_accelerometer_a99c995792b90ddeb04f9e6acd7a20078}{Accelerometer}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_sensor_a548201e3a01c9b881912f63d83763472}\label{class_sensor_a548201e3a01c9b881912f63d83763472}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!bias@{bias}}
+\index{bias@{bias}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{bias}{bias}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+T \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::bias\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_sensor_a3a6fbd577eb66f36eab5bf1ed1f150ed}\label{class_sensor_a3a6fbd577eb66f36eab5bf1ed1f150ed}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!dist@{dist}}
+\index{dist@{dist}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{dist}{dist}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+std\+::normal\+\_\+distribution$<$double$>$ \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::dist\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_sensor_a2719dcf7802389fca96f6cf13dcfa00a}\label{class_sensor_a2719dcf7802389fca96f6cf13dcfa00a}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!env@{env}}
+\index{env@{env}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{env}{env}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{class_environment}{Environment}}\& \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::env\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_sensor_a199ea33574b5fbcbb8217cec6922096f}\label{class_sensor_a199ea33574b5fbcbb8217cec6922096f}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!gen@{gen}}
+\index{gen@{gen}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{gen}{gen}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+std\+::mt19937 \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::gen = std\+::mt19937(std\+::random\+\_\+device()())\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_sensor_a1c39330600157f2e1781bb941ded0473}\label{class_sensor_a1c39330600157f2e1781bb941ded0473}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!lastUpdate@{lastUpdate}}
+\index{lastUpdate@{lastUpdate}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{lastUpdate}{lastUpdate}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::last\+Update\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_sensor_add7cef2ebb963b5d5b00304f0e708ac5}\label{class_sensor_add7cef2ebb963b5d5b00304f0e708ac5}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!logger@{logger}}
+\index{logger@{logger}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{logger}{logger}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+Logger \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::logger\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_sensor_a6eaafc72504349a25e3d4f1804674bc2}\label{class_sensor_a6eaafc72504349a25e3d4f1804674bc2}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!ready@{ready}}
+\index{ready@{ready}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ready}{ready}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+std\+::atomic\+\_\+bool \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::ready\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_sensor_a9639cd6679bfd35dbe4b3ef762a688ea}\label{class_sensor_a9639cd6679bfd35dbe4b3ef762a688ea}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!refreshTime@{refreshTime}}
+\index{refreshTime@{refreshTime}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{refreshTime}{refreshTime}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::refresh\+Time\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_sensor_aef8e7327a3d2e66260169f5990eb1dc6}\label{class_sensor_aef8e7327a3d2e66260169f5990eb1dc6}} 
+\index{Sensor$<$ T $>$@{Sensor$<$ T $>$}!value@{value}}
+\index{value@{value}!Sensor$<$ T $>$@{Sensor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+T \mbox{\hyperlink{class_sensor}{Sensor}}$<$ T $>$\+::value\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/navigation/\mbox{\hyperlink{sensors_8hpp}{sensors.\+hpp}}\item 
+src/navigation/\mbox{\hyperlink{sensors_8cpp}{sensors.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,56 @@
+\hypertarget{environment_8cpp}{}\doxysection{src/navigation/environment.cpp File Reference}
+\label{environment_8cpp}\index{src/navigation/environment.cpp@{src/navigation/environment.cpp}}
+{\ttfamily \#include \char`\"{}environment.\+hpp\char`\"{}}\newline
+{\ttfamily \#include $<$zmq.\+hpp$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$initializer\+\_\+list$>$}\newline
+{\ttfamily \#include \char`\"{}../utils.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}common.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sensors.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../defines.\+hpp\char`\"{}}\newline
+Include dependency graph for environment.\+cpp\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{environment_8cpp_a248941e15435de80759aef4a6a509270}{connect\+Conflate\+Socket}} (zmq\+::socket\+\_\+t \&sock, std\+::string address, std\+::string topic)
+\item 
+{\footnotesize template$<$int Size1, int Size2$>$ }\\bool \mbox{\hyperlink{environment_8cpp_aae182ed29d2c5da913fd75367bebd66f}{recv\+Vectors}} (zmq\+::socket\+\_\+t \&sock, int skip, Eigen\+::\+Vector$<$ double, Size1 $>$ \&vec1, Eigen\+::\+Vector$<$ double, Size2 $>$ \&vec2)
+\item 
+Eigen\+::\+Matrix$<$ double, 3, 3 $>$ \mbox{\hyperlink{environment_8cpp_ac9513f13242be0f599cdbf8065f7aed3}{r\+\_\+nb}} (const Eigen\+::\+Vector3d \&RPY)
+\item 
+Eigen\+::\+Matrix$<$ double, 3, 3 $>$ \mbox{\hyperlink{environment_8cpp_a118157ea9b5fa26fd00302ac99aa4172}{r\+\_\+nb}} (const Eigen\+::\+Vector4d \&e)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{environment_8cpp_a248941e15435de80759aef4a6a509270}\label{environment_8cpp_a248941e15435de80759aef4a6a509270}} 
+\index{environment.cpp@{environment.cpp}!connectConflateSocket@{connectConflateSocket}}
+\index{connectConflateSocket@{connectConflateSocket}!environment.cpp@{environment.cpp}}
+\doxysubsubsection{\texorpdfstring{connectConflateSocket()}{connectConflateSocket()}}
+{\footnotesize\ttfamily void connect\+Conflate\+Socket (\begin{DoxyParamCaption}\item[{zmq\+::socket\+\_\+t \&}]{sock,  }\item[{std\+::string}]{address,  }\item[{std\+::string}]{topic }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{environment_8cpp_ac9513f13242be0f599cdbf8065f7aed3}\label{environment_8cpp_ac9513f13242be0f599cdbf8065f7aed3}} 
+\index{environment.cpp@{environment.cpp}!r\_nb@{r\_nb}}
+\index{r\_nb@{r\_nb}!environment.cpp@{environment.cpp}}
+\doxysubsubsection{\texorpdfstring{r\_nb()}{r\_nb()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix$<$double, 3, 3$>$ r\+\_\+nb (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector3d \&}]{RPY }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{environment_8cpp_a118157ea9b5fa26fd00302ac99aa4172}\label{environment_8cpp_a118157ea9b5fa26fd00302ac99aa4172}} 
+\index{environment.cpp@{environment.cpp}!r\_nb@{r\_nb}}
+\index{r\_nb@{r\_nb}!environment.cpp@{environment.cpp}}
+\doxysubsubsection{\texorpdfstring{r\_nb()}{r\_nb()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix$<$double, 3, 3$>$ r\+\_\+nb (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector4d \&}]{e }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{environment_8cpp_aae182ed29d2c5da913fd75367bebd66f}\label{environment_8cpp_aae182ed29d2c5da913fd75367bebd66f}} 
+\index{environment.cpp@{environment.cpp}!recvVectors@{recvVectors}}
+\index{recvVectors@{recvVectors}!environment.cpp@{environment.cpp}}
+\doxysubsubsection{\texorpdfstring{recvVectors()}{recvVectors()}}
+{\footnotesize\ttfamily template$<$int Size1, int Size2$>$ \\
+bool recv\+Vectors (\begin{DoxyParamCaption}\item[{zmq\+::socket\+\_\+t \&}]{sock,  }\item[{int}]{skip,  }\item[{Eigen\+::\+Vector$<$ double, Size1 $>$ \&}]{vec1,  }\item[{Eigen\+::\+Vector$<$ double, Size2 $>$ \&}]{vec2 }\end{DoxyParamCaption})}
+

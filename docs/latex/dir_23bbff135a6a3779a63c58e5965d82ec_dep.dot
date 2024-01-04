@@ -1,0 +1,9 @@
+digraph "src/navigation/AHRS" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_b9f4d283f63ed92d53714bab84845a59 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="navigation" fontname="Helvetica", fontsize="10", URL="dir_b9f4d283f63ed92d53714bab84845a59.html"]
+  dir_23bbff135a6a3779a63c58e5965d82ec [shape=box, label="AHRS", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_23bbff135a6a3779a63c58e5965d82ec.html"];
+  }
+}

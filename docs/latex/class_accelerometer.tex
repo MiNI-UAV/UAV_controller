@@ -1,0 +1,76 @@
+\hypertarget{class_accelerometer}{}\doxysection{Accelerometer Class Reference}
+\label{class_accelerometer}\index{Accelerometer@{Accelerometer}}
+
+
+Representation of accelerometer.  
+
+
+
+
+{\ttfamily \#include $<$sensors.\+hpp$>$}
+
+
+
+Inheritance diagram for Accelerometer\+:
+% FIG 0
+
+
+Collaboration diagram for Accelerometer\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_accelerometer_ae37bf614768b1ff085e1ace6db81a43c}{Accelerometer}} (\mbox{\hyperlink{class_environment}{Environment}} \&\mbox{\hyperlink{class_sensor_a2719dcf7802389fca96f6cf13dcfa00a}{env}}, double sd, Eigen\+::\+Vector3d \mbox{\hyperlink{class_sensor_a548201e3a01c9b881912f63d83763472}{bias}}, double \mbox{\hyperlink{class_sensor_a9639cd6679bfd35dbe4b3ef762a688ea}{refresh\+Time}})
+\item 
+void \mbox{\hyperlink{class_accelerometer_a99c995792b90ddeb04f9e6acd7a20078}{update}} () override
+\begin{DoxyCompactList}\small\item\em Update sensor state. Measured value is updated if sensor is ready for next read. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const Eigen\+::\+Vector3d \mbox{\hyperlink{class_accelerometer_a6d44b731b30cfa4c93dea019f3c69a23}{g}} = Eigen\+::\+Vector3d(0.\+0,0.\+0,9.\+81)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Representation of accelerometer. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_accelerometer_ae37bf614768b1ff085e1ace6db81a43c}\label{class_accelerometer_ae37bf614768b1ff085e1ace6db81a43c}} 
+\index{Accelerometer@{Accelerometer}!Accelerometer@{Accelerometer}}
+\index{Accelerometer@{Accelerometer}!Accelerometer@{Accelerometer}}
+\doxysubsubsection{\texorpdfstring{Accelerometer()}{Accelerometer()}}
+{\footnotesize\ttfamily Accelerometer\+::\+Accelerometer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_environment}{Environment}} \&}]{env,  }\item[{double}]{sd,  }\item[{Eigen\+::\+Vector3d}]{bias,  }\item[{double}]{refresh\+Time }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_accelerometer_a99c995792b90ddeb04f9e6acd7a20078}\label{class_accelerometer_a99c995792b90ddeb04f9e6acd7a20078}} 
+\index{Accelerometer@{Accelerometer}!update@{update}}
+\index{update@{update}!Accelerometer@{Accelerometer}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Accelerometer\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Update sensor state. Measured value is updated if sensor is ready for next read. 
+
+
+
+Implements \mbox{\hyperlink{class_sensor_a1766329f3c9918fa886ead46b141a6a8}{Sensor$<$ Eigen\+::\+Vector3d $>$}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_accelerometer_a6d44b731b30cfa4c93dea019f3c69a23}\label{class_accelerometer_a6d44b731b30cfa4c93dea019f3c69a23}} 
+\index{Accelerometer@{Accelerometer}!g@{g}}
+\index{g@{g}!Accelerometer@{Accelerometer}}
+\doxysubsubsection{\texorpdfstring{g}{g}}
+{\footnotesize\ttfamily const Eigen\+::\+Vector3d Accelerometer\+::g = Eigen\+::\+Vector3d(0.\+0,0.\+0,9.\+81)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/navigation/\mbox{\hyperlink{sensors_8hpp}{sensors.\+hpp}}\item 
+src/navigation/\mbox{\hyperlink{sensors_8cpp}{sensors.\+cpp}}\end{DoxyCompactItemize}

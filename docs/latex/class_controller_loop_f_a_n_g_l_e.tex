@@ -1,0 +1,112 @@
+\hypertarget{class_controller_loop_f_a_n_g_l_e}{}\doxysection{Controller\+Loop\+FANGLE Class Reference}
+\label{class_controller_loop_f_a_n_g_l_e}\index{ControllerLoopFANGLE@{ControllerLoopFANGLE}}
+
+
+{\ttfamily \#include $<$controller\+\_\+loop\+\_\+\+FANGLE.\+hpp$>$}
+
+
+
+Inheritance diagram for Controller\+Loop\+FANGLE\+:
+% FIG 0
+
+
+Collaboration diagram for Controller\+Loop\+FANGLE\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_controller_loop_f_a_n_g_l_e_aa1f3f6f10e51790277ecdc5470cbb492}{Controller\+Loop\+FANGLE}} ()
+\item 
+void \mbox{\hyperlink{class_controller_loop_f_a_n_g_l_e_a92ead7374b7188e90032e645d253eabe}{job}} (std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Controller $>$$>$ \&controllers, \mbox{\hyperlink{class_control}{Control}} \&control, \mbox{\hyperlink{class_n_s}{NS}} \&navisys) override
+\item 
+void \mbox{\hyperlink{class_controller_loop_f_a_n_g_l_e_a3d8e50d93ccfbdb31a4a5ce568e5e07e}{handle\+Joystick}} (Eigen\+::\+Vector\+Xd joystick) override
+\item 
+std\+::string \mbox{\hyperlink{class_controller_loop_f_a_n_g_l_e_a4d2e1bf0c87fe963e2984a6fcb944cf5}{demand\+Info}} () override
+\begin{DoxyCompactList}\small\item\em Prepare info about state and demands. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_controller_loop_f_a_n_g_l_e_add9a4b46180af4386c522541dace63d0}{override\+Position\+And\+Speed}} (\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} Eigen\+::\+Vector3d position, \mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} Eigen\+::\+Vector3d orientation, \mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} Eigen\+::\+Vector3d velocity) override
+\begin{DoxyCompactList}\small\item\em Overrides demands to apply to given postion, orientation and speed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr double \mbox{\hyperlink{class_controller_loop_f_a_n_g_l_e_a06e66f1d51714c6df1191357151e898f}{angle\+Limit}} = std\+::numbers\+::pi/2.\+0
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_controller_loop_f_a_n_g_l_e_aa1f3f6f10e51790277ecdc5470cbb492}\label{class_controller_loop_f_a_n_g_l_e_aa1f3f6f10e51790277ecdc5470cbb492}} 
+\index{ControllerLoopFANGLE@{ControllerLoopFANGLE}!ControllerLoopFANGLE@{ControllerLoopFANGLE}}
+\index{ControllerLoopFANGLE@{ControllerLoopFANGLE}!ControllerLoopFANGLE@{ControllerLoopFANGLE}}
+\doxysubsubsection{\texorpdfstring{ControllerLoopFANGLE()}{ControllerLoopFANGLE()}}
+{\footnotesize\ttfamily Controller\+Loop\+FANGLE\+::\+Controller\+Loop\+FANGLE (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_controller_loop_f_a_n_g_l_e_a4d2e1bf0c87fe963e2984a6fcb944cf5}\label{class_controller_loop_f_a_n_g_l_e_a4d2e1bf0c87fe963e2984a6fcb944cf5}} 
+\index{ControllerLoopFANGLE@{ControllerLoopFANGLE}!demandInfo@{demandInfo}}
+\index{demandInfo@{demandInfo}!ControllerLoopFANGLE@{ControllerLoopFANGLE}}
+\doxysubsubsection{\texorpdfstring{demandInfo()}{demandInfo()}}
+{\footnotesize\ttfamily std\+::string Controller\+Loop\+FANGLE\+::demand\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prepare info about state and demands. 
+
+\begin{DoxyReturn}{Returns}
+information about mode and actually set demands 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_controller_loop_ad10249a12868c7f1c1a0e1bf919a1b51}{Controller\+Loop}}.
+
+\mbox{\Hypertarget{class_controller_loop_f_a_n_g_l_e_a3d8e50d93ccfbdb31a4a5ce568e5e07e}\label{class_controller_loop_f_a_n_g_l_e_a3d8e50d93ccfbdb31a4a5ce568e5e07e}} 
+\index{ControllerLoopFANGLE@{ControllerLoopFANGLE}!handleJoystick@{handleJoystick}}
+\index{handleJoystick@{handleJoystick}!ControllerLoopFANGLE@{ControllerLoopFANGLE}}
+\doxysubsubsection{\texorpdfstring{handleJoystick()}{handleJoystick()}}
+{\footnotesize\ttfamily void Controller\+Loop\+FANGLE\+::handle\+Joystick (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector\+Xd}]{joystick }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+\mbox{\Hypertarget{class_controller_loop_f_a_n_g_l_e_a92ead7374b7188e90032e645d253eabe}\label{class_controller_loop_f_a_n_g_l_e_a92ead7374b7188e90032e645d253eabe}} 
+\index{ControllerLoopFANGLE@{ControllerLoopFANGLE}!job@{job}}
+\index{job@{job}!ControllerLoopFANGLE@{ControllerLoopFANGLE}}
+\doxysubsubsection{\texorpdfstring{job()}{job()}}
+{\footnotesize\ttfamily void Controller\+Loop\+FANGLE\+::job (\begin{DoxyParamCaption}\item[{std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Controller $>$$>$ \&}]{controllers,  }\item[{\mbox{\hyperlink{class_control}{Control}} \&}]{control,  }\item[{\mbox{\hyperlink{class_n_s}{NS}} \&}]{navisys }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+\mbox{\Hypertarget{class_controller_loop_f_a_n_g_l_e_add9a4b46180af4386c522541dace63d0}\label{class_controller_loop_f_a_n_g_l_e_add9a4b46180af4386c522541dace63d0}} 
+\index{ControllerLoopFANGLE@{ControllerLoopFANGLE}!overridePositionAndSpeed@{overridePositionAndSpeed}}
+\index{overridePositionAndSpeed@{overridePositionAndSpeed}!ControllerLoopFANGLE@{ControllerLoopFANGLE}}
+\doxysubsubsection{\texorpdfstring{overridePositionAndSpeed()}{overridePositionAndSpeed()}}
+{\footnotesize\ttfamily void Controller\+Loop\+FANGLE\+::override\+Position\+And\+Speed (\begin{DoxyParamCaption}\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} Eigen\+::\+Vector3d}]{position,  }\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} Eigen\+::\+Vector3d}]{orientation,  }\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} Eigen\+::\+Vector3d}]{velocity }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Overrides demands to apply to given postion, orientation and speed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & position vector in world frame \\
+\hline
+{\em orientation} & orientation vector in world frame \\
+\hline
+{\em orientation} & linear velocity vector in world frame \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_controller_loop_a93d75b91c6f2b11862346ccfd7388c8b}{Controller\+Loop}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_controller_loop_f_a_n_g_l_e_a06e66f1d51714c6df1191357151e898f}\label{class_controller_loop_f_a_n_g_l_e_a06e66f1d51714c6df1191357151e898f}} 
+\index{ControllerLoopFANGLE@{ControllerLoopFANGLE}!angleLimit@{angleLimit}}
+\index{angleLimit@{angleLimit}!ControllerLoopFANGLE@{ControllerLoopFANGLE}}
+\doxysubsubsection{\texorpdfstring{angleLimit}{angleLimit}}
+{\footnotesize\ttfamily constexpr double Controller\+Loop\+FANGLE\+::angle\+Limit = std\+::numbers\+::pi/2.\+0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/controller/modes/\mbox{\hyperlink{controller__loop___f_a_n_g_l_e_8hpp}{controller\+\_\+loop\+\_\+\+FANGLE.\+hpp}}\item 
+src/controller/modes/\mbox{\hyperlink{controller__loop___f_a_n_g_l_e_8cpp}{controller\+\_\+loop\+\_\+\+FANGLE.\+cpp}}\end{DoxyCompactItemize}

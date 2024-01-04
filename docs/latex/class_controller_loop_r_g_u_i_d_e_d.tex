@@ -1,0 +1,90 @@
+\hypertarget{class_controller_loop_r_g_u_i_d_e_d}{}\doxysection{Controller\+Loop\+RGUIDED Class Reference}
+\label{class_controller_loop_r_g_u_i_d_e_d}\index{ControllerLoopRGUIDED@{ControllerLoopRGUIDED}}
+
+
+{\ttfamily \#include $<$controller\+\_\+loop\+\_\+\+RGUIDED.\+hpp$>$}
+
+
+
+Inheritance diagram for Controller\+Loop\+RGUIDED\+:
+% FIG 0
+
+
+Collaboration diagram for Controller\+Loop\+RGUIDED\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_controller_loop_r_g_u_i_d_e_d_ad96e20c4c9f971aa12f3b701c52a25b4}{Controller\+Loop\+RGUIDED}} ()
+\item 
+void \mbox{\hyperlink{class_controller_loop_r_g_u_i_d_e_d_a0f8997251721c40710c3a5f79f62fdb2}{job}} (\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Controller $>$$>$ \&controllers, \mbox{\hyperlink{class_control}{Control}} \&control, \mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} \mbox{\hyperlink{class_n_s}{NS}} \&navisys) override
+\item 
+std\+::string \mbox{\hyperlink{class_controller_loop_r_g_u_i_d_e_d_a9b029a44e778faa8b37d9cfa6c562728}{demand\+Info}} () override
+\begin{DoxyCompactList}\small\item\em Prepare info about state and demands. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const Eigen\+::\+Vector3d \mbox{\hyperlink{class_controller_loop_r_g_u_i_d_e_d_a873493a08ce4a579efc40b3ce529dcaa}{target}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr double \mbox{\hyperlink{class_controller_loop_r_g_u_i_d_e_d_a86bc0d85b6fb9f308367b7fa022bb8cf}{detection\+\_\+limit}} = std\+::numbers\+::pi/3.\+0
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_controller_loop_r_g_u_i_d_e_d_ad96e20c4c9f971aa12f3b701c52a25b4}\label{class_controller_loop_r_g_u_i_d_e_d_ad96e20c4c9f971aa12f3b701c52a25b4}} 
+\index{ControllerLoopRGUIDED@{ControllerLoopRGUIDED}!ControllerLoopRGUIDED@{ControllerLoopRGUIDED}}
+\index{ControllerLoopRGUIDED@{ControllerLoopRGUIDED}!ControllerLoopRGUIDED@{ControllerLoopRGUIDED}}
+\doxysubsubsection{\texorpdfstring{ControllerLoopRGUIDED()}{ControllerLoopRGUIDED()}}
+{\footnotesize\ttfamily Controller\+Loop\+RGUIDED\+::\+Controller\+Loop\+RGUIDED (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_controller_loop_r_g_u_i_d_e_d_a9b029a44e778faa8b37d9cfa6c562728}\label{class_controller_loop_r_g_u_i_d_e_d_a9b029a44e778faa8b37d9cfa6c562728}} 
+\index{ControllerLoopRGUIDED@{ControllerLoopRGUIDED}!demandInfo@{demandInfo}}
+\index{demandInfo@{demandInfo}!ControllerLoopRGUIDED@{ControllerLoopRGUIDED}}
+\doxysubsubsection{\texorpdfstring{demandInfo()}{demandInfo()}}
+{\footnotesize\ttfamily std\+::string Controller\+Loop\+RGUIDED\+::demand\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prepare info about state and demands. 
+
+\begin{DoxyReturn}{Returns}
+information about mode and actually set demands 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_controller_loop_ad10249a12868c7f1c1a0e1bf919a1b51}{Controller\+Loop}}.
+
+\mbox{\Hypertarget{class_controller_loop_r_g_u_i_d_e_d_a0f8997251721c40710c3a5f79f62fdb2}\label{class_controller_loop_r_g_u_i_d_e_d_a0f8997251721c40710c3a5f79f62fdb2}} 
+\index{ControllerLoopRGUIDED@{ControllerLoopRGUIDED}!job@{job}}
+\index{job@{job}!ControllerLoopRGUIDED@{ControllerLoopRGUIDED}}
+\doxysubsubsection{\texorpdfstring{job()}{job()}}
+{\footnotesize\ttfamily void Controller\+Loop\+RGUIDED\+::job (\begin{DoxyParamCaption}\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Controller $>$$>$ \&}]{controllers,  }\item[{\mbox{\hyperlink{class_control}{Control}} \&}]{control,  }\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} \mbox{\hyperlink{class_n_s}{NS}} \&}]{navisys }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_controller_loop_r_g_u_i_d_e_d_a86bc0d85b6fb9f308367b7fa022bb8cf}\label{class_controller_loop_r_g_u_i_d_e_d_a86bc0d85b6fb9f308367b7fa022bb8cf}} 
+\index{ControllerLoopRGUIDED@{ControllerLoopRGUIDED}!detection\_limit@{detection\_limit}}
+\index{detection\_limit@{detection\_limit}!ControllerLoopRGUIDED@{ControllerLoopRGUIDED}}
+\doxysubsubsection{\texorpdfstring{detection\_limit}{detection\_limit}}
+{\footnotesize\ttfamily constexpr double Controller\+Loop\+RGUIDED\+::detection\+\_\+limit = std\+::numbers\+::pi/3.\+0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_controller_loop_r_g_u_i_d_e_d_a873493a08ce4a579efc40b3ce529dcaa}\label{class_controller_loop_r_g_u_i_d_e_d_a873493a08ce4a579efc40b3ce529dcaa}} 
+\index{ControllerLoopRGUIDED@{ControllerLoopRGUIDED}!target@{target}}
+\index{target@{target}!ControllerLoopRGUIDED@{ControllerLoopRGUIDED}}
+\doxysubsubsection{\texorpdfstring{target}{target}}
+{\footnotesize\ttfamily const Eigen\+::\+Vector3d Controller\+Loop\+RGUIDED\+::target\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/controller/modes/\mbox{\hyperlink{controller__loop___r_g_u_i_d_e_d_8hpp}{controller\+\_\+loop\+\_\+\+RGUIDED.\+hpp}}\item 
+src/controller/modes/\mbox{\hyperlink{controller__loop___r_g_u_i_d_e_d_8cpp}{controller\+\_\+loop\+\_\+\+RGUIDED.\+cpp}}\end{DoxyCompactItemize}

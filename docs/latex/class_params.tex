@@ -1,0 +1,113 @@
+\hypertarget{class_params}{}\doxysection{Params Class Reference}
+\label{class_params}\index{Params@{Params}}
+
+
+Simulation parameters.  
+
+
+
+
+{\ttfamily \#include $<$params.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_params_a1c0d445a3ea36e3b4d8696c55217fdd2}{Params}} ()
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_params_a662193d8cc09d9f67f2331e6d9283524}{Params}} (const \mbox{\hyperlink{class_params}{Params}} \&)=delete
+\item 
+\mbox{\hyperlink{class_params}{Params}} \& \mbox{\hyperlink{class_params_ae8c164690058dcda1a17de805f813b19}{operator=}} (const \mbox{\hyperlink{class_params}{Params}} \&)=delete
+\item 
+\mbox{\hyperlink{class_params_a7173b05ac1f4512656b062aeb7ec09d9}{Params}} (\mbox{\hyperlink{class_params}{Params}} \&\&)=delete
+\item 
+\mbox{\hyperlink{class_params_a718541a736b5b4b829652af720dfb242}{$\sim$\+Params}} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static const \mbox{\hyperlink{class_params}{Params}} $\ast$ \mbox{\hyperlink{class_params_a32ef1c4cb08d2dfd4432ccfd1c135869}{get\+Singleton}} ()
+\begin{DoxyCompactList}\small\item\em Get singleton of \mbox{\hyperlink{class_params}{Params}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{class_params_adc36f3ca163b58b4d88395f629bc0b3b}{STEP\+\_\+\+TIME}}
+\begin{DoxyCompactList}\small\item\em Step time of simulation. Step of ODE solving methods. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Simulation parameters. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_params_a1c0d445a3ea36e3b4d8696c55217fdd2}\label{class_params_a1c0d445a3ea36e3b4d8696c55217fdd2}} 
+\index{Params@{Params}!Params@{Params}}
+\index{Params@{Params}!Params@{Params}}
+\doxysubsubsection{\texorpdfstring{Params()}{Params()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Params\+::\+Params (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+\mbox{\Hypertarget{class_params_a662193d8cc09d9f67f2331e6d9283524}\label{class_params_a662193d8cc09d9f67f2331e6d9283524}} 
+\index{Params@{Params}!Params@{Params}}
+\index{Params@{Params}!Params@{Params}}
+\doxysubsubsection{\texorpdfstring{Params()}{Params()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Params\+::\+Params (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_params}{Params}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{class_params_a7173b05ac1f4512656b062aeb7ec09d9}\label{class_params_a7173b05ac1f4512656b062aeb7ec09d9}} 
+\index{Params@{Params}!Params@{Params}}
+\index{Params@{Params}!Params@{Params}}
+\doxysubsubsection{\texorpdfstring{Params()}{Params()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Params\+::\+Params (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_params}{Params}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{class_params_a718541a736b5b4b829652af720dfb242}\label{class_params_a718541a736b5b4b829652af720dfb242}} 
+\index{Params@{Params}!````~Params@{$\sim$Params}}
+\index{````~Params@{$\sim$Params}!Params@{Params}}
+\doxysubsubsection{\texorpdfstring{$\sim$Params()}{~Params()}}
+{\footnotesize\ttfamily Params\+::$\sim$\+Params (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_params_a32ef1c4cb08d2dfd4432ccfd1c135869}\label{class_params_a32ef1c4cb08d2dfd4432ccfd1c135869}} 
+\index{Params@{Params}!getSingleton@{getSingleton}}
+\index{getSingleton@{getSingleton}!Params@{Params}}
+\doxysubsubsection{\texorpdfstring{getSingleton()}{getSingleton()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_params}{Params}} $\ast$ Params\+::get\+Singleton (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get singleton of \mbox{\hyperlink{class_params}{Params}}. 
+
+\begin{DoxyReturn}{Returns}
+const pointer to \mbox{\hyperlink{class_params}{Params}} instance. Return nullptr if not initialized 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_params_ae8c164690058dcda1a17de805f813b19}\label{class_params_ae8c164690058dcda1a17de805f813b19}} 
+\index{Params@{Params}!operator=@{operator=}}
+\index{operator=@{operator=}!Params@{Params}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_params}{Params}}\& Params\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_params}{Params}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_params_adc36f3ca163b58b4d88395f629bc0b3b}\label{class_params_adc36f3ca163b58b4d88395f629bc0b3b}} 
+\index{Params@{Params}!STEP\_TIME@{STEP\_TIME}}
+\index{STEP\_TIME@{STEP\_TIME}!Params@{Params}}
+\doxysubsubsection{\texorpdfstring{STEP\_TIME}{STEP\_TIME}}
+{\footnotesize\ttfamily double Params\+::\+STEP\+\_\+\+TIME}
+
+
+
+Step time of simulation. Step of ODE solving methods. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{params_8hpp}{params.\+hpp}}\item 
+src/\mbox{\hyperlink{params_8cpp}{params.\+cpp}}\end{DoxyCompactItemize}

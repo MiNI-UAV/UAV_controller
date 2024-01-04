@@ -1,0 +1,47 @@
+\hypertarget{_a_h_r_s__complementary_8cpp}{}\doxysection{src/navigation/\+AHRS/\+AHRS\+\_\+complementary.cpp File Reference}
+\label{_a_h_r_s__complementary_8cpp}\index{src/navigation/AHRS/AHRS\_complementary.cpp@{src/navigation/AHRS/AHRS\_complementary.cpp}}
+{\ttfamily \#include \char`\"{}AHRS\+\_\+complementary.\+hpp\char`\"{}}\newline
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
+{\ttfamily \#include $<$random$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include \char`\"{}common.\+hpp\char`\"{}}\newline
+Include dependency graph for AHRS\+\_\+complementary.\+cpp\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Eigen\+::\+Matrix3d \mbox{\hyperlink{_a_h_r_s__complementary_8cpp_aa9cca41794e6839ca7427f19f74713a3}{calc\+Rnb}} (Eigen\+::\+Vector3d ori)
+\item 
+Eigen\+::\+Matrix3d \mbox{\hyperlink{_a_h_r_s__complementary_8cpp_ad3f74d7a450aae54b01bf2dee66de798}{calc\+Rbn}} (Eigen\+::\+Vector3d ori)
+\item 
+Eigen\+::\+Matrix3d \mbox{\hyperlink{_a_h_r_s__complementary_8cpp_aae62704cdf60562ce83b9acee66d8096}{calc\+Tom}} (Eigen\+::\+Vector3d ori)
+\item 
+void \mbox{\hyperlink{_a_h_r_s__complementary_8cpp_a373fbdee0f5570e31b6c3f3f716fbee5}{clamp\+Orientation}} (Eigen\+::\+Vector3d \&vec)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_a_h_r_s__complementary_8cpp_ad3f74d7a450aae54b01bf2dee66de798}\label{_a_h_r_s__complementary_8cpp_ad3f74d7a450aae54b01bf2dee66de798}} 
+\index{AHRS\_complementary.cpp@{AHRS\_complementary.cpp}!calcRbn@{calcRbn}}
+\index{calcRbn@{calcRbn}!AHRS\_complementary.cpp@{AHRS\_complementary.cpp}}
+\doxysubsubsection{\texorpdfstring{calcRbn()}{calcRbn()}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix3d calc\+Rbn (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector3d}]{ori }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_a_h_r_s__complementary_8cpp_aa9cca41794e6839ca7427f19f74713a3}\label{_a_h_r_s__complementary_8cpp_aa9cca41794e6839ca7427f19f74713a3}} 
+\index{AHRS\_complementary.cpp@{AHRS\_complementary.cpp}!calcRnb@{calcRnb}}
+\index{calcRnb@{calcRnb}!AHRS\_complementary.cpp@{AHRS\_complementary.cpp}}
+\doxysubsubsection{\texorpdfstring{calcRnb()}{calcRnb()}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix3d calc\+Rnb (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector3d}]{ori }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_a_h_r_s__complementary_8cpp_aae62704cdf60562ce83b9acee66d8096}\label{_a_h_r_s__complementary_8cpp_aae62704cdf60562ce83b9acee66d8096}} 
+\index{AHRS\_complementary.cpp@{AHRS\_complementary.cpp}!calcTom@{calcTom}}
+\index{calcTom@{calcTom}!AHRS\_complementary.cpp@{AHRS\_complementary.cpp}}
+\doxysubsubsection{\texorpdfstring{calcTom()}{calcTom()}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix3d calc\+Tom (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector3d}]{ori }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_a_h_r_s__complementary_8cpp_a373fbdee0f5570e31b6c3f3f716fbee5}\label{_a_h_r_s__complementary_8cpp_a373fbdee0f5570e31b6c3f3f716fbee5}} 
+\index{AHRS\_complementary.cpp@{AHRS\_complementary.cpp}!clampOrientation@{clampOrientation}}
+\index{clampOrientation@{clampOrientation}!AHRS\_complementary.cpp@{AHRS\_complementary.cpp}}
+\doxysubsubsection{\texorpdfstring{clampOrientation()}{clampOrientation()}}
+{\footnotesize\ttfamily void clamp\+Orientation (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector3d \&}]{vec }\end{DoxyParamCaption})}
+

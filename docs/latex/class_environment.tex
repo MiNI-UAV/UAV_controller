@@ -1,0 +1,244 @@
+\hypertarget{class_environment}{}\doxysection{Environment Class Reference}
+\label{class_environment}\index{Environment@{Environment}}
+
+
+{\ttfamily \#include $<$environment.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_environment_a326c73df35b888901376d7900c5ee963}{Environment}} (zmq\+::context\+\_\+t $\ast$ctx, std\+::string uav\+\_\+address)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_environment_a8e294735187880dd3d59be10c425b29d}{$\sim$\+Environment}} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_environment_a03d9d2db949b5491e60e922d9a33769b}{get\+Time}} ()
+\begin{DoxyCompactList}\small\item\em Returns time of simulation. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_environment_a4cb6b7f75d5f2baee2c55366adcd954e}{get\+Position}} ()
+\begin{DoxyCompactList}\small\item\em Returns exact postion vector. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector4d \mbox{\hyperlink{class_environment_acc5ba03a4c4d16ed25b3f51b5b478582}{get\+Orientation}} ()
+\begin{DoxyCompactList}\small\item\em Returns exact orientation vector. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_environment_a6ffc6553a24bc09c7daef8859f53a186}{get\+World\+Linear\+Velocity}} ()
+\begin{DoxyCompactList}\small\item\em Returns exact linear velocity vector. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_environment_abf7db55e625e0d77a168277389370573}{get\+World\+Angular\+Velocity}} ()
+\begin{DoxyCompactList}\small\item\em Returns exact angular velocity vector. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_environment_a65363ff3e61eca40c067fd2a32ba7593}{get\+Linear\+Velocity}} ()
+\begin{DoxyCompactList}\small\item\em Returns exact linear velocity vector. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_environment_a983d546f6a7a5513219c33f5ddb6a70b}{get\+Angular\+Velocity}} ()
+\begin{DoxyCompactList}\small\item\em Returns exact angular velocity vector. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_environment_aecaef9a900cc2fe815ef81be11708366}{get\+Linear\+Acceleration}} ()
+\begin{DoxyCompactList}\small\item\em Returns exact linear acceleration vector. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_environment_a401c5b59a5e449acc607afcae465722c}{get\+Angular\+Acceleraton}} ()
+\begin{DoxyCompactList}\small\item\em Returns exact angular acceleration vector. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix3d \mbox{\hyperlink{class_environment_ab564f4b1f6c9393a86811da7c3f37431}{get\+Rnb}} ()
+\begin{DoxyCompactList}\small\item\em Get rotation matrix from world to body frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_environment_a8543fdc203cf7750020198109697f46f}{update\+Sensors}} ()
+\begin{DoxyCompactList}\small\item\em update all sensors \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_sensor}{Sensor}}$<$ Eigen\+::\+Vector3d $>$ $>$ $>$ \mbox{\hyperlink{class_environment_a2b1a739593ffe5fb3c474284f922c4e8}{sensors\+Vec3d}}
+\begin{DoxyCompactList}\small\item\em map of sensors that measure values which is 3 element vector \end{DoxyCompactList}\item 
+std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_sensor}{Sensor}}$<$ double $>$ $>$ $>$ \mbox{\hyperlink{class_environment_afd361665e80fa9c9edef011d61fa5adf}{sensors}}
+\begin{DoxyCompactList}\small\item\em map of sensors that measure single value \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_environment_a326c73df35b888901376d7900c5ee963}\label{class_environment_a326c73df35b888901376d7900c5ee963}} 
+\index{Environment@{Environment}!Environment@{Environment}}
+\index{Environment@{Environment}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{Environment()}{Environment()}}
+{\footnotesize\ttfamily Environment\+::\+Environment (\begin{DoxyParamCaption}\item[{zmq\+::context\+\_\+t $\ast$}]{ctx,  }\item[{std\+::string}]{uav\+\_\+address }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & zero mq context \\
+\hline
+{\em uav\+\_\+address} & address to state PUB socket that enviroment should listen \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_environment_a8e294735187880dd3d59be10c425b29d}\label{class_environment_a8e294735187880dd3d59be10c425b29d}} 
+\index{Environment@{Environment}!````~Environment@{$\sim$Environment}}
+\index{````~Environment@{$\sim$Environment}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{$\sim$Environment()}{~Environment()}}
+{\footnotesize\ttfamily Environment\+::$\sim$\+Environment (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_environment_a401c5b59a5e449acc607afcae465722c}\label{class_environment_a401c5b59a5e449acc607afcae465722c}} 
+\index{Environment@{Environment}!getAngularAcceleraton@{getAngularAcceleraton}}
+\index{getAngularAcceleraton@{getAngularAcceleraton}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{getAngularAcceleraton()}{getAngularAcceleraton()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d Environment\+::get\+Angular\+Acceleraton (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns exact angular acceleration vector. 
+
+\begin{DoxyReturn}{Returns}
+angular acceleration vector in body frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environment_a983d546f6a7a5513219c33f5ddb6a70b}\label{class_environment_a983d546f6a7a5513219c33f5ddb6a70b}} 
+\index{Environment@{Environment}!getAngularVelocity@{getAngularVelocity}}
+\index{getAngularVelocity@{getAngularVelocity}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{getAngularVelocity()}{getAngularVelocity()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d Environment\+::get\+Angular\+Velocity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns exact angular velocity vector. 
+
+\begin{DoxyReturn}{Returns}
+angular velocities vector in body frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environment_aecaef9a900cc2fe815ef81be11708366}\label{class_environment_aecaef9a900cc2fe815ef81be11708366}} 
+\index{Environment@{Environment}!getLinearAcceleration@{getLinearAcceleration}}
+\index{getLinearAcceleration@{getLinearAcceleration}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{getLinearAcceleration()}{getLinearAcceleration()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d Environment\+::get\+Linear\+Acceleration (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns exact linear acceleration vector. 
+
+\begin{DoxyReturn}{Returns}
+linear acceleration vector in body frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environment_a65363ff3e61eca40c067fd2a32ba7593}\label{class_environment_a65363ff3e61eca40c067fd2a32ba7593}} 
+\index{Environment@{Environment}!getLinearVelocity@{getLinearVelocity}}
+\index{getLinearVelocity@{getLinearVelocity}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{getLinearVelocity()}{getLinearVelocity()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d Environment\+::get\+Linear\+Velocity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns exact linear velocity vector. 
+
+\begin{DoxyReturn}{Returns}
+linear velocity vector in body frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environment_acc5ba03a4c4d16ed25b3f51b5b478582}\label{class_environment_acc5ba03a4c4d16ed25b3f51b5b478582}} 
+\index{Environment@{Environment}!getOrientation@{getOrientation}}
+\index{getOrientation@{getOrientation}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{getOrientation()}{getOrientation()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector4d Environment\+::get\+Orientation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns exact orientation vector. 
+
+\begin{DoxyReturn}{Returns}
+orientation vector in world frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environment_a4cb6b7f75d5f2baee2c55366adcd954e}\label{class_environment_a4cb6b7f75d5f2baee2c55366adcd954e}} 
+\index{Environment@{Environment}!getPosition@{getPosition}}
+\index{getPosition@{getPosition}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{getPosition()}{getPosition()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d Environment\+::get\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns exact postion vector. 
+
+\begin{DoxyReturn}{Returns}
+position vector in world frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environment_ab564f4b1f6c9393a86811da7c3f37431}\label{class_environment_ab564f4b1f6c9393a86811da7c3f37431}} 
+\index{Environment@{Environment}!getRnb@{getRnb}}
+\index{getRnb@{getRnb}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{getRnb()}{getRnb()}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix3d Environment\+::get\+Rnb (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get rotation matrix from world to body frame. 
+
+\begin{DoxyReturn}{Returns}
+rotation matrix 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environment_a03d9d2db949b5491e60e922d9a33769b}\label{class_environment_a03d9d2db949b5491e60e922d9a33769b}} 
+\index{Environment@{Environment}!getTime@{getTime}}
+\index{getTime@{getTime}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{getTime()}{getTime()}}
+{\footnotesize\ttfamily double Environment\+::get\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns time of simulation. 
+
+\begin{DoxyReturn}{Returns}
+simulation time 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environment_abf7db55e625e0d77a168277389370573}\label{class_environment_abf7db55e625e0d77a168277389370573}} 
+\index{Environment@{Environment}!getWorldAngularVelocity@{getWorldAngularVelocity}}
+\index{getWorldAngularVelocity@{getWorldAngularVelocity}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{getWorldAngularVelocity()}{getWorldAngularVelocity()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d Environment\+::get\+World\+Angular\+Velocity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns exact angular velocity vector. 
+
+\begin{DoxyReturn}{Returns}
+linear angular vector in world frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environment_a6ffc6553a24bc09c7daef8859f53a186}\label{class_environment_a6ffc6553a24bc09c7daef8859f53a186}} 
+\index{Environment@{Environment}!getWorldLinearVelocity@{getWorldLinearVelocity}}
+\index{getWorldLinearVelocity@{getWorldLinearVelocity}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{getWorldLinearVelocity()}{getWorldLinearVelocity()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d Environment\+::get\+World\+Linear\+Velocity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns exact linear velocity vector. 
+
+\begin{DoxyReturn}{Returns}
+linear velocity vector in world frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environment_a8543fdc203cf7750020198109697f46f}\label{class_environment_a8543fdc203cf7750020198109697f46f}} 
+\index{Environment@{Environment}!updateSensors@{updateSensors}}
+\index{updateSensors@{updateSensors}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{updateSensors()}{updateSensors()}}
+{\footnotesize\ttfamily void Environment\+::update\+Sensors (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+update all sensors 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_environment_afd361665e80fa9c9edef011d61fa5adf}\label{class_environment_afd361665e80fa9c9edef011d61fa5adf}} 
+\index{Environment@{Environment}!sensors@{sensors}}
+\index{sensors@{sensors}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{sensors}{sensors}}
+{\footnotesize\ttfamily std\+::map$<$std\+::string,std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{class_sensor}{Sensor}}$<$double$>$ $>$ $>$ Environment\+::sensors}
+
+
+
+map of sensors that measure single value 
+
+\mbox{\Hypertarget{class_environment_a2b1a739593ffe5fb3c474284f922c4e8}\label{class_environment_a2b1a739593ffe5fb3c474284f922c4e8}} 
+\index{Environment@{Environment}!sensorsVec3d@{sensorsVec3d}}
+\index{sensorsVec3d@{sensorsVec3d}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{sensorsVec3d}{sensorsVec3d}}
+{\footnotesize\ttfamily std\+::map$<$std\+::string,std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{class_sensor}{Sensor}}$<$Eigen\+::\+Vector3d$>$ $>$ $>$ Environment\+::sensors\+Vec3d}
+
+
+
+map of sensors that measure values which is 3 element vector 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/navigation/\mbox{\hyperlink{environment_8hpp}{environment.\+hpp}}\item 
+src/navigation/\mbox{\hyperlink{environment_8cpp}{environment.\+cpp}}\end{DoxyCompactItemize}

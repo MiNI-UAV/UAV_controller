@@ -1,0 +1,214 @@
+\hypertarget{class_control}{}\doxysection{Control Class Reference}
+\label{class_control}\index{Control@{Control}}
+
+
+\mbox{\hyperlink{class_control}{Control}} command listener \& sender.  
+
+
+
+
+{\ttfamily \#include $<$control.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_control_afde195e5f0a2b3a825ee4096dcaa5264}{Control}} (zmq\+::context\+\_\+t $\ast$ctx, std\+::string uav\+\_\+address, \mbox{\hyperlink{class_control_system}{Control\+System}} $\ast$controller)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_control_aedda1328c4f8b8d49bca8f0812d3bfd1}{$\sim$\+Control}} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_control_a246d6a5730148ba3fb9d0f4f2388fd58}{prepare}} ()
+\begin{DoxyCompactList}\small\item\em Sends ping command. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_control_a933994a3524f2f6d7ef0a17086e7cf66}{start}} ()
+\begin{DoxyCompactList}\small\item\em Sends start command. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_control_ae2a8f42e010c5ff3acd991412e591fa8}{stop}} ()
+\begin{DoxyCompactList}\small\item\em Sends stop command. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_control_ad275305feacc89e3c38d3488fb0149bd}{recv}} ()
+\begin{DoxyCompactList}\small\item\em Recivers reply and check if it contains \char`\"{}ok\char`\"{} phrase. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_control_adf77db9019a5413307a6186acfbb52c6}{send\+Speed}} (Eigen\+::\+Vector\+Xd speeds)
+\begin{DoxyCompactList}\small\item\em Sends new demanded rotors speed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_control_ac7f205c20142c5c82d185710ffe5db91}{send\+Surface}} (Eigen\+::\+Vector\+Xd angels)
+\begin{DoxyCompactList}\small\item\em Sends new demanded surface deflactions. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_control_a19883801c893e0fcbc631afa21558a12}{start\+Jet}} (int index)
+\begin{DoxyCompactList}\small\item\em Sends command to start jet engine of given index. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_control_aea3842bf11840886705b5ed75e96967f}{send\+Hinge}} (char type, int index, int hinge\+\_\+index, double value)
+\begin{DoxyCompactList}\small\item\em Sends command to control hinge deflaction. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_control_a0ea202713a09c4042459988ce70d846f}{handle\+Msg}} (std\+::string msg)
+\begin{DoxyCompactList}\small\item\em Handle incomming control message -\/ message that instruct controller what to do. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_control_ae5a2f70405f2122be78eea1546e5bd0d}{set\+Mode}} (\mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}} mode)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_control}{Control}} command listener \& sender. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_control_afde195e5f0a2b3a825ee4096dcaa5264}\label{class_control_afde195e5f0a2b3a825ee4096dcaa5264}} 
+\index{Control@{Control}!Control@{Control}}
+\index{Control@{Control}!Control@{Control}}
+\doxysubsubsection{\texorpdfstring{Control()}{Control()}}
+{\footnotesize\ttfamily Control\+::\+Control (\begin{DoxyParamCaption}\item[{zmq\+::context\+\_\+t $\ast$}]{ctx,  }\item[{std\+::string}]{uav\+\_\+address,  }\item[{\mbox{\hyperlink{class_control_system}{Control\+System}} $\ast$}]{controller }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & zero mq context \\
+\hline
+{\em uav\+\_\+address} & address to REP socket in simulation of controller uav \\
+\hline
+{\em controller} & pointer to controller instance \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_control_aedda1328c4f8b8d49bca8f0812d3bfd1}\label{class_control_aedda1328c4f8b8d49bca8f0812d3bfd1}} 
+\index{Control@{Control}!````~Control@{$\sim$Control}}
+\index{````~Control@{$\sim$Control}!Control@{Control}}
+\doxysubsubsection{\texorpdfstring{$\sim$Control()}{~Control()}}
+{\footnotesize\ttfamily Control\+::$\sim$\+Control (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_control_a0ea202713a09c4042459988ce70d846f}\label{class_control_a0ea202713a09c4042459988ce70d846f}} 
+\index{Control@{Control}!handleMsg@{handleMsg}}
+\index{handleMsg@{handleMsg}!Control@{Control}}
+\doxysubsubsection{\texorpdfstring{handleMsg()}{handleMsg()}}
+{\footnotesize\ttfamily std\+::string Control\+::handle\+Msg (\begin{DoxyParamCaption}\item[{std\+::string}]{msg }\end{DoxyParamCaption})}
+
+
+
+Handle incomming control message -\/ message that instruct controller what to do. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & message content \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reply to message 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_control_a246d6a5730148ba3fb9d0f4f2388fd58}\label{class_control_a246d6a5730148ba3fb9d0f4f2388fd58}} 
+\index{Control@{Control}!prepare@{prepare}}
+\index{prepare@{prepare}!Control@{Control}}
+\doxysubsubsection{\texorpdfstring{prepare()}{prepare()}}
+{\footnotesize\ttfamily void Control\+::prepare (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sends ping command. 
+
+\mbox{\Hypertarget{class_control_ad275305feacc89e3c38d3488fb0149bd}\label{class_control_ad275305feacc89e3c38d3488fb0149bd}} 
+\index{Control@{Control}!recv@{recv}}
+\index{recv@{recv}!Control@{Control}}
+\doxysubsubsection{\texorpdfstring{recv()}{recv()}}
+{\footnotesize\ttfamily void Control\+::recv (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Recivers reply and check if it contains \char`\"{}ok\char`\"{} phrase. 
+
+\mbox{\Hypertarget{class_control_aea3842bf11840886705b5ed75e96967f}\label{class_control_aea3842bf11840886705b5ed75e96967f}} 
+\index{Control@{Control}!sendHinge@{sendHinge}}
+\index{sendHinge@{sendHinge}!Control@{Control}}
+\doxysubsubsection{\texorpdfstring{sendHinge()}{sendHinge()}}
+{\footnotesize\ttfamily void Control\+::send\+Hinge (\begin{DoxyParamCaption}\item[{char}]{type,  }\item[{int}]{index,  }\item[{int}]{hinge\+\_\+index,  }\item[{double}]{value }\end{DoxyParamCaption})}
+
+
+
+Sends command to control hinge deflaction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & hinge type\+: \textquotesingle{}r\textquotesingle{} -\/ rotor, \textquotesingle{}j\textquotesingle{} -\/ jet \\
+\hline
+{\em index} & drive index \\
+\hline
+{\em hinge\+\_\+index} & hinge index \\
+\hline
+{\em value} & new deflection \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_control_adf77db9019a5413307a6186acfbb52c6}\label{class_control_adf77db9019a5413307a6186acfbb52c6}} 
+\index{Control@{Control}!sendSpeed@{sendSpeed}}
+\index{sendSpeed@{sendSpeed}!Control@{Control}}
+\doxysubsubsection{\texorpdfstring{sendSpeed()}{sendSpeed()}}
+{\footnotesize\ttfamily void Control\+::send\+Speed (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector\+Xd}]{speeds }\end{DoxyParamCaption})}
+
+
+
+Sends new demanded rotors speed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em speeds} & vector of demanded speeds \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_control_ac7f205c20142c5c82d185710ffe5db91}\label{class_control_ac7f205c20142c5c82d185710ffe5db91}} 
+\index{Control@{Control}!sendSurface@{sendSurface}}
+\index{sendSurface@{sendSurface}!Control@{Control}}
+\doxysubsubsection{\texorpdfstring{sendSurface()}{sendSurface()}}
+{\footnotesize\ttfamily void Control\+::send\+Surface (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector\+Xd}]{angels }\end{DoxyParamCaption})}
+
+
+
+Sends new demanded surface deflactions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em speeds} & vector of surface deflactions \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_control_ae5a2f70405f2122be78eea1546e5bd0d}\label{class_control_ae5a2f70405f2122be78eea1546e5bd0d}} 
+\index{Control@{Control}!setMode@{setMode}}
+\index{setMode@{setMode}!Control@{Control}}
+\doxysubsubsection{\texorpdfstring{setMode()}{setMode()}}
+{\footnotesize\ttfamily void Control\+::set\+Mode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}}}]{mode }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_control_a933994a3524f2f6d7ef0a17086e7cf66}\label{class_control_a933994a3524f2f6d7ef0a17086e7cf66}} 
+\index{Control@{Control}!start@{start}}
+\index{start@{start}!Control@{Control}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void Control\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sends start command. 
+
+\mbox{\Hypertarget{class_control_a19883801c893e0fcbc631afa21558a12}\label{class_control_a19883801c893e0fcbc631afa21558a12}} 
+\index{Control@{Control}!startJet@{startJet}}
+\index{startJet@{startJet}!Control@{Control}}
+\doxysubsubsection{\texorpdfstring{startJet()}{startJet()}}
+{\footnotesize\ttfamily void Control\+::start\+Jet (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+
+Sends command to start jet engine of given index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & jet engine index \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_control_ae2a8f42e010c5ff3acd991412e591fa8}\label{class_control_ae2a8f42e010c5ff3acd991412e591fa8}} 
+\index{Control@{Control}!stop@{stop}}
+\index{stop@{stop}!Control@{Control}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void Control\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sends stop command. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/communication/\mbox{\hyperlink{control_8hpp}{control.\+hpp}}\item 
+src/communication/\mbox{\hyperlink{control_8cpp}{control.\+cpp}}\item 
+src/communication/\mbox{\hyperlink{control__recv_8cpp}{control\+\_\+recv.\+cpp}}\item 
+src/communication/\mbox{\hyperlink{control__send_8cpp}{control\+\_\+send.\+cpp}}\end{DoxyCompactItemize}

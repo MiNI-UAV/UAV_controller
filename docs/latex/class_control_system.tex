@@ -1,0 +1,111 @@
+\hypertarget{class_control_system}{}\doxysection{Control\+System Class Reference}
+\label{class_control_system}\index{ControlSystem@{ControlSystem}}
+
+
+Central controller class.  
+
+
+
+
+{\ttfamily \#include $<$controller.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_control_system_a8c6503cdcf3e67c716b91403364edea8}{Control\+System}} (zmq\+::context\+\_\+t $\ast$ctx, std\+::string uav\+\_\+address)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_control_system_a449890897411186d4f245a79e8f2d016}{$\sim$\+Control\+System}} ()
+\item 
+void \mbox{\hyperlink{class_control_system_af8dc8a8c97eff8d7995ae8e87c11edec}{run}} ()
+\begin{DoxyCompactList}\small\item\em Run controller. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_control_system_a9db3ce3bc24fdc9f137459a6e0f39f81}{set\+Mode}} (\mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}} new\+\_\+mode)
+\begin{DoxyCompactList}\small\item\em Change controller mode. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_control_system_aeb88d3200f60735c28a811374c813400}{exit\+Controller}} ()
+\begin{DoxyCompactList}\small\item\em Stop controller loop. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_control_system_a9adf7c444a8611024541177662d4716a}{Control}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Central controller class. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_control_system_a8c6503cdcf3e67c716b91403364edea8}\label{class_control_system_a8c6503cdcf3e67c716b91403364edea8}} 
+\index{ControlSystem@{ControlSystem}!ControlSystem@{ControlSystem}}
+\index{ControlSystem@{ControlSystem}!ControlSystem@{ControlSystem}}
+\doxysubsubsection{\texorpdfstring{ControlSystem()}{ControlSystem()}}
+{\footnotesize\ttfamily Control\+System\+::\+Control\+System (\begin{DoxyParamCaption}\item[{zmq\+::context\+\_\+t $\ast$}]{ctx,  }\item[{std\+::string}]{uav\+\_\+address }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & zero mq context \\
+\hline
+{\em uav\+\_\+address} & address of simulation sockets \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_control_system_a449890897411186d4f245a79e8f2d016}\label{class_control_system_a449890897411186d4f245a79e8f2d016}} 
+\index{ControlSystem@{ControlSystem}!````~ControlSystem@{$\sim$ControlSystem}}
+\index{````~ControlSystem@{$\sim$ControlSystem}!ControlSystem@{ControlSystem}}
+\doxysubsubsection{\texorpdfstring{$\sim$ControlSystem()}{~ControlSystem()}}
+{\footnotesize\ttfamily Control\+System\+::$\sim$\+Control\+System (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_control_system_aeb88d3200f60735c28a811374c813400}\label{class_control_system_aeb88d3200f60735c28a811374c813400}} 
+\index{ControlSystem@{ControlSystem}!exitController@{exitController}}
+\index{exitController@{exitController}!ControlSystem@{ControlSystem}}
+\doxysubsubsection{\texorpdfstring{exitController()}{exitController()}}
+{\footnotesize\ttfamily void Control\+System\+::exit\+Controller (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stop controller loop. 
+
+\mbox{\Hypertarget{class_control_system_af8dc8a8c97eff8d7995ae8e87c11edec}\label{class_control_system_af8dc8a8c97eff8d7995ae8e87c11edec}} 
+\index{ControlSystem@{ControlSystem}!run@{run}}
+\index{run@{run}!ControlSystem@{ControlSystem}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Control\+System\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Run controller. 
+
+\mbox{\Hypertarget{class_control_system_a9db3ce3bc24fdc9f137459a6e0f39f81}\label{class_control_system_a9db3ce3bc24fdc9f137459a6e0f39f81}} 
+\index{ControlSystem@{ControlSystem}!setMode@{setMode}}
+\index{setMode@{setMode}!ControlSystem@{ControlSystem}}
+\doxysubsubsection{\texorpdfstring{setMode()}{setMode()}}
+{\footnotesize\ttfamily void Control\+System\+::set\+Mode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{controller__mode_8hpp_a5e003bf870f5aec515aff40f70d5b31e}{Controller\+Mode}}}]{new\+\_\+mode }\end{DoxyParamCaption})}
+
+
+
+Change controller mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+mode} & new contoller mode \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_control_system_a9adf7c444a8611024541177662d4716a}\label{class_control_system_a9adf7c444a8611024541177662d4716a}} 
+\index{ControlSystem@{ControlSystem}!Control@{Control}}
+\index{Control@{Control}!ControlSystem@{ControlSystem}}
+\doxysubsubsection{\texorpdfstring{Control}{Control}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{class_control}{Control}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/controller/\mbox{\hyperlink{controller_8hpp}{controller.\+hpp}}\item 
+src/controller/\mbox{\hyperlink{controller_8cpp}{controller.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,9 @@
+digraph "src/controller/modes" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_41ef5d8a90b9cc03a02949a5c062e6f0 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="controller" fontname="Helvetica", fontsize="10", URL="dir_41ef5d8a90b9cc03a02949a5c062e6f0.html"]
+  dir_11e54efbdc5216cbffe36683dee4fc0b [shape=box, label="modes", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_11e54efbdc5216cbffe36683dee4fc0b.html"];
+  }
+}

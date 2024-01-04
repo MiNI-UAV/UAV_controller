@@ -1,0 +1,95 @@
+\hypertarget{class_controller_loop_r_m_a_n_u_a_l}{}\doxysection{Controller\+Loop\+RMANUAL Class Reference}
+\label{class_controller_loop_r_m_a_n_u_a_l}\index{ControllerLoopRMANUAL@{ControllerLoopRMANUAL}}
+
+
+{\ttfamily \#include $<$controller\+\_\+loop\+\_\+\+RMANUAL.\+hpp$>$}
+
+
+
+Inheritance diagram for Controller\+Loop\+RMANUAL\+:
+% FIG 0
+
+
+Collaboration diagram for Controller\+Loop\+RMANUAL\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_controller_loop_r_m_a_n_u_a_l_acbf17e2fe01938494a9357e139b0da89}{Controller\+Loop\+RMANUAL}} ()
+\item 
+void \mbox{\hyperlink{class_controller_loop_r_m_a_n_u_a_l_ac0bc78595117479149f0fdb68a3b6a38}{job}} (\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Controller $>$$>$ \&controllers, \mbox{\hyperlink{class_control}{Control}} \&control, \mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]}\mbox{]} \mbox{\hyperlink{class_n_s}{NS}} \&navisys) override
+\item 
+void \mbox{\hyperlink{class_controller_loop_r_m_a_n_u_a_l_a7cbfbef9a4e299c9f94ef765aa276016}{handle\+Joystick}} (Eigen\+::\+Vector\+Xd joystick) override
+\item 
+std\+::string \mbox{\hyperlink{class_controller_loop_r_m_a_n_u_a_l_aef9dd9d1cb471405c57d385cc61de8a6}{demand\+Info}} () override
+\begin{DoxyCompactList}\small\item\em Prepare info about state and demands. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::atomic$<$ double $>$ \mbox{\hyperlink{class_controller_loop_r_m_a_n_u_a_l_a700b704acb6b773ae5acc790631569c6}{demanded\+\_\+H}} = 0.\+0
+\item 
+std\+::atomic$<$ double $>$ \mbox{\hyperlink{class_controller_loop_r_m_a_n_u_a_l_a47d88cb6cf047c80e3c11ac2325ed673}{demanded\+\_\+V}} = 0.\+0
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_controller_loop_r_m_a_n_u_a_l_acbf17e2fe01938494a9357e139b0da89}\label{class_controller_loop_r_m_a_n_u_a_l_acbf17e2fe01938494a9357e139b0da89}} 
+\index{ControllerLoopRMANUAL@{ControllerLoopRMANUAL}!ControllerLoopRMANUAL@{ControllerLoopRMANUAL}}
+\index{ControllerLoopRMANUAL@{ControllerLoopRMANUAL}!ControllerLoopRMANUAL@{ControllerLoopRMANUAL}}
+\doxysubsubsection{\texorpdfstring{ControllerLoopRMANUAL()}{ControllerLoopRMANUAL()}}
+{\footnotesize\ttfamily Controller\+Loop\+RMANUAL\+::\+Controller\+Loop\+RMANUAL (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_controller_loop_r_m_a_n_u_a_l_aef9dd9d1cb471405c57d385cc61de8a6}\label{class_controller_loop_r_m_a_n_u_a_l_aef9dd9d1cb471405c57d385cc61de8a6}} 
+\index{ControllerLoopRMANUAL@{ControllerLoopRMANUAL}!demandInfo@{demandInfo}}
+\index{demandInfo@{demandInfo}!ControllerLoopRMANUAL@{ControllerLoopRMANUAL}}
+\doxysubsubsection{\texorpdfstring{demandInfo()}{demandInfo()}}
+{\footnotesize\ttfamily std\+::string Controller\+Loop\+RMANUAL\+::demand\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prepare info about state and demands. 
+
+\begin{DoxyReturn}{Returns}
+information about mode and actually set demands 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_controller_loop_ad10249a12868c7f1c1a0e1bf919a1b51}{Controller\+Loop}}.
+
+\mbox{\Hypertarget{class_controller_loop_r_m_a_n_u_a_l_a7cbfbef9a4e299c9f94ef765aa276016}\label{class_controller_loop_r_m_a_n_u_a_l_a7cbfbef9a4e299c9f94ef765aa276016}} 
+\index{ControllerLoopRMANUAL@{ControllerLoopRMANUAL}!handleJoystick@{handleJoystick}}
+\index{handleJoystick@{handleJoystick}!ControllerLoopRMANUAL@{ControllerLoopRMANUAL}}
+\doxysubsubsection{\texorpdfstring{handleJoystick()}{handleJoystick()}}
+{\footnotesize\ttfamily void Controller\+Loop\+RMANUAL\+::handle\+Joystick (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector\+Xd}]{joystick }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+\mbox{\Hypertarget{class_controller_loop_r_m_a_n_u_a_l_ac0bc78595117479149f0fdb68a3b6a38}\label{class_controller_loop_r_m_a_n_u_a_l_ac0bc78595117479149f0fdb68a3b6a38}} 
+\index{ControllerLoopRMANUAL@{ControllerLoopRMANUAL}!job@{job}}
+\index{job@{job}!ControllerLoopRMANUAL@{ControllerLoopRMANUAL}}
+\doxysubsubsection{\texorpdfstring{job()}{job()}}
+{\footnotesize\ttfamily void Controller\+Loop\+RMANUAL\+::job (\begin{DoxyParamCaption}\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} std\+::map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Controller $>$$>$ \&}]{controllers,  }\item[{\mbox{\hyperlink{class_control}{Control}} \&}]{control,  }\item[{\mbox{[}\mbox{[}maybe\+\_\+unused\mbox{]} \mbox{]} \mbox{\hyperlink{class_n_s}{NS}} \&}]{navisys }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_controller_loop_r_m_a_n_u_a_l_a700b704acb6b773ae5acc790631569c6}\label{class_controller_loop_r_m_a_n_u_a_l_a700b704acb6b773ae5acc790631569c6}} 
+\index{ControllerLoopRMANUAL@{ControllerLoopRMANUAL}!demanded\_H@{demanded\_H}}
+\index{demanded\_H@{demanded\_H}!ControllerLoopRMANUAL@{ControllerLoopRMANUAL}}
+\doxysubsubsection{\texorpdfstring{demanded\_H}{demanded\_H}}
+{\footnotesize\ttfamily std\+::atomic$<$double$>$ Controller\+Loop\+RMANUAL\+::demanded\+\_\+H = 0.\+0\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_controller_loop_r_m_a_n_u_a_l_a47d88cb6cf047c80e3c11ac2325ed673}\label{class_controller_loop_r_m_a_n_u_a_l_a47d88cb6cf047c80e3c11ac2325ed673}} 
+\index{ControllerLoopRMANUAL@{ControllerLoopRMANUAL}!demanded\_V@{demanded\_V}}
+\index{demanded\_V@{demanded\_V}!ControllerLoopRMANUAL@{ControllerLoopRMANUAL}}
+\doxysubsubsection{\texorpdfstring{demanded\_V}{demanded\_V}}
+{\footnotesize\ttfamily std\+::atomic$<$double$>$ Controller\+Loop\+RMANUAL\+::demanded\+\_\+V = 0.\+0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/controller/modes/\mbox{\hyperlink{controller__loop___r_m_a_n_u_a_l_8hpp}{controller\+\_\+loop\+\_\+\+RMANUAL.\+hpp}}\item 
+src/controller/modes/\mbox{\hyperlink{controller__loop___r_m_a_n_u_a_l_8cpp}{controller\+\_\+loop\+\_\+\+RMANUAL.\+cpp}}\end{DoxyCompactItemize}

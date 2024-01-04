@@ -1,0 +1,30 @@
+digraph "ControllerLoop"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="ControllerLoop",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="This class is interface of controller modes. All modes should keep this strucure and implements all t..."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="ControllerLoopFACRO",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_controller_loop_f_a_c_r_o.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="ControllerLoopFANGLE",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_controller_loop_f_a_n_g_l_e.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="ControllerLoopFMANUAL",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_controller_loop_f_m_a_n_u_a_l.html",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="ControllerLoopNONE",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_controller_loop_n_o_n_e.html",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="ControllerLoopQACRO",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_controller_loop_q_a_c_r_o.html",tooltip=" "];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="ControllerLoopQANGLE",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_controller_loop_q_a_n_g_l_e.html",tooltip=" "];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="ControllerLoopQPOS",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_controller_loop_q_p_o_s.html",tooltip=" "];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="ControllerLoopRANGLE",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_controller_loop_r_a_n_g_l_e.html",tooltip=" "];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="ControllerLoopRAUTOLAUNCH",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_controller_loop_r_a_u_t_o_l_a_u_n_c_h.html",tooltip=" "];
+  Node1 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="ControllerLoopRGUIDED",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_controller_loop_r_g_u_i_d_e_d.html",tooltip=" "];
+  Node1 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="ControllerLoopRMANUAL",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_controller_loop_r_m_a_n_u_a_l.html",tooltip=" "];
+}

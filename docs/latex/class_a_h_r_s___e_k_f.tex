@@ -1,0 +1,168 @@
+\hypertarget{class_a_h_r_s___e_k_f}{}\doxysection{AHRS\+\_\+\+EKF Class Reference}
+\label{class_a_h_r_s___e_k_f}\index{AHRS\_EKF@{AHRS\_EKF}}
+
+
+Implementation of \mbox{\hyperlink{class_a_h_r_s}{AHRS}} based on Extended Kalman Filter.  
+
+
+
+
+{\ttfamily \#include $<$AHRS\+\_\+\+EKF.\+hpp$>$}
+
+
+
+Inheritance diagram for AHRS\+\_\+\+EKF\+:
+% FIG 0
+
+
+Collaboration diagram for AHRS\+\_\+\+EKF\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_a_h_r_s___e_k_f_af1eef22682f9052ad2a3f3d6f22cf979}{AHRS\+\_\+\+EKF}} (\mbox{\hyperlink{class_environment}{Environment}} \&\mbox{\hyperlink{class_a_h_r_s_afe43b3a6c9521f6e6d374e14a1dff6c6}{env}}, double Q\+\_\+scaler, double R\+\_\+scaler)
+\item 
+\mbox{\hyperlink{class_a_h_r_s___e_k_f_a3690dd6d3726f39524b74d2c235dd399}{$\sim$\+AHRS\+\_\+\+EKF}} ()
+\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_a_h_r_s___e_k_f_ad3c99ca868491bbf3bcc6037b429d97b}{get\+Gyro\+Bias}} () override
+\begin{DoxyCompactList}\small\item\em Returns estimatied gyroscope bias. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix3d \mbox{\hyperlink{class_a_h_r_s___e_k_f_a64eaf96c40436b91ca118996f893c713}{rot\+\_\+bw}} () override
+\begin{DoxyCompactList}\small\item\em Returns rotation matrix from body to world frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_h_r_s___e_k_f_a7e119de70506e26a0077d5e6781f00cc}{update}} (Eigen\+::\+Vector3d gyro, Eigen\+::\+Vector3d acc, Eigen\+::\+Vector3d mag) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Eigen\+::\+Vector4d \mbox{\hyperlink{class_a_h_r_s___e_k_f_a66ee4728a1503b143a3152570984bd18}{q}} ()
+\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_a_h_r_s___e_k_f_a4794ad319f9dad5ed73c3aa342267848}{quaterion\+To\+RPY}} (Eigen\+::\+Vector4d \mbox{\hyperlink{class_a_h_r_s___e_k_f_a66ee4728a1503b143a3152570984bd18}{q}})
+\item 
+Eigen\+::\+Vector4d \mbox{\hyperlink{class_a_h_r_s___e_k_f_aeaed7a5c46bb57bdd255756c78d82e49}{RPYTo\+Quaterion}} (Eigen\+::\+Vector3d RPY)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Eigen\+::\+Vector$<$ double, 7 $>$ \mbox{\hyperlink{class_a_h_r_s___e_k_f_ac0567c84debec2c9bfd7046ff65db010}{x}}
+\item 
+Eigen\+::\+Matrix$<$ double, 7, 7 $>$ \mbox{\hyperlink{class_a_h_r_s___e_k_f_a3cf06ffd8743d02790bfb4cb874c9c76}{P}}
+\item 
+Eigen\+::\+Matrix$<$ double, 7, 7 $>$ \mbox{\hyperlink{class_a_h_r_s___e_k_f_a1881829554bb47626925e9cf6985d7ca}{Q}}
+\item 
+Eigen\+::\+Matrix$<$ double, 6, 6 $>$ \mbox{\hyperlink{class_a_h_r_s___e_k_f_ad262cbc0799c33698409bfb4ba3ce6f1}{R}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of \mbox{\hyperlink{class_a_h_r_s}{AHRS}} based on Extended Kalman Filter. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_a_h_r_s___e_k_f_af1eef22682f9052ad2a3f3d6f22cf979}\label{class_a_h_r_s___e_k_f_af1eef22682f9052ad2a3f3d6f22cf979}} 
+\index{AHRS\_EKF@{AHRS\_EKF}!AHRS\_EKF@{AHRS\_EKF}}
+\index{AHRS\_EKF@{AHRS\_EKF}!AHRS\_EKF@{AHRS\_EKF}}
+\doxysubsubsection{\texorpdfstring{AHRS\_EKF()}{AHRS\_EKF()}}
+{\footnotesize\ttfamily AHRS\+\_\+\+EKF\+::\+AHRS\+\_\+\+EKF (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_environment}{Environment}} \&}]{env,  }\item[{double}]{Q\+\_\+scaler,  }\item[{double}]{R\+\_\+scaler }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_a_h_r_s___e_k_f_a3690dd6d3726f39524b74d2c235dd399}\label{class_a_h_r_s___e_k_f_a3690dd6d3726f39524b74d2c235dd399}} 
+\index{AHRS\_EKF@{AHRS\_EKF}!````~AHRS\_EKF@{$\sim$AHRS\_EKF}}
+\index{````~AHRS\_EKF@{$\sim$AHRS\_EKF}!AHRS\_EKF@{AHRS\_EKF}}
+\doxysubsubsection{\texorpdfstring{$\sim$AHRS\_EKF()}{~AHRS\_EKF()}}
+{\footnotesize\ttfamily AHRS\+\_\+\+EKF\+::$\sim$\+AHRS\+\_\+\+EKF (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_a_h_r_s___e_k_f_ad3c99ca868491bbf3bcc6037b429d97b}\label{class_a_h_r_s___e_k_f_ad3c99ca868491bbf3bcc6037b429d97b}} 
+\index{AHRS\_EKF@{AHRS\_EKF}!getGyroBias@{getGyroBias}}
+\index{getGyroBias@{getGyroBias}!AHRS\_EKF@{AHRS\_EKF}}
+\doxysubsubsection{\texorpdfstring{getGyroBias()}{getGyroBias()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d AHRS\+\_\+\+EKF\+::get\+Gyro\+Bias (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns estimatied gyroscope bias. 
+
+\begin{DoxyReturn}{Returns}
+gyroscope bias 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_a_h_r_s_aadeef186dc5b2717644ec845366ae66c}{AHRS}}.
+
+\mbox{\Hypertarget{class_a_h_r_s___e_k_f_a66ee4728a1503b143a3152570984bd18}\label{class_a_h_r_s___e_k_f_a66ee4728a1503b143a3152570984bd18}} 
+\index{AHRS\_EKF@{AHRS\_EKF}!q@{q}}
+\index{q@{q}!AHRS\_EKF@{AHRS\_EKF}}
+\doxysubsubsection{\texorpdfstring{q()}{q()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector4d AHRS\+\_\+\+EKF\+::q (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_a_h_r_s___e_k_f_a4794ad319f9dad5ed73c3aa342267848}\label{class_a_h_r_s___e_k_f_a4794ad319f9dad5ed73c3aa342267848}} 
+\index{AHRS\_EKF@{AHRS\_EKF}!quaterionToRPY@{quaterionToRPY}}
+\index{quaterionToRPY@{quaterionToRPY}!AHRS\_EKF@{AHRS\_EKF}}
+\doxysubsubsection{\texorpdfstring{quaterionToRPY()}{quaterionToRPY()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d AHRS\+\_\+\+EKF\+::quaterion\+To\+RPY (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector4d}]{q }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_a_h_r_s___e_k_f_a64eaf96c40436b91ca118996f893c713}\label{class_a_h_r_s___e_k_f_a64eaf96c40436b91ca118996f893c713}} 
+\index{AHRS\_EKF@{AHRS\_EKF}!rot\_bw@{rot\_bw}}
+\index{rot\_bw@{rot\_bw}!AHRS\_EKF@{AHRS\_EKF}}
+\doxysubsubsection{\texorpdfstring{rot\_bw()}{rot\_bw()}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix3d AHRS\+\_\+\+EKF\+::rot\+\_\+bw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns rotation matrix from body to world frame. 
+
+\begin{DoxyReturn}{Returns}
+rotation matrix 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_a_h_r_s_aac2a1dbf58f1c3a5fde23519c478f92f}{AHRS}}.
+
+\mbox{\Hypertarget{class_a_h_r_s___e_k_f_aeaed7a5c46bb57bdd255756c78d82e49}\label{class_a_h_r_s___e_k_f_aeaed7a5c46bb57bdd255756c78d82e49}} 
+\index{AHRS\_EKF@{AHRS\_EKF}!RPYToQuaterion@{RPYToQuaterion}}
+\index{RPYToQuaterion@{RPYToQuaterion}!AHRS\_EKF@{AHRS\_EKF}}
+\doxysubsubsection{\texorpdfstring{RPYToQuaterion()}{RPYToQuaterion()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector4d AHRS\+\_\+\+EKF\+::\+RPYTo\+Quaterion (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector3d}]{RPY }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_a_h_r_s___e_k_f_a7e119de70506e26a0077d5e6781f00cc}\label{class_a_h_r_s___e_k_f_a7e119de70506e26a0077d5e6781f00cc}} 
+\index{AHRS\_EKF@{AHRS\_EKF}!update@{update}}
+\index{update@{update}!AHRS\_EKF@{AHRS\_EKF}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void AHRS\+\_\+\+EKF\+::update (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector3d}]{gyro,  }\item[{Eigen\+::\+Vector3d}]{acc,  }\item[{Eigen\+::\+Vector3d}]{mag }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_a_h_r_s_ada87b6ba92b609dd73414f11276c850b}{AHRS}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_a_h_r_s___e_k_f_a3cf06ffd8743d02790bfb4cb874c9c76}\label{class_a_h_r_s___e_k_f_a3cf06ffd8743d02790bfb4cb874c9c76}} 
+\index{AHRS\_EKF@{AHRS\_EKF}!P@{P}}
+\index{P@{P}!AHRS\_EKF@{AHRS\_EKF}}
+\doxysubsubsection{\texorpdfstring{P}{P}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix$<$double,7,7$>$ AHRS\+\_\+\+EKF\+::P\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_a_h_r_s___e_k_f_a1881829554bb47626925e9cf6985d7ca}\label{class_a_h_r_s___e_k_f_a1881829554bb47626925e9cf6985d7ca}} 
+\index{AHRS\_EKF@{AHRS\_EKF}!Q@{Q}}
+\index{Q@{Q}!AHRS\_EKF@{AHRS\_EKF}}
+\doxysubsubsection{\texorpdfstring{Q}{Q}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix$<$double,7,7$>$ AHRS\+\_\+\+EKF\+::Q\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_a_h_r_s___e_k_f_ad262cbc0799c33698409bfb4ba3ce6f1}\label{class_a_h_r_s___e_k_f_ad262cbc0799c33698409bfb4ba3ce6f1}} 
+\index{AHRS\_EKF@{AHRS\_EKF}!R@{R}}
+\index{R@{R}!AHRS\_EKF@{AHRS\_EKF}}
+\doxysubsubsection{\texorpdfstring{R}{R}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix$<$double,6,6$>$ AHRS\+\_\+\+EKF\+::R\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_a_h_r_s___e_k_f_ac0567c84debec2c9bfd7046ff65db010}\label{class_a_h_r_s___e_k_f_ac0567c84debec2c9bfd7046ff65db010}} 
+\index{AHRS\_EKF@{AHRS\_EKF}!x@{x}}
+\index{x@{x}!AHRS\_EKF@{AHRS\_EKF}}
+\doxysubsubsection{\texorpdfstring{x}{x}}
+{\footnotesize\ttfamily Eigen\+::\+Vector$<$double,7$>$ AHRS\+\_\+\+EKF\+::x\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/navigation/\+AHRS/\mbox{\hyperlink{_a_h_r_s___e_k_f_8hpp}{AHRS\+\_\+\+EKF.\+hpp}}\item 
+src/navigation/\+AHRS/\mbox{\hyperlink{_a_h_r_s___e_k_f_8cpp}{AHRS\+\_\+\+EKF.\+cpp}}\end{DoxyCompactItemize}

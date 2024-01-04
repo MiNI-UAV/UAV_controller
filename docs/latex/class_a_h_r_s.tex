@@ -1,0 +1,169 @@
+\hypertarget{class_a_h_r_s}{}\doxysection{AHRS Class Reference}
+\label{class_a_h_r_s}\index{AHRS@{AHRS}}
+
+
+Attitude and heading reference system.  
+
+
+
+
+{\ttfamily \#include $<$AHRS.\+hpp$>$}
+
+
+
+Inheritance diagram for AHRS\+:
+% FIG 0
+
+
+Collaboration diagram for AHRS\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_a_h_r_s_ad7aadf0a417465adc43da1d36de0d07c}{AHRS}} (\mbox{\hyperlink{class_environment}{Environment}} \&\mbox{\hyperlink{class_a_h_r_s_afe43b3a6c9521f6e6d374e14a1dff6c6}{env}})
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_a_h_r_s_a5291d85a9f21c8bb32a04c4011d9e627}{$\sim$\+AHRS}} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_a_h_r_s_ab25aa2d86f1a9c4c6461a59355cc58c1}{get\+Ori}} ()
+\begin{DoxyCompactList}\small\item\em Returns estimatied orientation vector (roll, pitch, yaw) \end{DoxyCompactList}\item 
+virtual Eigen\+::\+Vector3d \mbox{\hyperlink{class_a_h_r_s_aadeef186dc5b2717644ec845366ae66c}{get\+Gyro\+Bias}} ()
+\begin{DoxyCompactList}\small\item\em Returns estimatied gyroscope bias. \end{DoxyCompactList}\item 
+virtual Eigen\+::\+Matrix3d \mbox{\hyperlink{class_a_h_r_s_aac2a1dbf58f1c3a5fde23519c478f92f}{rot\+\_\+bw}} ()=0
+\begin{DoxyCompactList}\small\item\em Returns rotation matrix from body to world frame. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_a_h_r_s_ada87b6ba92b609dd73414f11276c850b}{update}} (Eigen\+::\+Vector3d gyro, Eigen\+::\+Vector3d acc, Eigen\+::\+Vector3d mag)=0
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_a_h_r_s_a53d6e7ec940e1a7088e6f987ce14c638}{ori\+\_\+est}}
+\item 
+std\+::mutex \mbox{\hyperlink{class_a_h_r_s_a6eec1fa641d26291ecf51ae9ee8ee820}{mtx\+Ori}}
+\item 
+\mbox{\hyperlink{class_environment}{Environment}} \& \mbox{\hyperlink{class_a_h_r_s_afe43b3a6c9521f6e6d374e14a1dff6c6}{env}}
+\item 
+Logger \mbox{\hyperlink{class_a_h_r_s_ab9bc73f4622b1724e5dc3e6d385f125f}{logger}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Attitude and heading reference system. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_a_h_r_s_ad7aadf0a417465adc43da1d36de0d07c}\label{class_a_h_r_s_ad7aadf0a417465adc43da1d36de0d07c}} 
+\index{AHRS@{AHRS}!AHRS@{AHRS}}
+\index{AHRS@{AHRS}!AHRS@{AHRS}}
+\doxysubsubsection{\texorpdfstring{AHRS()}{AHRS()}}
+{\footnotesize\ttfamily AHRS\+::\+AHRS (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_environment}{Environment}} \&}]{env }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em env} & eference to environment, where \mbox{\hyperlink{class_a_h_r_s}{AHRS}} works \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_a_h_r_s_a5291d85a9f21c8bb32a04c4011d9e627}\label{class_a_h_r_s_a5291d85a9f21c8bb32a04c4011d9e627}} 
+\index{AHRS@{AHRS}!````~AHRS@{$\sim$AHRS}}
+\index{````~AHRS@{$\sim$AHRS}!AHRS@{AHRS}}
+\doxysubsubsection{\texorpdfstring{$\sim$AHRS()}{~AHRS()}}
+{\footnotesize\ttfamily AHRS\+::$\sim$\+AHRS (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_a_h_r_s_aadeef186dc5b2717644ec845366ae66c}\label{class_a_h_r_s_aadeef186dc5b2717644ec845366ae66c}} 
+\index{AHRS@{AHRS}!getGyroBias@{getGyroBias}}
+\index{getGyroBias@{getGyroBias}!AHRS@{AHRS}}
+\doxysubsubsection{\texorpdfstring{getGyroBias()}{getGyroBias()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d AHRS\+::get\+Gyro\+Bias (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Returns estimatied gyroscope bias. 
+
+\begin{DoxyReturn}{Returns}
+gyroscope bias 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{class_a_h_r_s___e_k_f_ad3c99ca868491bbf3bcc6037b429d97b}{AHRS\+\_\+\+EKF}}.
+
+\mbox{\Hypertarget{class_a_h_r_s_ab25aa2d86f1a9c4c6461a59355cc58c1}\label{class_a_h_r_s_ab25aa2d86f1a9c4c6461a59355cc58c1}} 
+\index{AHRS@{AHRS}!getOri@{getOri}}
+\index{getOri@{getOri}!AHRS@{AHRS}}
+\doxysubsubsection{\texorpdfstring{getOri()}{getOri()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d AHRS\+::get\+Ori (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns estimatied orientation vector (roll, pitch, yaw) 
+
+\begin{DoxyReturn}{Returns}
+estimatied orientation 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_a_h_r_s_aac2a1dbf58f1c3a5fde23519c478f92f}\label{class_a_h_r_s_aac2a1dbf58f1c3a5fde23519c478f92f}} 
+\index{AHRS@{AHRS}!rot\_bw@{rot\_bw}}
+\index{rot\_bw@{rot\_bw}!AHRS@{AHRS}}
+\doxysubsubsection{\texorpdfstring{rot\_bw()}{rot\_bw()}}
+{\footnotesize\ttfamily virtual Eigen\+::\+Matrix3d AHRS\+::rot\+\_\+bw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Returns rotation matrix from body to world frame. 
+
+\begin{DoxyReturn}{Returns}
+rotation matrix 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_a_h_r_s___e_k_f_a64eaf96c40436b91ca118996f893c713}{AHRS\+\_\+\+EKF}}, and \mbox{\hyperlink{class_a_h_r_s__complementary_a3963db36ddcf3b4455ddd8665b9d16df}{AHRS\+\_\+complementary}}.
+
+\mbox{\Hypertarget{class_a_h_r_s_ada87b6ba92b609dd73414f11276c850b}\label{class_a_h_r_s_ada87b6ba92b609dd73414f11276c850b}} 
+\index{AHRS@{AHRS}!update@{update}}
+\index{update@{update}!AHRS@{AHRS}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily virtual void AHRS\+::update (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector3d}]{gyro,  }\item[{Eigen\+::\+Vector3d}]{acc,  }\item[{Eigen\+::\+Vector3d}]{mag }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_a_h_r_s___e_k_f_a7e119de70506e26a0077d5e6781f00cc}{AHRS\+\_\+\+EKF}}, and \mbox{\hyperlink{class_a_h_r_s__complementary_ad055096496b47521528b6e3b2e9ceb1a}{AHRS\+\_\+complementary}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_a_h_r_s_afe43b3a6c9521f6e6d374e14a1dff6c6}\label{class_a_h_r_s_afe43b3a6c9521f6e6d374e14a1dff6c6}} 
+\index{AHRS@{AHRS}!env@{env}}
+\index{env@{env}!AHRS@{AHRS}}
+\doxysubsubsection{\texorpdfstring{env}{env}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_environment}{Environment}}\& AHRS\+::env\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_a_h_r_s_ab9bc73f4622b1724e5dc3e6d385f125f}\label{class_a_h_r_s_ab9bc73f4622b1724e5dc3e6d385f125f}} 
+\index{AHRS@{AHRS}!logger@{logger}}
+\index{logger@{logger}!AHRS@{AHRS}}
+\doxysubsubsection{\texorpdfstring{logger}{logger}}
+{\footnotesize\ttfamily Logger AHRS\+::logger\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_a_h_r_s_a6eec1fa641d26291ecf51ae9ee8ee820}\label{class_a_h_r_s_a6eec1fa641d26291ecf51ae9ee8ee820}} 
+\index{AHRS@{AHRS}!mtxOri@{mtxOri}}
+\index{mtxOri@{mtxOri}!AHRS@{AHRS}}
+\doxysubsubsection{\texorpdfstring{mtxOri}{mtxOri}}
+{\footnotesize\ttfamily std\+::mutex AHRS\+::mtx\+Ori\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_a_h_r_s_a53d6e7ec940e1a7088e6f987ce14c638}\label{class_a_h_r_s_a53d6e7ec940e1a7088e6f987ce14c638}} 
+\index{AHRS@{AHRS}!ori\_est@{ori\_est}}
+\index{ori\_est@{ori\_est}!AHRS@{AHRS}}
+\doxysubsubsection{\texorpdfstring{ori\_est}{ori\_est}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d AHRS\+::ori\+\_\+est\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/navigation/\mbox{\hyperlink{_a_h_r_s_8hpp}{AHRS.\+hpp}}\item 
+src/navigation/\mbox{\hyperlink{_a_h_r_s_8cpp}{AHRS.\+cpp}}\end{DoxyCompactItemize}

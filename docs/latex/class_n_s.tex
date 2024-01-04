@@ -1,0 +1,134 @@
+\hypertarget{class_n_s}{}\doxysection{NS Class Reference}
+\label{class_n_s}\index{NS@{NS}}
+
+
+Navigation system.  
+
+
+
+
+{\ttfamily \#include $<$NS.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_n_s_a006d3f09b52e0c251b927123850e2dfe}{NS}} (\mbox{\hyperlink{class_environment}{Environment}} \&env)
+\begin{DoxyCompactList}\small\item\em Consturctor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_n_s_a8349f4d87c6b2eee5e3d4c2d44a94094}{$\sim$\+NS}} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_n_s_ae2711f9712e727ced44b00a43f86aa4b}{get\+Position}} ()
+\begin{DoxyCompactList}\small\item\em Returns position estimated by \mbox{\hyperlink{class_n_s}{NS}}. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_n_s_a63aee78ce9a11de89dfdd1a245baca4c}{get\+Linear\+Velocity}} ()
+\begin{DoxyCompactList}\small\item\em Returns linear velocity estimated by \mbox{\hyperlink{class_n_s}{NS}}. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_n_s_a9e686bab3e398d032d7efbf886749a2f}{get\+Orientation}} ()
+\begin{DoxyCompactList}\small\item\em Returns orientation estimated by \mbox{\hyperlink{class_n_s}{NS}}. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{class_n_s_a2a1f0cf0622b740eef7394a951c9dc2b}{get\+Angular\+Velocity}} ()
+\begin{DoxyCompactList}\small\item\em Returns rates estimated by \mbox{\hyperlink{class_n_s}{NS}}. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix3d \mbox{\hyperlink{class_n_s_abae2ecd2c316842494da4fc868866919}{get\+Rotation\+Matrix\+Body\+To\+World}} ()
+\begin{DoxyCompactList}\small\item\em Returns rotation matrix from body to world frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Navigation system. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_n_s_a006d3f09b52e0c251b927123850e2dfe}\label{class_n_s_a006d3f09b52e0c251b927123850e2dfe}} 
+\index{NS@{NS}!NS@{NS}}
+\index{NS@{NS}!NS@{NS}}
+\doxysubsubsection{\texorpdfstring{NS()}{NS()}}
+{\footnotesize\ttfamily NS\+::\+NS (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_environment}{Environment}} \&}]{env }\end{DoxyParamCaption})}
+
+
+
+Consturctor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em env} & reference to environment, that \mbox{\hyperlink{class_n_s}{NS}} navigate through ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_n_s_a8349f4d87c6b2eee5e3d4c2d44a94094}\label{class_n_s_a8349f4d87c6b2eee5e3d4c2d44a94094}} 
+\index{NS@{NS}!````~NS@{$\sim$NS}}
+\index{````~NS@{$\sim$NS}!NS@{NS}}
+\doxysubsubsection{\texorpdfstring{$\sim$NS()}{~NS()}}
+{\footnotesize\ttfamily NS\+::$\sim$\+NS (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_n_s_a2a1f0cf0622b740eef7394a951c9dc2b}\label{class_n_s_a2a1f0cf0622b740eef7394a951c9dc2b}} 
+\index{NS@{NS}!getAngularVelocity@{getAngularVelocity}}
+\index{getAngularVelocity@{getAngularVelocity}!NS@{NS}}
+\doxysubsubsection{\texorpdfstring{getAngularVelocity()}{getAngularVelocity()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d NS\+::get\+Angular\+Velocity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns rates estimated by \mbox{\hyperlink{class_n_s}{NS}}. 
+
+\begin{DoxyReturn}{Returns}
+angular velocity vector (roll rate, pitch rate, yaw rate) in body frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_n_s_a63aee78ce9a11de89dfdd1a245baca4c}\label{class_n_s_a63aee78ce9a11de89dfdd1a245baca4c}} 
+\index{NS@{NS}!getLinearVelocity@{getLinearVelocity}}
+\index{getLinearVelocity@{getLinearVelocity}!NS@{NS}}
+\doxysubsubsection{\texorpdfstring{getLinearVelocity()}{getLinearVelocity()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d NS\+::get\+Linear\+Velocity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns linear velocity estimated by \mbox{\hyperlink{class_n_s}{NS}}. 
+
+\begin{DoxyReturn}{Returns}
+linear velocity vector in world frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_n_s_a9e686bab3e398d032d7efbf886749a2f}\label{class_n_s_a9e686bab3e398d032d7efbf886749a2f}} 
+\index{NS@{NS}!getOrientation@{getOrientation}}
+\index{getOrientation@{getOrientation}!NS@{NS}}
+\doxysubsubsection{\texorpdfstring{getOrientation()}{getOrientation()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d NS\+::get\+Orientation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns orientation estimated by \mbox{\hyperlink{class_n_s}{NS}}. 
+
+\begin{DoxyReturn}{Returns}
+orientation vector (RPY) in world frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_n_s_ae2711f9712e727ced44b00a43f86aa4b}\label{class_n_s_ae2711f9712e727ced44b00a43f86aa4b}} 
+\index{NS@{NS}!getPosition@{getPosition}}
+\index{getPosition@{getPosition}!NS@{NS}}
+\doxysubsubsection{\texorpdfstring{getPosition()}{getPosition()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector3d NS\+::get\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns position estimated by \mbox{\hyperlink{class_n_s}{NS}}. 
+
+\begin{DoxyReturn}{Returns}
+position vector in world frame 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_n_s_abae2ecd2c316842494da4fc868866919}\label{class_n_s_abae2ecd2c316842494da4fc868866919}} 
+\index{NS@{NS}!getRotationMatrixBodyToWorld@{getRotationMatrixBodyToWorld}}
+\index{getRotationMatrixBodyToWorld@{getRotationMatrixBodyToWorld}!NS@{NS}}
+\doxysubsubsection{\texorpdfstring{getRotationMatrixBodyToWorld()}{getRotationMatrixBodyToWorld()}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix3d NS\+::get\+Rotation\+Matrix\+Body\+To\+World (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns rotation matrix from body to world frame. 
+
+\begin{DoxyReturn}{Returns}
+rotation matrix 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/navigation/\mbox{\hyperlink{_n_s_8hpp}{NS.\+hpp}}\item 
+src/navigation/\mbox{\hyperlink{_n_s_8cpp}{NS.\+cpp}}\end{DoxyCompactItemize}

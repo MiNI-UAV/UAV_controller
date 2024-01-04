@@ -1,0 +1,98 @@
+\hypertarget{class_a_h_r_s__complementary}{}\doxysection{AHRS\+\_\+complementary Class Reference}
+\label{class_a_h_r_s__complementary}\index{AHRS\_complementary@{AHRS\_complementary}}
+
+
+Implementation of \mbox{\hyperlink{class_a_h_r_s}{AHRS}} based on Complementary Filter.  
+
+
+
+
+{\ttfamily \#include $<$AHRS\+\_\+complementary.\+hpp$>$}
+
+
+
+Inheritance diagram for AHRS\+\_\+complementary\+:
+% FIG 0
+
+
+Collaboration diagram for AHRS\+\_\+complementary\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_a_h_r_s__complementary_a559bc80328506d341e1e55aabcbe0f6f}{AHRS\+\_\+complementary}} (\mbox{\hyperlink{class_environment}{Environment}} \&\mbox{\hyperlink{class_a_h_r_s_afe43b3a6c9521f6e6d374e14a1dff6c6}{env}}, double \mbox{\hyperlink{class_a_h_r_s__complementary_aa0c0bb95473eacebd0cc05d4cd5c3d40}{alpha}})
+\item 
+\mbox{\hyperlink{class_a_h_r_s__complementary_aa13ef26a8d23e6d4f993b80263754d1e}{$\sim$\+AHRS\+\_\+complementary}} ()
+\item 
+Eigen\+::\+Matrix3d \mbox{\hyperlink{class_a_h_r_s__complementary_a3963db36ddcf3b4455ddd8665b9d16df}{rot\+\_\+bw}} () override
+\begin{DoxyCompactList}\small\item\em Returns rotation matrix from body to world frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_a_h_r_s__complementary_ad055096496b47521528b6e3b2e9ceb1a}{update}} (Eigen\+::\+Vector3d gyro, Eigen\+::\+Vector3d acc, Eigen\+::\+Vector3d mag) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const double \mbox{\hyperlink{class_a_h_r_s__complementary_aa0c0bb95473eacebd0cc05d4cd5c3d40}{alpha}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of \mbox{\hyperlink{class_a_h_r_s}{AHRS}} based on Complementary Filter. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_a_h_r_s__complementary_a559bc80328506d341e1e55aabcbe0f6f}\label{class_a_h_r_s__complementary_a559bc80328506d341e1e55aabcbe0f6f}} 
+\index{AHRS\_complementary@{AHRS\_complementary}!AHRS\_complementary@{AHRS\_complementary}}
+\index{AHRS\_complementary@{AHRS\_complementary}!AHRS\_complementary@{AHRS\_complementary}}
+\doxysubsubsection{\texorpdfstring{AHRS\_complementary()}{AHRS\_complementary()}}
+{\footnotesize\ttfamily AHRS\+\_\+complementary\+::\+AHRS\+\_\+complementary (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_environment}{Environment}} \&}]{env,  }\item[{double}]{alpha }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_a_h_r_s__complementary_aa13ef26a8d23e6d4f993b80263754d1e}\label{class_a_h_r_s__complementary_aa13ef26a8d23e6d4f993b80263754d1e}} 
+\index{AHRS\_complementary@{AHRS\_complementary}!````~AHRS\_complementary@{$\sim$AHRS\_complementary}}
+\index{````~AHRS\_complementary@{$\sim$AHRS\_complementary}!AHRS\_complementary@{AHRS\_complementary}}
+\doxysubsubsection{\texorpdfstring{$\sim$AHRS\_complementary()}{~AHRS\_complementary()}}
+{\footnotesize\ttfamily AHRS\+\_\+complementary\+::$\sim$\+AHRS\+\_\+complementary (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_a_h_r_s__complementary_a3963db36ddcf3b4455ddd8665b9d16df}\label{class_a_h_r_s__complementary_a3963db36ddcf3b4455ddd8665b9d16df}} 
+\index{AHRS\_complementary@{AHRS\_complementary}!rot\_bw@{rot\_bw}}
+\index{rot\_bw@{rot\_bw}!AHRS\_complementary@{AHRS\_complementary}}
+\doxysubsubsection{\texorpdfstring{rot\_bw()}{rot\_bw()}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix3d AHRS\+\_\+complementary\+::rot\+\_\+bw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns rotation matrix from body to world frame. 
+
+\begin{DoxyReturn}{Returns}
+rotation matrix 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_a_h_r_s_aac2a1dbf58f1c3a5fde23519c478f92f}{AHRS}}.
+
+\mbox{\Hypertarget{class_a_h_r_s__complementary_ad055096496b47521528b6e3b2e9ceb1a}\label{class_a_h_r_s__complementary_ad055096496b47521528b6e3b2e9ceb1a}} 
+\index{AHRS\_complementary@{AHRS\_complementary}!update@{update}}
+\index{update@{update}!AHRS\_complementary@{AHRS\_complementary}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void AHRS\+\_\+complementary\+::update (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector3d}]{gyro,  }\item[{Eigen\+::\+Vector3d}]{acc,  }\item[{Eigen\+::\+Vector3d}]{mag }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_a_h_r_s_ada87b6ba92b609dd73414f11276c850b}{AHRS}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_a_h_r_s__complementary_aa0c0bb95473eacebd0cc05d4cd5c3d40}\label{class_a_h_r_s__complementary_aa0c0bb95473eacebd0cc05d4cd5c3d40}} 
+\index{AHRS\_complementary@{AHRS\_complementary}!alpha@{alpha}}
+\index{alpha@{alpha}!AHRS\_complementary@{AHRS\_complementary}}
+\doxysubsubsection{\texorpdfstring{alpha}{alpha}}
+{\footnotesize\ttfamily const double AHRS\+\_\+complementary\+::alpha\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/navigation/\+AHRS/\mbox{\hyperlink{_a_h_r_s__complementary_8hpp}{AHRS\+\_\+complementary.\+hpp}}\item 
+src/navigation/\+AHRS/\mbox{\hyperlink{_a_h_r_s__complementary_8cpp}{AHRS\+\_\+complementary.\+cpp}}\end{DoxyCompactItemize}
